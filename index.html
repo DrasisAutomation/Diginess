@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+<title>DIGINESS — Premium Smart Gadgets</title>
+<meta name="description" content="DIGINESS — Premium smart gadgets for the modern lifestyle.">
+<!-- Font Awesome 6 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<!-- Common Styles -->
+<link rel="stylesheet" href="common-styles.css">
+<style>
+/* Homepage specific styles */
+.hero{
+  position:relative;
+  width:100%;
+  height:100dvh;
+  overflow:hidden;
+}
+.hero-container {
+  display:flex;
+  width:100%;
+  height:100%;
+  transition:transform 0.6s var(--ease);
+}
+.hero-slide{
+  flex: 0 0 100%;
+  height:100%;
+  position:relative;
+}
+.hero-slide img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.hero-text{
+  position:absolute;
+  bottom:32px;
+  left:0;
+  right:0;
+  text-align:center;
+  z-index:10;
+  color:#fff;
+  letter-spacing:.2em;
+  text-shadow:0 2px 10px rgba(0,0,0,0.3);
+}
+.hero-dots{
+  position:absolute;
+  bottom:32px;
+  left:16px;
+  z-index:10;
+  display:flex;
+  gap:8px;
+  margin-bottom: 5px;
+}
+.hero-dot{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:rgba(255,255,255,.4);
+  border:none;
+  transition:background .3s;
+}
+.hero-dot.active{
+  background:#fff;
+}
+.hero-pause{
+  position:absolute;
+  bottom:32px;
+  right:16px;
+  z-index:10;
+  width:40px;
+  height:40px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:rgba(0,0,0,.3);
+  color:#fff;
+  border:1px solid rgba(255,255,255,0.2);
+  transition:all .3s;
+  transform: translateY(25%);
+}
+.hero-pause:hover{
+  background:#fff;
+  color:#000;
+}
+.hero-pause i {
+  font-size: 18px;
+}
+
+/* Products grid for homepage */
+.products{
+  width:100%;
+  background:var(--bg);
+}
+.products-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:0;
+}
+
+/* Bottom carousel */
+.bottom-carousel{
+  position:relative;
+  width:100%;
+  height:100dvh;
+  overflow:hidden;
+}
+.bottom-container {
+  display:flex;
+  width:100%;
+  height:100%;
+  transition:transform 0.6s var(--ease);
+}
+.bottom-slide{
+  flex: 0 0 100%;
+  height:100%;
+}
+.bottom-slide img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.carousel-arrow{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  z-index:20;
+  width:56px;
+  height:56px;
+  border-radius:50%;
+  background:rgba(0,0,0,0.3);
+  backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,0.25);
+  color:#fff;
+  font-size:32px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  transition:all 0.3s;
+}
+.carousel-arrow:hover{
+  background:rgba(255,255,255,0.9);
+  color:#000;
+}
+.carousel-arrow.left{
+  left:28px;
+}
+.carousel-arrow.right{
+  right:28px;
+}
+.bottom-dots{
+  position:absolute;
+  bottom:28px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:20;
+  display:flex;
+  gap:12px;
+}
+.bottom-dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:rgba(255,255,255,0.5);
+  border:none;
+  transition:all 0.3s;
+  cursor:pointer;
+}
+.bottom-dot.active{
+  background:#fff;
+  transform:scale(1.3);
+}
+
+/* Mobile action buttons - Both plus and eye */
+.product-mobile-actions {
+  display: none;
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  gap: 8px;
+  z-index: 5;
+}
+.product-mobile-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary);
+  color: #000;
+  border-radius: 50%;
+  font-size: 18px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+.product-mobile-btn.view-btn {
+  background: rgba(0, 0, 0, 0.2);
+  color: #fff;
+  border: 2px solid rgb(255, 255, 255);
+}
+.product-mobile-btn.view-btn:hover {
+  background: var(--primary);
+  color: #000;
+}
+.product-mobile-btn.add-btn:hover {
+  background: #f0f0f0;
+}
+
+@media (min-width:768px) and (max-width:1023px){
+  .products-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+@media(max-width:767px){
+  .products-grid{
+    grid-template-columns:1fr;
+  }
+  .carousel-arrow{
+    width:44px;
+    height:44px;
+    font-size:24px;
+  }
+  .carousel-arrow.left{
+    left:12px;
+  }
+  .carousel-arrow.right{
+    right:12px;
+  }
+  /* Show mobile actions on mobile */
+  .product-mobile-actions {
+    display: flex !important;
+  }
+  .product-mobile-add {
+    display: none !important;
+  }
+}
+</style>
+</head>
+<body>
+<!-- HEADER -->
+<header class="header" id="mainHeader">
+  <div class="header-inner">
+    <nav class="nav-left">
+      <a href="products.html" class="nav-link btn-text">Shop All</a>
+      <button class="mobile-menu-btn btn-text" onclick="openMenu()">
+        <i class="fas fa-bars"></i> Menu
+      </button>
+    </nav>
+    <div style="position: absolute; left: 50%; top: 50%; transform: translate(-43%, -50%);">
+      <a href="products.html" class="logo" style="position: static; transform: none; margin: 0;">
+        <svg viewBox="0 0 200 28" width="120">
+          <text x="0" y="22" font-family="Inter" font-weight="400" font-size="26" letter-spacing="8" fill="currentColor">DIGINESS</text>
+        </svg>
+      </a>
+    </div>
+    <nav class="nav-right">
+      <button class="nav-link btn-text desktop-only" onclick="openSearch()"><i class="fas fa-search"></i> Search</button>
+      <a href="#about" class="nav-link btn-text desktop-only"><i class="fas fa-info-circle"></i> About</a>
+      <a href="#account" class="nav-link btn-text desktop-only"><i class="fas fa-user"></i> Account</a>
+      <button class="nav-link btn-text bag" onclick="openBag()">
+        <i class="fas fa-shopping-bag"></i> Bag <span class="bag-count" id="bagCount">0</span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<!-- MENU SIDEBAR -->
+<div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+<div class="menu-sidebar" id="menuSidebar">
+  <div class="menu-header">
+    <h3>DIGINESS</h3>
+    <button class="menu-close btn-text" onclick="closeMenu()"><i class="fas fa-times"></i> Close</button>
+  </div>
+  <div class="menu-body">
+    <div class="mobile-search-item" onclick="openSearch(); closeMenu();">
+      <span><i class="fas fa-search"></i> Search</span>
+      <span class="mobile-search-icon"><i class="fas fa-arrow-right"></i></span>
+    </div>
+    <a href="products.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-store"></i> Shop All</a>
+    <a href="#about" class="menu-item" onclick="closeMenu()"><i class="fas fa-info-circle"></i> About</a>
+    <a href="#account" class="menu-item" onclick="closeMenu()"><i class="fas fa-user"></i> Account</a>
+    <div class="menu-divider"></div>
+    <a href="#" class="menu-item" onclick="closeMenu()"><i class="fas fa-truck"></i> Shipping & Returns</a>
+  </div>
+</div>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="searchOverlay">
+  <button class="search-close" onclick="closeSearch()"><i class="fas fa-times"></i></button>
+  <div class="search-input-wrapper">
+    <input type="text" placeholder="Search smart gadgets..." id="searchInput" oninput="handleSearch()">
+    <span class="search-icon"><i class="fas fa-search"></i></span>
+  </div>
+  <div class="search-results" id="searchResults"></div>
+</div>
+
+<!-- BAG SIDEBAR -->
+<div class="bag-overlay" id="bagOverlay" onclick="closeBag()"></div>
+<div class="bag-sidebar" id="bagSidebar">
+  <div class="bag-header">
+    <h3><i class="fas fa-shopping-bag"></i> Your Bag</h3>
+    <button class="bag-close btn-text" onclick="closeBag()"><i class="fas fa-times"></i> Close</button>
+  </div>
+  <div class="bag-body" id="bagBody">
+    <div class="bag-empty">Your bag is empty</div>
+  </div>
+  <div class="bag-footer" id="bagFooter"></div>
+</div>
+
+<!-- HERO CAROUSEL -->
+<section class="hero" id="heroCarousel">
+  <div class="hero-container" id="heroContainer">
+    <div class="hero-slide"><img src="1.png" alt="Tech lifestyle"></div>
+    <div class="hero-slide"><img src="2.png" alt="Smart home"></div>
+    <div class="hero-slide"><img src="3.png" alt="Gadget setup"></div>
+  </div>
+  <div class="hero-text btn-text">Experience Innovation</div>
+  <div class="hero-dots" id="heroDots">
+    <button class="hero-dot active" onclick="goToHeroSlide(0)"></button>
+    <button class="hero-dot" onclick="goToHeroSlide(1)"></button>
+    <button class="hero-dot" onclick="goToHeroSlide(2)"></button>
+  </div>
+  <button class="hero-pause" onclick="togglePause()" id="pauseBtn">
+    <i class="fa-solid fa-pause"></i>
+  </button>
+</section>
+
+<!-- PRODUCTS GRID (Featured Products) -->
+<section class="products" id="shop">
+  <div class="products-grid">
+    <!-- Product 1 -->
+    <div class="product-card">
+      <img src="https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?w=600&h=800&fit=crop" alt="Smart Watch Pro" loading="lazy">
+      <div class="product-mobile-actions">
+        <button class="product-mobile-btn view-btn" onclick="event.stopPropagation(); goToProduct('smart-watch-pro')">
+          <i class="fas fa-eye"></i>
+        </button>
+        <button class="product-mobile-btn add-btn" onclick="event.stopPropagation(); addToBag('Smart Watch Pro','₹16,999','https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?w=600&h=800&fit=crop')">
+          <i class="fas fa-plus"></i>
+        </button>
+      </div>
+      <div class="product-info">
+        <h4>Smart Watch Pro</h4>
+        <span>₹16,999</span>
+      </div>
+      <div class="product-hover-actions">
+        <button class="btn-hover view-more" onclick="event.stopPropagation(); goToProduct('smart-watch-pro')">
+          <i class="fas fa-eye"></i> View
+        </button>
+        <button class="btn-hover add-to-bag" onclick="event.stopPropagation(); addToBag('Smart Watch Pro','₹16,999','https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?w=600&h=800&fit=crop')">
+          <i class="fas fa-shopping-bag"></i> Add
+        </button>
+      </div>
+    </div>
+
+    <!-- Product 2 -->
+    <div class="product-card">
+      <img src="https://images.pexels.com/photos/3780681/pexels-photo-3780681.jpeg?w=600&h=800&fit=crop" alt="Wireless Earbuds X1" loading="lazy">
+      <div class="product-mobile-actions">
+        <button class="product-mobile-btn view-btn" onclick="event.stopPropagation(); goToProduct('wireless-earbuds-x1')">
+          <i class="fas fa-eye"></i>
+        </button>
+        <button class="product-mobile-btn add-btn" onclick="event.stopPropagation(); addToBag('Wireless Earbuds X1','₹9,999','https://images.pexels.com/photos/3780681/pexels-photo-3780681.jpeg?w=600&h=800&fit=crop')">
+          <i class="fas fa-plus"></i>
+        </button>
+      </div>
+      <div class="product-info">
+        <h4>Wireless Earbuds X1</h4>
+        <span>₹9,999</span>
+      </div>
+      <div class="product-hover-actions">
+        <button class="btn-hover view-more" onclick="event.stopPropagation(); goToProduct('wireless-earbuds-x1')">
+          <i class="fas fa-eye"></i> View
+        </button>
+        <button class="btn-hover add-to-bag" onclick="event.stopPropagation(); addToBag('Wireless Earbuds X1','₹9,999','https://images.pexels.com/photos/3780681/pexels-photo-3780681.jpeg?w=600&h=800&fit=crop')">
+          <i class="fas fa-shopping-bag"></i> Add
+        </button>
+      </div>
+    </div>
+
+    <!-- Product 3 -->
+    <div class="product-card">
+      <img src="https://tse2.mm.bing.net/th/id/OIP.epF6Hxs9i497obQQBjvqBAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Mini Drone Cam" loading="lazy">
+      <div class="product-mobile-actions">
+        <button class="product-mobile-btn view-btn" onclick="event.stopPropagation(); goToProduct('mini-drone-cam')">
+          <i class="fas fa-eye"></i>
+        </button>
+        <button class="product-mobile-btn add-btn" onclick="event.stopPropagation(); addToBag('Mini Drone Cam','₹21,499','https://tse2.mm.bing.net/th/id/OIP.epF6Hxs9i497obQQBjvqBAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3')">
+          <i class="fas fa-plus"></i>
+        </button>
+      </div>
+      <div class="product-info">
+        <h4>Mini Drone Cam</h4>
+        <span>₹21,499</span>
+      </div>
+      <div class="product-hover-actions">
+        <button class="btn-hover view-more" onclick="event.stopPropagation(); goToProduct('mini-drone-cam')">
+          <i class="fas fa-eye"></i> View
+        </button>
+        <button class="btn-hover add-to-bag" onclick="event.stopPropagation(); addToBag('Mini Drone Cam','₹21,499','https://tse2.mm.bing.net/th/id/OIP.epF6Hxs9i497obQQBjvqBAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3')">
+          <i class="fas fa-shopping-bag"></i> Add
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOTTOM CAROUSEL -->
+<section class="bottom-carousel" id="bottomCarousel">
+  <div class="bottom-container" id="bottomContainer">
+    <div class="bottom-slide"><img src="https://images.pexels.com/photos/1229861/pexels-photo-1229861.jpeg?w=1920&h=1080&fit=crop" alt="Tech lifestyle"></div>
+    <div class="bottom-slide"><img src="https://images.pexels.com/photos/205421/pexels-photo-205421.jpeg?w=1920&h=1080&fit=crop" alt="Smart home"></div>
+    <div class="bottom-slide"><img src="https://images.pexels.com/photos/2582937/pexels-photo-2582937.jpeg?w=1920&h=1080&fit=crop" alt="Gadget setup"></div>
+    <div class="bottom-slide"><img src="https://images.pexels.com/photos/1266285/pexels-photo-1266285.jpeg?w=1920&h=1080&fit=crop" alt="Innovation"></div>
+  </div>
+  <button class="carousel-arrow left" onclick="prevBottomSlide()"><i class="fas fa-chevron-left"></i></button>
+  <button class="carousel-arrow right" onclick="nextBottomSlide()"><i class="fas fa-chevron-right"></i></button>
+  <div class="bottom-dots" id="bottomDots">
+    <button class="bottom-dot active" onclick="goToBottomSlide(0)"></button>
+    <button class="bottom-dot" onclick="goToBottomSlide(1)"></button>
+    <button class="bottom-dot" onclick="goToBottomSlide(2)"></button>
+    <button class="bottom-dot" onclick="goToBottomSlide(3)"></button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer" id="about">
+  <div class="footer-inner">
+    <div>
+      <h3>Stay Connected</h3>
+      <p>Sign up for exclusive access to new gadgets, special offers, and stories from the world of Diginess.</p>
+      <div class="footer-input">
+        <input type="email" placeholder="Email address">
+        <button><i class="fas fa-arrow-right"></i></button>
+      </div>
+    </div>
+    <div>
+      <h3>Shop</h3>
+      <ul>
+        <li><a href="products.html">Smart Watch Pro</a></li>
+        <li><a href="products.html">Wireless Earbuds X1</a></li>
+        <li><a href="products.html">Mini Drone Cam</a></li>
+        <li><a href="products.html">Shop All</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Info</h3>
+      <ul>
+        <li><a href="#">Our Approach</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Shipping & Returns</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-socials">
+      <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+      <a href="#"><i class="fab fa-tiktok"></i> TikTok</a>
+      <a href="#"><i class="fab fa-youtube"></i> YouTube</a>
+    </div>
+    <span>© 2026 Diginess. All rights reserved.</span>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script src="product-data.js"></script>
+<script src="main.js"></script>
+<script>
+// ================= HERO CAROUSEL =================
+const heroContainer = document.getElementById('heroContainer');
+const heroSlides = document.querySelectorAll('#heroCarousel .hero-slide');
+const heroDots = document.querySelectorAll('#heroCarousel .hero-dot');
+const pauseBtn = document.getElementById('pauseBtn');
+
+let heroIndex = 1;
+let heroInterval;
+const heroTotal = heroSlides.length;
+
+const heroFirst = heroSlides[0].cloneNode(true);
+const heroLast = heroSlides[heroTotal - 1].cloneNode(true);
+heroContainer.appendChild(heroFirst);
+heroContainer.insertBefore(heroLast, heroSlides[0]);
+heroContainer.style.transform = 'translateX(-100%)';
+
+function updateHeroDots() {
+  heroDots.forEach(dot => dot.classList.remove('active'));
+  heroDots[(heroIndex - 1) % heroTotal].classList.add('active');
+}
+
+function moveHero() {
+  heroIndex++;
+  heroContainer.style.transition = 'transform 0.6s ease';
+  heroContainer.style.transform = `translateX(-${heroIndex * 100}%)`;
+  if (heroIndex === heroTotal + 1) {
+    setTimeout(() => {
+      heroContainer.style.transition = 'none';
+      heroIndex = 1;
+      heroContainer.style.transform = 'translateX(-100%)';
+    }, 600);
+  }
+  updateHeroDots();
+}
+
+function goToHeroSlide(n) {
+  heroIndex = n + 1;
+  heroContainer.style.transition = 'transform 0.6s ease';
+  heroContainer.style.transform = `translateX(-${heroIndex * 100}%)`;
+  updateHeroDots();
+}
+
+heroInterval = setInterval(moveHero, 4000);
+
+function togglePause() {
+  if (heroInterval) {
+    clearInterval(heroInterval);
+    heroInterval = null;
+    pauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+  } else {
+    heroInterval = setInterval(moveHero, 4000);
+    pauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+  }
+}
+
+// =============== BOTTOM CAROUSEL ==================
+const bottomContainer = document.getElementById('bottomContainer');
+const bottomSlides = document.querySelectorAll('#bottomCarousel .bottom-slide');
+const bottomDots = document.querySelectorAll('#bottomDots .bottom-dot');
+
+let bottomIndex = 1;
+let bottomInterval;
+const bottomTotal = bottomSlides.length;
+
+const bottomFirst = bottomSlides[0].cloneNode(true);
+const bottomLast = bottomSlides[bottomTotal - 1].cloneNode(true);
+bottomContainer.appendChild(bottomFirst);
+bottomContainer.insertBefore(bottomLast, bottomSlides[0]);
+bottomContainer.style.transform = 'translateX(-100%)';
+
+function updateBottomDots() {
+  bottomDots.forEach(dot => dot.classList.remove('active'));
+  bottomDots[(bottomIndex - 1) % bottomTotal].classList.add('active');
+}
+
+function moveBottom() {
+  bottomIndex++;
+  bottomContainer.style.transition = 'transform 0.6s ease';
+  bottomContainer.style.transform = `translateX(-${bottomIndex * 100}%)`;
+  if (bottomIndex === bottomTotal + 1) {
+    setTimeout(() => {
+      bottomContainer.style.transition = 'none';
+      bottomIndex = 1;
+      bottomContainer.style.transform = 'translateX(-100%)';
+    }, 600);
+  }
+  updateBottomDots();
+}
+
+function nextBottomSlide() { 
+  clearInterval(bottomInterval);
+  moveBottom(); 
+  bottomInterval = setInterval(moveBottom, 5000);
+}
+
+function prevBottomSlide() {
+  clearInterval(bottomInterval);
+  bottomIndex--;
+  bottomContainer.style.transition = 'transform 0.6s ease';
+  bottomContainer.style.transform = `translateX(-${bottomIndex * 100}%)`;
+  if (bottomIndex === 0) {
+    setTimeout(() => {
+      bottomContainer.style.transition = 'none';
+      bottomIndex = bottomTotal;
+      bottomContainer.style.transform = `translateX(-${bottomTotal * 100}%)`;
+    }, 600);
+  }
+  updateBottomDots();
+  bottomInterval = setInterval(moveBottom, 5000);
+}
+
+function goToBottomSlide(n) {
+  clearInterval(bottomInterval);
+  bottomIndex = n + 1;
+  bottomContainer.style.transition = 'transform 0.6s ease';
+  bottomContainer.style.transform = `translateX(-${bottomIndex * 100}%)`;
+  updateBottomDots();
+  bottomInterval = setInterval(moveBottom, 5000);
+}
+
+bottomInterval = setInterval(moveBottom, 5000);
+</script>
+</body>
+</html>

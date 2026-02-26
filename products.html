@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+<title>DIGINESS — All Products</title>
+<meta name="description" content="Premium smart gadgets — dark theme with white accents.">
+<!-- Font Awesome 6 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<!-- Common Styles -->
+<link rel="stylesheet" href="common-styles.css">
+<style>
+/* Products page specific styles */
+.product-page {
+  max-width: 1440px;
+  margin: calc(var(--header-h) + 24px) auto 0;
+  padding: 0 16px 60px;
+  display: flex;
+  gap: 40px;
+  width: 100%;
+}
+
+/* Filter sidebar */
+.filter-sidebar {
+  flex: 0 0 240px;
+  background: var(--filter-bg);
+  padding: 24px 20px;
+  border-radius: 8px;
+  align-self: start;
+  position: sticky;
+  top: calc(var(--header-h) + 20px);
+  border: 1px solid var(--border-light);
+}
+.filter-sidebar h3 {
+  font-size: 13px;
+  letter-spacing: .15em;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #333;
+  font-weight: 500;
+  color: var(--primary);
+}
+.filter-group {
+  margin-bottom: 32px;
+}
+.filter-group h4 {
+  font-size: 11px;
+  letter-spacing: .1em;
+  margin-bottom: 16px;
+  color: #aaa;
+  font-weight: 400;
+}
+.filter-group ul li {
+  margin-bottom: 12px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: #ccc;
+}
+.filter-group ul li input[type="checkbox"] {
+  accent-color: var(--primary);
+  width: 14px;
+  height: 14px;
+}
+.price-range {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.price-range input[type="range"] {
+  width: 100%;
+  accent-color: var(--primary);
+}
+.range-values {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #aaa;
+}
+.sort-radio {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.sort-radio label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  cursor: pointer;
+  color: #ccc;
+}
+.sort-radio input[type="radio"] {
+  accent-color: var(--primary);
+}
+.clear-filters {
+  background: none;
+  border: 1px solid #3a3a3a;
+  padding: 12px;
+  font-size: 11px;
+  text-transform: uppercase;
+  width: 100%;
+  margin-top: 16px;
+  color: #eee;
+}
+.clear-filters:hover { background: #222; border-color: var(--primary); color:var(--primary); }
+
+/* Products grid */
+.products-wrapper {
+  flex: 1;
+  min-width: 0;
+}
+.products-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.products-header h3 { font-size: 20px; font-weight: 300; letter-spacing: .2em; color: #f0f0f0; }
+.products-header span { font-size: 12px; color: #aaa; }
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+/* Product card */
+.product-card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--card-bg);
+  width: 100%;
+  transition: border .2s;
+}
+.product-card:hover { border-color: var(--primary); }
+.product-card img {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  background: #1a1a1a;
+}
+.product-info {
+  padding: 12px 16px;
+  background: var(--card-bg);
+  transition: transform .7s var(--ease);
+}
+.product-info h4 {
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-weight: 400;
+  margin-bottom: 6px;
+  word-break: break-word;
+  color: #fff;
+}
+.product-info span { font-size: 11px; color: var(--primary); }
+
+/* Hover actions */
+.product-hover-actions {
+  position: absolute;
+  bottom: -56px;
+  left: 0;
+  right: 0;
+  display: flex;
+  gap: 4px;
+  padding: 8px 12px 12px;
+  background: #1c1c1c;
+  transition: transform .7s var(--ease);
+  transform: translateY(0);
+  z-index: 10;
+  justify-content: center;
+  box-shadow: 0 -4px 16px rgba(255,255,255,0.1);
+}
+.product-card:hover .product-info {
+  transform: translateY(-56px);
+}
+.product-card:hover .product-hover-actions {
+  transform: translateY(-56px);
+}
+
+.btn-hover {
+  flex: 1;
+  padding: 10px 0;
+  font-size: 10px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  border: 1px solid var(--primary);
+  background: transparent;
+  color: var(--primary);
+  transition: all .2s;
+  text-align: center;
+  border-radius: 0;
+  font-weight: 400;
+  min-width: 0;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.btn-hover.add-to-bag {
+  background: var(--primary);
+  color: #0a0a0a;
+  border: 1px solid var(--primary);
+  font-weight: 500;
+}
+.btn-hover.add-to-bag:hover { opacity: 0.85; background: #f0f0f0; color:#000; }
+.btn-hover.view-more:hover { background: rgba(255,255,255,0.15); color: #fff; border-color: var(--primary); }
+
+/* Mobile action buttons - Both plus and eye */
+.product-mobile-actions {
+  display: none;
+  position: absolute;
+  bottom: 12px;
+  right: 12px;
+  gap: 8px;
+  z-index: 5;
+}
+.product-mobile-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary);
+  color: #000;
+  border-radius: 50%;
+  font-size: 18px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+.product-mobile-btn.view-btn {
+  background: rgba(0, 0, 0, 0.2);
+  color: #fff;
+  border: 2px solid rgb(255, 255, 255);
+}
+.product-mobile-btn.view-btn:hover {
+  background: var(--primary);
+  color: #000;
+}
+.product-mobile-btn.add-btn:hover {
+  background: #f0f0f0;
+}
+
+/* Mobile filter */
+.mobile-filter-bar {
+  display: none;
+  justify-content: flex-end;
+  padding: 16px 16px 8px;
+  background: transparent;
+  width: 100%;
+  margin-top: 80px;
+}
+.mobile-filter-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #1f1f1f;
+  padding: 10px 20px;
+  border-radius: 40px;
+  font-size: 12px;
+  text-transform: uppercase;
+  border: 1px solid #3a3a3a;
+  white-space: nowrap;
+  color: #eee;
+}
+.mobile-filter-toggle i { color: var(--primary); }
+.active-filter-count {
+  background: var(--primary);
+  color: #000;
+  border-radius: 20px;
+  padding: 2px 8px;
+  font-size: 10px;
+  margin-left: 6px;
+  font-weight: 600;
+}
+.mobile-filter-dropdown {
+  display: none;
+  background: #131313;
+  padding: 20px 16px;
+  margin: 8px 16px 16px;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  width: calc(100% - 32px);
+}
+.mobile-filter-dropdown.open { display: block; }
+.dropdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 14px;
+  letter-spacing: .15em;
+  color: var(--primary);
+}
+.close-dropdown { font-size: 20px; background: none; border: none; cursor: pointer; color: #aaa; }
+.close-dropdown:hover { color: var(--primary); }
+
+/* Responsive */
+@media (max-width: 1023px) {
+  .product-page { flex-direction: column; padding-left: 12px; padding-right: 12px; margin-top: 10px !important; }
+  .filter-sidebar { display: none; }
+  .mobile-filter-bar { display: flex; }
+  .products-grid { grid-template-columns: repeat(2,1fr); }
+}
+
+@media (max-width: 767px) {
+  .products-grid { grid-template-columns: 1fr; }
+  .product-mobile-actions { display: flex; }
+  .product-card:hover .product-info { transform: none; }
+  .product-card:hover .product-hover-actions { transform: none; }
+  .product-hover-actions { display: none; }
+}
+
+@media (max-width: 480px) {
+  .product-page { padding-left: 8px; padding-right: 8px; }
+  .mobile-filter-bar { padding-left: 8px; padding-right: 8px; }
+  .mobile-filter-dropdown { margin-left: 8px; margin-right: 8px; width: calc(100% - 16px); }
+  .products-header h3 { font-size: 18px; }
+}
+</style>
+</head>
+<body>
+<!-- HEADER -->
+<header class="header" id="mainHeader">
+  <div class="header-inner">
+    <nav class="nav-left">
+      <a href="products.html" class="nav-link btn-text">Shop All</a>
+      <button class="mobile-menu-btn btn-text" onclick="openMenu()">
+        <i class="fas fa-bars"></i> Menu
+      </button>
+    </nav>
+    <div style="position: absolute; left: 50%; top: 50%; transform: translate(-43%, -50%);">
+      <a href="products.html" class="logo" style="position: static; transform: none; margin: 0;">
+        <svg viewBox="0 0 200 28" width="120">
+          <text x="0" y="22" font-family="Inter" font-weight="400" font-size="26" letter-spacing="8" fill="currentColor">DIGINESS</text>
+        </svg>
+      </a>
+    </div>
+    <nav class="nav-right">
+      <button class="nav-link btn-text desktop-only" onclick="openSearch()"><i class="fas fa-search"></i> Search</button>
+      <a href="#about" class="nav-link btn-text desktop-only"><i class="fas fa-info-circle"></i> About</a>
+      <a href="#account" class="nav-link btn-text desktop-only"><i class="fas fa-user"></i> Account</a>
+      <button class="nav-link btn-text bag" onclick="openBag()">
+        <i class="fas fa-shopping-bag"></i> Bag <span class="bag-count" id="bagCount">0</span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<!-- MENU SIDEBAR -->
+<div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+<div class="menu-sidebar" id="menuSidebar">
+  <div class="menu-header">
+    <h3>DIGINESS</h3>
+    <button class="menu-close btn-text" onclick="closeMenu()"><i class="fas fa-times"></i> Close</button>
+  </div>
+  <div class="menu-body">
+    <div class="mobile-search-item" onclick="openSearch(); closeMenu();">
+      <span><i class="fas fa-search"></i> Search</span>
+      <span class="mobile-search-icon"><i class="fas fa-arrow-right"></i></span>
+    </div>
+    <a href="products.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-store"></i> Shop All</a>
+    <a href="#about" class="menu-item" onclick="closeMenu()"><i class="fas fa-info-circle"></i> About</a>
+    <a href="#account" class="menu-item" onclick="closeMenu()"><i class="fas fa-user"></i> Account</a>
+    <div class="menu-divider"></div>
+    <a href="#" class="menu-item" onclick="closeMenu()"><i class="fas fa-truck"></i> Shipping & Returns</a>
+  </div>
+</div>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="searchOverlay">
+  <button class="search-close" onclick="closeSearch()"><i class="fas fa-times"></i></button>
+  <div class="search-input-wrapper">
+    <input type="text" placeholder="Search smart gadgets..." id="searchInput" oninput="handleSearch()">
+    <span class="search-icon"><i class="fas fa-search"></i></span>
+  </div>
+  <div class="search-results" id="searchResults"></div>
+</div>
+
+<!-- BAG SIDEBAR -->
+<div class="bag-overlay" id="bagOverlay" onclick="closeBag()"></div>
+<div class="bag-sidebar" id="bagSidebar">
+  <div class="bag-header">
+    <h3><i class="fas fa-shopping-bag"></i> Your Bag</h3>
+    <button class="bag-close btn-text" onclick="closeBag()"><i class="fas fa-times"></i> Close</button>
+  </div>
+  <div class="bag-body" id="bagBody">
+    <div class="bag-empty">Your bag is empty</div>
+  </div>
+  <div class="bag-footer" id="bagFooter"></div>
+</div>
+
+<!-- Mobile filter bar -->
+<div class="mobile-filter-bar">
+  <button class="mobile-filter-toggle" onclick="toggleMobileFilter()">
+    <i class="fa-solid fa-sliders"></i> Filter
+    <span class="active-filter-count" id="mobileFilterCount">0</span>
+  </button>
+</div>
+
+<!-- Mobile filter dropdown -->
+<div class="mobile-filter-dropdown" id="mobileFilterDropdown">
+  <div class="dropdown-header">
+    <span>FILTER & SORT</span>
+    <button class="close-dropdown" onclick="closeMobileFilter()"><i class="fas fa-times"></i></button>
+  </div>
+  
+  <div class="filter-group">
+    <h4>CATEGORY</h4>
+    <ul id="mobileCategoryFilters">
+      <li><input type="checkbox" value="Watch" onchange="applyMobileFilters()"> <span>Smart Watches</span></li>
+      <li><input type="checkbox" value="Audio" onchange="applyMobileFilters()"> <span>Audio</span></li>
+      <li><input type="checkbox" value="Camera" onchange="applyMobileFilters()"> <span>Cameras & Drones</span></li>
+      <li><input type="checkbox" value="VR" onchange="applyMobileFilters()"> <span>VR / AR</span></li>
+      <li><input type="checkbox" value="Accessory" onchange="applyMobileFilters()"> <span>Accessories</span></li>
+    </ul>
+  </div>
+
+  <div class="filter-group">
+    <h4>PRICE RANGE (₹)</h4>
+    <div class="price-range">
+      <input type="range" id="mobileMinPrice" min="0" max="40000" step="500" value="0" oninput="updateMobileRange()" onchange="applyMobileFilters()">
+      <input type="range" id="mobileMaxPrice" min="0" max="40000" step="500" value="40000" oninput="updateMobileRange()" onchange="applyMobileFilters()">
+      <div class="range-values">
+        <span id="mobileMinVal">₹0</span>
+        <span id="mobileMaxVal">₹40,000+</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="filter-group">
+    <h4>SORT BY</h4>
+    <div class="sort-radio">
+      <label><input type="radio" name="mobileSort" value="default" checked onchange="applyMobileFilters()"> Default</label>
+      <label><input type="radio" name="mobileSort" value="lowToHigh" onchange="applyMobileFilters()"> Low to High</label>
+      <label><input type="radio" name="mobileSort" value="highToLow" onchange="applyMobileFilters()"> High to Low</label>
+    </div>
+  </div>
+
+  <button class="clear-filters" onclick="clearMobileFilters()">Clear all</button>
+</div>
+
+<!-- MAIN PRODUCT PAGE -->
+<div class="product-page">
+  <!-- LEFT FILTER SIDEBAR (desktop) -->
+  <aside class="filter-sidebar">
+    <h3>FILTER & SORT</h3>
+    <div class="filter-group">
+      <h4>CATEGORY</h4>
+      <ul id="categoryFilters">
+        <li><input type="checkbox" value="Watch" onchange="applyFilters()"> <span>Smart Watches</span></li>
+        <li><input type="checkbox" value="Audio" onchange="applyFilters()"> <span>Audio</span></li>
+        <li><input type="checkbox" value="Camera" onchange="applyFilters()"> <span>Cameras & Drones</span></li>
+        <li><input type="checkbox" value="VR" onchange="applyFilters()"> <span>VR / AR</span></li>
+        <li><input type="checkbox" value="Accessory" onchange="applyFilters()"> <span>Accessories</span></li>
+      </ul>
+    </div>
+    <div class="filter-group">
+      <h4>PRICE RANGE (₹)</h4>
+      <div class="price-range">
+        <input type="range" id="minPrice" min="0" max="40000" step="500" value="0" oninput="updateRange()" onchange="applyFilters()">
+        <input type="range" id="maxPrice" min="0" max="40000" step="500" value="40000" oninput="updateRange()" onchange="applyFilters()">
+        <div class="range-values">
+          <span id="minVal">₹0</span>
+          <span id="maxVal">₹40,000+</span>
+        </div>
+      </div>
+    </div>
+    <div class="filter-group">
+      <h4>SORT BY</h4>
+      <div class="sort-radio">
+        <label><input type="radio" name="sort" value="default" checked onchange="applyFilters()"> Default</label>
+        <label><input type="radio" name="sort" value="lowToHigh" onchange="applyFilters()"> Low to High</label>
+        <label><input type="radio" name="sort" value="highToLow" onchange="applyFilters()"> High to Low</label>
+      </div>
+    </div>
+    <button class="clear-filters" onclick="clearFilters()">Clear all</button>
+  </aside>
+
+  <!-- RIGHT PRODUCT GRID -->
+  <div class="products-wrapper">
+    <div class="products-header">
+      <h4>All Gadgets</h4>
+      <span id="productCount">15 items</span>
+    </div>
+    <div class="products-grid" id="productGrid"></div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer" id="about">
+  <div class="footer-inner">
+    <div>
+      <h3>Stay Connected</h3>
+      <p>Sign up for exclusive access to new gadgets, special offers, and stories from the world of Diginess.</p>
+      <div class="footer-input">
+        <input type="email" placeholder="Email address">
+        <button><i class="fas fa-arrow-right"></i></button>
+      </div>
+    </div>
+    <div>
+      <h3>Shop</h3>
+      <ul>
+        <li><a href="products.html">Smart Watch Pro</a></li>
+        <li><a href="products.html">Wireless Earbuds X1</a></li>
+        <li><a href="products.html">Mini Drone Cam</a></li>
+        <li><a href="products.html">Shop All</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Info</h3>
+      <ul>
+        <li><a href="#">Our Approach</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Shipping & Returns</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-socials">
+      <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+      <a href="#"><i class="fab fa-tiktok"></i> TikTok</a>
+      <a href="#"><i class="fab fa-youtube"></i> YouTube</a>
+    </div>
+    <span>© 2026 Diginess. All rights reserved.</span>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script src="product-data.js"></script>
+<script src="main.js"></script>
+<script>
+// ========== FILTER FUNCTIONS ==========
+function renderProducts(products) {
+  const grid = document.getElementById('productGrid');
+  grid.innerHTML = '';
+  products.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'product-card';
+    card.innerHTML = `
+      <img src="${p.img}" alt="${p.name}" loading="lazy">
+      <div class="product-mobile-actions">
+        <button class="product-mobile-btn view-btn" onclick="goToProduct('${p.slug}'); event.stopPropagation();">
+          <i class="fas fa-eye"></i>
+        </button>
+        <button class="product-mobile-btn add-btn" onclick="addToBag('${p.name}','${p.price}','${p.img}'); event.stopPropagation();">
+          <i class="fas fa-plus"></i>
+        </button>
+      </div>
+      <div class="product-info">
+        <h4>${p.name}</h4>
+        <span>${p.price}</span>
+      </div>
+      <div class="product-hover-actions">
+        <button class="btn-hover view-more" onclick="goToProduct('${p.slug}'); event.stopPropagation();">
+          <i class="fas fa-eye"></i> View
+        </button>
+        <button class="btn-hover add-to-bag" onclick="addToBag('${p.name}','${p.price}','${p.img}'); event.stopPropagation();">
+          <i class="fas fa-shopping-bag"></i> Add
+        </button>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+  document.getElementById('productCount').innerText = products.length + ' items';
+}
+
+// Desktop filters
+function applyFilters() {
+  const cats = Array.from(document.querySelectorAll('#categoryFilters input:checked')).map(cb => cb.value);
+  const min = parseInt(document.getElementById('minPrice').value);
+  const max = parseInt(document.getElementById('maxPrice').value);
+  const sort = document.querySelector('input[name="sort"]:checked').value;
+  
+  let filtered = productData.filter(p => 
+    (!cats.length || cats.includes(p.category)) && p.priceNum >= min && p.priceNum <= max
+  );
+  
+  if (sort === 'lowToHigh') filtered.sort((a,b) => a.priceNum - b.priceNum);
+  else if (sort === 'highToLow') filtered.sort((a,b) => b.priceNum - a.priceNum);
+  
+  renderProducts(filtered);
+  updateMobileFilterCount(cats.length, min, max);
+}
+
+function updateRange() {
+  let min = parseInt(document.getElementById('minPrice').value);
+  let max = parseInt(document.getElementById('maxPrice').value);
+  if (min > max) { [min, max] = [max, min]; }
+  document.getElementById('minVal').innerText = '₹' + min.toLocaleString();
+  document.getElementById('maxVal').innerText = max >= 40000 ? '₹40,000+' : '₹' + max.toLocaleString();
+}
+
+function clearFilters() {
+  document.querySelectorAll('#categoryFilters input').forEach(cb => cb.checked = false);
+  document.getElementById('minPrice').value = 0;
+  document.getElementById('maxPrice').value = 40000;
+  document.querySelector('input[name="sort"][value="default"]').checked = true;
+  updateRange();
+  applyFilters();
+}
+
+// Mobile filters
+function toggleMobileFilter() {
+  document.getElementById('mobileFilterDropdown').classList.toggle('open');
+}
+
+function closeMobileFilter() {
+  document.getElementById('mobileFilterDropdown').classList.remove('open');
+}
+
+function applyMobileFilters() {
+  const cats = Array.from(document.querySelectorAll('#mobileCategoryFilters input:checked')).map(cb => cb.value);
+  const min = parseInt(document.getElementById('mobileMinPrice').value);
+  const max = parseInt(document.getElementById('mobileMaxPrice').value);
+  const sort = document.querySelector('input[name="mobileSort"]:checked').value;
+  
+  let filtered = productData.filter(p => 
+    (!cats.length || cats.includes(p.category)) && p.priceNum >= min && p.priceNum <= max
+  );
+  
+  if (sort === 'lowToHigh') filtered.sort((a,b) => a.priceNum - b.priceNum);
+  else if (sort === 'highToLow') filtered.sort((a,b) => b.priceNum - a.priceNum);
+  
+  renderProducts(filtered);
+  updateMobileFilterCount(cats.length, min, max);
+}
+
+function updateMobileRange() {
+  let min = parseInt(document.getElementById('mobileMinPrice').value);
+  let max = parseInt(document.getElementById('mobileMaxPrice').value);
+  if (min > max) { [min, max] = [max, min]; }
+  document.getElementById('mobileMinVal').innerText = '₹' + min;
+  document.getElementById('mobileMaxVal').innerText = max >= 40000 ? '₹40,000+' : '₹' + max;
+}
+
+function updateMobileFilterCount(catCount, min, max) {
+  const priceActive = (min > 0 || max < 40000) ? 1 : 0;
+  document.getElementById('mobileFilterCount').innerText = catCount + priceActive;
+}
+
+function clearMobileFilters() {
+  document.querySelectorAll('#mobileCategoryFilters input').forEach(cb => cb.checked = false);
+  document.getElementById('mobileMinPrice').value = 0;
+  document.getElementById('mobileMaxPrice').value = 40000;
+  document.querySelector('input[name="mobileSort"][value="default"]').checked = true;
+  updateMobileRange();
+  applyMobileFilters();
+  closeMobileFilter();
+}
+
+// Initial render
+renderProducts(productData);
+updateRange();
+updateMobileRange();
+</script>
+</body>
+</html>

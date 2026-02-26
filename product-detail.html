@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+<title>DIGINESS — product detail</title>
+<meta name="description" content="Premium smart gadgets — dark theme with white accents.">
+<!-- Font Awesome 6 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<!-- Common Styles -->
+<link rel="stylesheet" href="common-styles.css">
+<style>
+/* Product detail specific styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  overflow-x: hidden;
+  width: 100%;
+  min-width: 280px;
+}
+
+.product-page {
+  max-width: 1200px;
+  margin: calc(var(--header-h) + 40px) auto 60px;
+  padding: 0 20px;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+.product-detail-container {
+  display: flex;
+  gap: 60px;
+  width: 100%;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.product-image-section {
+  flex: 1;
+  min-width: 280px;
+  max-width: 50%;
+  width: 100%;
+}
+
+.product-image {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  display: block;
+  border: 1px solid #333;
+  max-width: 100%;
+  height: auto;
+}
+
+.product-info-section {
+  flex: 1;
+  min-width: 280px;
+  max-width: 50%;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  width: 100%;
+}
+
+.product-title {
+  font-size: 28px;
+  letter-spacing: .2em;
+  line-height: 1.3;
+  margin-bottom: 16px;
+  word-break: break-word;
+}
+
+.product-price {
+  margin: 0 0 24px;
+  color: var(--primary);
+  font-size: 24px;
+  word-break: break-word;
+}
+
+.product-description-container {
+  margin-bottom: 30px;
+  overflow: visible;
+  max-height: none;
+  width: 100%;
+}
+
+@media (min-width: 901px) {
+  .product-description-container {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 8px;
+    max-height: 300px;
+  }
+  
+  .product-description-container::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  .product-description-container::-webkit-scrollbar-track {
+    background: #2a2a2a;
+  }
+  
+  .product-description-container::-webkit-scrollbar-thumb {
+    background: #666;
+    border-radius: 4px;
+  }
+  
+  .product-description-container::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+  }
+}
+
+.product-description {
+  color: #aaa;
+  line-height: 1.6;
+  font-size: 14px;
+  width: 100%;
+  overflow-x: hidden;
+  word-wrap: break-word;
+}
+
+.product-description h3 {
+  color: var(--primary);
+  font-size: 16px;
+  margin: 20px 0 10px;
+  font-weight: 400;
+  letter-spacing: .1em;
+  word-break: break-word;
+}
+
+.product-description h4 {
+  color: #ddd;
+  font-size: 14px;
+  margin: 15px 0 8px;
+  font-weight: 400;
+  word-break: break-word;
+}
+
+.product-description ul {
+  list-style: disc;
+  padding-left: 20px;
+  margin: 10px 0;
+  word-break: break-word;
+}
+
+.product-description li {
+  margin-bottom: 5px;
+  color: #bbb;
+  word-break: break-word;
+}
+
+.product-description p {
+  margin: 10px 0;
+  word-break: break-word;
+}
+
+.product-description strong {
+  word-break: break-word;
+}
+
+.button-container {
+  display: flex;
+  gap: 12px;
+  margin-top: auto;
+  width: 100%;
+}
+
+.btn-add-to-bag {
+  background: var(--primary);
+  color: var(--primary-fg);
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: opacity .4s var(--ease);
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-weight: 500;
+  border: none;
+  flex: 2;
+  cursor: pointer;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.btn-add-to-bag:hover {
+  opacity: .8;
+  background: #ffffff;
+  color: #000;
+}
+
+.btn-add-to-bag i {
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.btn-back {
+  padding: 14px 24px;
+  font-size: 11px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  border: 1px solid var(--primary);
+  background: transparent;
+  color: var(--primary);
+  transition: all .2s;
+  text-align: center;
+  font-weight: 400;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.btn-back:hover {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+}
+
+.btn-back i {
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+/* Ultra small devices (below 400px) */
+@media (max-width: 399px) {
+  .product-page {
+    padding: 0 10px;
+    margin-top: calc(var(--header-h) + 20px);
+  }
+  
+  .product-title {
+    font-size: 18px;
+    letter-spacing: .15em;
+  }
+  
+  .product-price {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+  
+  .product-description {
+    font-size: 12px;
+  }
+  
+  .product-description h3 {
+    font-size: 14px;
+  }
+  
+  .product-description h4 {
+    font-size: 12px;
+  }
+  
+  .product-description ul {
+    padding-left: 15px;
+  }
+  
+  .btn-add-to-bag, 
+  .btn-back {
+    padding: 12px 16px;
+    font-size: 10px;
+    white-space: normal;
+    word-break: break-word;
+  }
+  
+  .btn-add-to-bag i,
+  .btn-back i {
+    font-size: 12px;
+  }
+}
+
+/* Below 320px - Extreme small devices */
+@media (max-width: 319px) {
+  .product-page {
+    padding: 0 8px;
+  }
+  
+  .product-image-section,
+  .product-info-section {
+    min-width: 200px;
+  }
+  
+  .product-title {
+    font-size: 16px;
+    letter-spacing: .1em;
+  }
+  
+  .product-price {
+    font-size: 16px;
+  }
+  
+  .product-description {
+    font-size: 11px;
+  }
+  
+  .product-description h3 {
+    font-size: 13px;
+  }
+  
+  .product-description h4 {
+    font-size: 11px;
+  }
+  
+  .product-description ul {
+    padding-left: 12px;
+  }
+  
+  .button-container {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .btn-add-to-bag,
+  .btn-back {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 9px;
+  }
+}
+
+/* Below 280px - Minimum supported */
+@media (max-width: 279px) {
+  .product-page {
+    padding: 0 5px;
+  }
+  
+  .product-image-section,
+  .product-info-section {
+    min-width: 160px;
+  }
+  
+  .product-title {
+    font-size: 14px;
+    letter-spacing: .08em;
+  }
+  
+  .product-price {
+    font-size: 14px;
+  }
+  
+  .product-description {
+    font-size: 10px;
+  }
+  
+  .product-description h3 {
+    font-size: 12px;
+  }
+  
+  .product-description h4 {
+    font-size: 10px;
+  }
+  
+  .product-description ul {
+    padding-left: 10px;
+  }
+  
+  .btn-add-to-bag,
+  .btn-back {
+    padding: 8px 10px;
+    font-size: 8px;
+    gap: 4px;
+  }
+  
+  .btn-add-to-bag i,
+  .btn-back i {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 900px) {
+  .product-detail-container {
+    flex-direction: column;
+    gap: 30px;
+  }
+  
+  .product-image-section,
+  .product-info-section {
+    max-width: 100%;
+    width: 100%;
+  }
+  
+  .product-image-section {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  
+  .button-container {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-page {
+    padding: 0 12px;
+  }
+  
+  .product-title {
+    font-size: 20px;
+  }
+  
+  .product-price {
+    font-size: 20px;
+  }
+}
+</style>
+</head>
+<body>
+<!-- HEADER -->
+<header class="header" id="mainHeader">
+  <div class="header-inner">
+    <nav class="nav-left">
+      <a href="products.html" class="nav-link btn-text">Shop All</a>
+      <button class="mobile-menu-btn btn-text" onclick="openMenu()">
+        <i class="fas fa-bars"></i> Menu
+      </button>
+    </nav>
+    <div style="position: absolute; left: 50%; top: 50%; transform: translate(-43%, -50%);">
+      <a href="products.html" class="logo" style="position: static; transform: none; margin: 0;">
+        <svg viewBox="0 0 200 28" width="120">
+          <text x="0" y="22" font-family="Inter" font-weight="400" font-size="26" letter-spacing="8" fill="currentColor">DIGINESS</text>
+        </svg>
+      </a>
+    </div>
+    <nav class="nav-right">
+      <button class="nav-link btn-text desktop-only" onclick="openSearch()"><i class="fas fa-search"></i> Search</button>
+      <a href="#about" class="nav-link btn-text desktop-only"><i class="fas fa-info-circle"></i> About</a>
+      <a href="#account" class="nav-link btn-text desktop-only"><i class="fas fa-user"></i> Account</a>
+      <button class="nav-link btn-text bag" onclick="openBag()">
+        <i class="fas fa-shopping-bag"></i> Bag <span class="bag-count" id="bagCount">0</span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<!-- MENU SIDEBAR -->
+<div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+<div class="menu-sidebar" id="menuSidebar">
+  <div class="menu-header">
+    <h3>DIGINESS</h3>
+    <button class="menu-close btn-text" onclick="closeMenu()"><i class="fas fa-times"></i> Close</button>
+  </div>
+  <div class="menu-body">
+    <div class="mobile-search-item" onclick="openSearch(); closeMenu();">
+      <span><i class="fas fa-search"></i> Search</span>
+      <span class="mobile-search-icon"><i class="fas fa-arrow-right"></i></span>
+    </div>
+    <a href="products.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-store"></i> Shop All</a>
+    <a href="#about" class="menu-item" onclick="closeMenu()"><i class="fas fa-info-circle"></i> About</a>
+    <a href="#account" class="menu-item" onclick="closeMenu()"><i class="fas fa-user"></i> Account</a>
+    <div class="menu-divider"></div>
+    <a href="#" class="menu-item" onclick="closeMenu()"><i class="fas fa-truck"></i> Shipping & Returns</a>
+  </div>
+</div>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="searchOverlay">
+  <button class="search-close" onclick="closeSearch()"><i class="fas fa-times"></i></button>
+  <div class="search-input-wrapper">
+    <input type="text" placeholder="Search smart gadgets..." id="searchInput" oninput="handleSearch()">
+    <span class="search-icon"><i class="fas fa-search"></i></span>
+  </div>
+  <div class="search-results" id="searchResults"></div>
+</div>
+
+<!-- BAG SIDEBAR -->
+<div class="bag-overlay" id="bagOverlay" onclick="closeBag()"></div>
+<div class="bag-sidebar" id="bagSidebar">
+  <div class="bag-header">
+    <h3><i class="fas fa-shopping-bag"></i> Your Bag</h3>
+    <button class="bag-close btn-text" onclick="closeBag()"><i class="fas fa-times"></i> Close</button>
+  </div>
+  <div class="bag-body" id="bagBody">
+    <div class="bag-empty">Your bag is empty</div>
+  </div>
+  <div class="bag-footer" id="bagFooter"></div>
+</div>
+
+<!-- MAIN PRODUCT DETAIL AREA -->
+<div class="product-page" id="productDetailPage"></div>
+
+<!-- FOOTER -->
+<footer class="footer" id="about">
+  <div class="footer-inner">
+    <div>
+      <h3>Stay Connected</h3>
+      <p>Sign up for exclusive access to new gadgets, special offers, and stories from the world of Diginess.</p>
+      <div class="footer-input">
+        <input type="email" placeholder="Email address">
+        <button><i class="fas fa-arrow-right"></i></button>
+      </div>
+    </div>
+    <div>
+      <h3>Shop</h3>
+      <ul>
+        <li><a href="products.html">Smart Watch Pro</a></li>
+        <li><a href="products.html">Wireless Earbuds X1</a></li>
+        <li><a href="products.html">Mini Drone Cam</a></li>
+        <li><a href="products.html">Shop All</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Info</h3>
+      <ul>
+        <li><a href="#">Our Approach</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Shipping & Returns</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-socials">
+      <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+      <a href="#"><i class="fab fa-tiktok"></i> TikTok</a>
+      <a href="#"><i class="fab fa-youtube"></i> YouTube</a>
+    </div>
+    <span>© 2026 Diginess. All rights reserved.</span>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script src="product-data.js"></script>
+<script src="main.js"></script>
+<script>
+// Load product detail
+function loadProductDetail() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const slug = urlParams.get('product');
+  
+  const container = document.getElementById("productDetailPage");
+
+  if (!slug) {
+    container.innerHTML = "<h2 style='margin:120px 20px; text-align:center; color:#aaa; font-size:16px; word-break:break-word;'>Product Not Found</h2>";
+    return;
+  }
+  
+  const product = productData.find(p => p.slug === slug);
+  
+  if (!product) {
+    container.innerHTML = "<h2 style='margin:120px 20px; text-align:center; color:#aaa; font-size:16px; word-break:break-word;'>Product Not Found</h2>";
+    return;
+  }
+  
+  document.title = product.name + " | DIGINESS";
+
+  container.innerHTML = `
+    <div class="product-detail-container">
+      <div class="product-image-section">
+        <img src="${product.img}" alt="${product.name}" class="product-image">
+      </div>
+
+      <div class="product-info-section">
+        <h1 class="product-title">${product.name}</h1>
+        <h2 class="product-price">${product.price}</h2>
+
+        <div class="product-description-container">
+          <div class="product-description">
+            ${product.description}
+          </div>
+        </div>
+
+        <div class="button-container">
+          <button class="btn-add-to-bag" onclick="addToBag('${product.name}','${product.price}','${product.img}')">
+            <i class="fas fa-shopping-bag"></i> Add to Bag
+          </button>
+
+          <button class="btn-back" onclick="window.location.href='products.html'">
+            <i class="fas fa-arrow-left"></i> Back
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Adjust description height
+  setTimeout(() => {
+    if (window.innerWidth > 900) {
+      const imageSection = document.querySelector('.product-image-section');
+      const descriptionContainer = document.querySelector('.product-description-container');
+      
+      if (imageSection && descriptionContainer) {
+        const imageHeight = imageSection.offsetHeight;
+        const title = document.querySelector('.product-title');
+        const price = document.querySelector('.product-price');
+        const buttons = document.querySelector('.button-container');
+        
+        const titleHeight = title ? title.offsetHeight : 0;
+        const priceHeight = price ? price.offsetHeight : 0;
+        const buttonsHeight = buttons ? buttons.offsetHeight : 0;
+        const margins = 80;
+        
+        const availableHeight = imageHeight - (titleHeight + priceHeight + buttonsHeight + margins);
+        
+        if (availableHeight > 80) {
+          descriptionContainer.style.maxHeight = availableHeight + 'px';
+        } else {
+          descriptionContainer.style.maxHeight = '150px';
+        }
+      }
+    }
+  }, 100);
+}
+
+// Handle resize
+window.addEventListener('resize', function() {
+  if (window.innerWidth > 900) {
+    setTimeout(() => {
+      const imageSection = document.querySelector('.product-image-section');
+      const descriptionContainer = document.querySelector('.product-description-container');
+      
+      if (imageSection && descriptionContainer) {
+        const imageHeight = imageSection.offsetHeight;
+        const title = document.querySelector('.product-title');
+        const price = document.querySelector('.product-price');
+        const buttons = document.querySelector('.button-container');
+        
+        const titleHeight = title ? title.offsetHeight : 0;
+        const priceHeight = price ? price.offsetHeight : 0;
+        const buttonsHeight = buttons ? buttons.offsetHeight : 0;
+        const margins = 80;
+        
+        const availableHeight = imageHeight - (titleHeight + priceHeight + buttonsHeight + margins);
+        
+        if (availableHeight > 80) {
+          descriptionContainer.style.maxHeight = availableHeight + 'px';
+        } else {
+          descriptionContainer.style.maxHeight = '150px';
+        }
+      }
+    }, 100);
+  } else {
+    const descriptionContainer = document.querySelector('.product-description-container');
+    if (descriptionContainer) {
+      descriptionContainer.style.maxHeight = 'none';
+    }
+  }
+});
+
+// Load product on page load
+document.addEventListener('DOMContentLoaded', function() {
+  loadProductDetail();
+});
+</script>
+</body>
+</html>
