@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>DIGINESS — Checkout</title>
+    <meta name="description" content="Complete your purchase">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Common Styles -->
+    <link rel="stylesheet" href="common-styles.css">
+    <!-- Razorpay SDK -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <!-- Product Data -->
+    <script src="product-data.js"></script>
+    <style>
+        /* Checkout page specific styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .checkout-page {
+            max-width: 1200px;
+            margin: calc(var(--header-h) + 40px) auto 80px;
+            padding: 0 20px;
+            min-height: 60vh;
+        }
+
+        .checkout-container {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        /* Order Summary */
+        .order-summary {
+            background: #111;
+            border: 1px solid #2a2a2a;
+            border-radius: 20px;
+            padding: 30px;
+            position: sticky;
+            top: calc(var(--header-h) + 40px);
+        }
+
+        .order-summary h2 {
+            font-size: 18px;
+            letter-spacing: .2em;
+            margin-bottom: 24px;
+            color: var(--primary);
+            font-weight: 300;
+        }
+
+        .checkout-items {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding-right: 10px;
+        }
+
+        .checkout-items::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .checkout-items::-webkit-scrollbar-track {
+            background: #2a2a2a;
+        }
+
+        .checkout-items::-webkit-scrollbar-thumb {
+            background: #666;
+            border-radius: 4px;
+        }
+
+        .checkout-item {
+            display: flex;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid #2a2a2a;
+        }
+
+        .checkout-item img {
+            width: 60px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .checkout-item-details {
+            flex: 1;
+        }
+
+        .checkout-item-details h4 {
+            font-size: 12px;
+            letter-spacing: .1em;
+            margin-bottom: 6px;
+            color: #fff;
+            font-weight: 400;
+        }
+
+        .checkout-item-price {
+            font-size: 11px;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .checkout-item-quantity {
+            font-size: 11px;
+            color: #888;
+        }
+
+        .checkout-total {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #2a2a2a;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 13px;
+            color: #aaa;
+        }
+
+        .grand-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #3a3a3a;
+            font-size: 16px;
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        /* Checkout Form */
+        .checkout-form {
+            background: #111;
+            border: 1px solid #2a2a2a;
+            border-radius: 20px;
+            padding: 30px;
+        }
+
+        .checkout-form h2 {
+            font-size: 18px;
+            letter-spacing: .2em;
+            margin-bottom: 30px;
+            color: var(--primary);
+            font-weight: 300;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 11px;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: #aaa;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            background: #1f1f1f;
+            border: 1px solid #3a3a3a;
+            border-radius: 12px;
+            padding: 14px 16px;
+            color: #fff;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: #2a2a2a;
+        }
+
+        .form-group input[readonly] {
+            background: #1a1a1a;
+            color: #888;
+            cursor: not-allowed;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .instructions {
+            background: #1a1a1a;
+            border-left: 3px solid var(--primary);
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin: 30px 0 20px;
+            font-size: 12px;
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        .instructions i {
+            color: var(--primary);
+            margin-right: 8px;
+        }
+
+        .btn-payment {
+            background: var(--primary);
+            color: #000;
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 40px;
+            font-size: 12px;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+
+        .btn-payment:hover {
+            opacity: 0.8;
+            background: #ffffff;
+        }
+
+        .btn-payment i {
+            font-size: 14px;
+        }
+
+        /* Empty checkout state */
+        .empty-checkout {
+            text-align: center;
+            padding: 80px 20px;
+            background: #111;
+            border: 1px solid #2a2a2a;
+            border-radius: 20px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .empty-checkout i {
+            font-size: 60px;
+            color: var(--primary);
+            margin-bottom: 20px;
+            opacity: 0.7;
+        }
+
+        .empty-checkout h3 {
+            font-size: 22px;
+            letter-spacing: .2em;
+            margin-bottom: 16px;
+            color: #fff;
+            font-weight: 300;
+        }
+
+        .empty-checkout p {
+            color: #888;
+            margin-bottom: 40px;
+            font-size: 14px;
+        }
+
+        .btn-continue-shopping {
+            background: var(--primary);
+            color: #000;
+            padding: 14px 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: opacity .4s var(--ease);
+            font-size: 11px;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            min-width: 220px;
+        }
+
+        .btn-continue-shopping:hover {
+            opacity: .8;
+            background: #ffffff;
+            color: #000;
+        }
+
+        .btn-continue-shopping i {
+            font-size: 14px;
+        }
+
+        /* Payment processing overlay */
+        .payment-processing {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(16px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .payment-processing.active {
+            display: flex;
+        }
+
+        .payment-processing .spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid #333;
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .payment-processing p {
+            color: #fff;
+            font-size: 14px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Order success modal - Perfectly Centered */
+        .order-success-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(16px);
+            z-index: 1100;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .order-success-modal.active {
+            display: flex;
+        }
+
+        .success-content {
+            background: #111;
+            border: 1px solid #2a2a2a;
+            border-radius: 32px;
+            padding: 40px;
+            max-width: 480px;
+            width: 100%;
+            text-align: center;
+            animation: modalSlideUp 0.4s ease;
+            margin: auto;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .success-content i {
+            font-size: 64px;
+            color: #4CAF50;
+            margin-bottom: 24px;
+        }
+
+        .success-content h2 {
+            font-size: 24px;
+            letter-spacing: .2em;
+            margin-bottom: 16px;
+            color: #fff;
+            font-weight: 300;
+        }
+
+        .success-content p {
+            color: #aaa;
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .success-content .order-id {
+            background: #1a1a1a;
+            padding: 16px;
+            border-radius: 12px;
+            border: 1px solid #2a2a2a;
+            margin-bottom: 24px;
+        }
+
+        .success-content .order-id span {
+            color: var(--primary);
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: .1em;
+        }
+
+        .success-content .btn-success {
+            background: var(--primary);
+            color: #000;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 40px;
+            font-size: 12px;
+            letter-spacing: .15em;
+            text-transform: uppercase;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .success-content .btn-success:hover {
+            opacity: 0.8;
+            background: #ffffff;
+        }
+
+        @keyframes modalSlideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .checkout-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .order-summary {
+                position: static;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .btn-continue-shopping {
+                width: 100%;
+                min-width: auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .checkout-page {
+                padding: 0 12px;
+            }
+
+            .checkout-form,
+            .order-summary {
+                padding: 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .checkout-item img {
+                width: 50px;
+                height: 70px;
+            }
+
+            .empty-checkout {
+                padding: 40px 16px;
+            }
+
+            .empty-checkout h3 {
+                font-size: 18px;
+            }
+
+            .success-content {
+                padding: 30px 20px;
+            }
+
+            .success-content h2 {
+                font-size: 20px;
+            }
+
+            .success-content i {
+                font-size: 48px;
+            }
+
+            .success-content .order-id span {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .checkout-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .checkout-item img {
+                width: 100%;
+                height: auto;
+                max-width: 120px;
+            }
+        }
+
+        .continue-arrow {
+            color: #000;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header class="header" id="mainHeader">
+        <div class="header-inner">
+            <nav class="nav-left">
+                <a href="products.html" class="nav-link btn-text">Shop All</a>
+                <button class="mobile-menu-btn btn-text" onclick="openMenu()">
+                    <i class="fas fa-bars"></i> Menu
+                </button>
+            </nav>
+            <div style="position: absolute; left: 50%; top: 50%; transform: translate(-43%, -50%);">
+                <a href="products.html" class="logo" style="position: static; transform: none; margin: 0;">
+                    <svg viewBox="0 0 200 28" width="120">
+                        <text x="0" y="22" font-family="Inter" font-weight="400" font-size="26" letter-spacing="8"
+                            fill="currentColor">DIGINESS</text>
+                    </svg>
+                </a>
+            </div>
+            <nav class="nav-right">
+                <button class="nav-link btn-text desktop-only" onclick="openSearch()"><i class="fas fa-search"></i>
+                    Search</button>
+                <a href="#about" class="nav-link btn-text desktop-only"><i class="fas fa-info-circle"></i> About</a>
+                <a href="account.html" class="nav-link btn-text desktop-only"><i class="fas fa-user"></i> Account</a>
+                <button class="nav-link btn-text bag" onclick="openBag()">
+                    <i class="fas fa-shopping-bag"></i> Bag <span class="bag-count" id="bagCount">0</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- MENU SIDEBAR -->
+    <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+    <div class="menu-sidebar" id="menuSidebar">
+        <div class="menu-header">
+            <h3>DIGINESS</h3>
+            <button class="menu-close btn-text" onclick="closeMenu()"><i class="fas fa-times"></i> Close</button>
+        </div>
+        <div class="menu-body">
+            <div class="mobile-search-item" onclick="openSearch(); closeMenu();">
+                <span><i class="fas fa-search"></i> Search</span>
+                <span class="mobile-search-icon"><i class="fas fa-arrow-right"></i></span>
+            </div>
+            <a href="products.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-store"></i> Shop All</a>
+            <a href="#about" class="menu-item" onclick="closeMenu()"><i class="fas fa-info-circle"></i> About</a>
+            <a href="account.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-user"></i> Account</a>
+            <div class="menu-divider"></div>
+            <a href="#" class="menu-item" onclick="closeMenu()"><i class="fas fa-truck"></i> Shipping & Returns</a>
+        </div>
+    </div>
+
+    <!-- SEARCH OVERLAY -->
+    <div class="search-overlay" id="searchOverlay">
+        <button class="search-close" onclick="closeSearch()"><i class="fas fa-times"></i></button>
+        <div class="search-input-wrapper">
+            <input type="text" placeholder="Search smart gadgets..." id="searchInput" oninput="handleSearch()">
+            <span class="search-icon"><i class="fas fa-search"></i></span>
+        </div>
+        <div class="search-results" id="searchResults"></div>
+    </div>
+
+    <!-- BAG SIDEBAR -->
+    <div class="bag-overlay" id="bagOverlay" onclick="closeBag()"></div>
+    <div class="bag-sidebar" id="bagSidebar">
+        <div class="bag-header">
+            <h3><i class="fas fa-shopping-bag"></i> Your Bag</h3>
+            <button class="bag-close btn-text" onclick="closeBag()"><i class="fas fa-times"></i> Close</button>
+        </div>
+        <div class="bag-body" id="bagBody">
+            <div class="bag-empty">Your bag is empty</div>
+        </div>
+        <div class="bag-footer" id="bagFooter"></div>
+    </div>
+
+    <!-- Payment Processing Overlay -->
+    <div class="payment-processing" id="paymentProcessing">
+        <div class="spinner"></div>
+        <p>Processing Payment...</p>
+    </div>
+
+    <!-- Order Success Modal - Perfectly Centered with Single Button -->
+    <div class="order-success-modal" id="orderSuccessModal">
+        <div class="success-content">
+            <i class="fas fa-check-circle"></i>
+            <h2>Order Placed Successfully!</h2>
+            <p>Thank you for your purchase. Your order has been confirmed and will be processed soon.</p>
+            <div class="order-id">
+                <span id="successOrderId">DIG-2024-001</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN CHECKOUT CONTENT -->
+    <div class="checkout-page" id="checkoutPage">
+        <!-- Content will be injected by JavaScript -->
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer" id="about">
+        <div class="footer-inner">
+            <div>
+                <h3>Stay Connected</h3>
+                <p>Sign up for exclusive access to new gadgets, special offers, and stories from the world of Diginess.
+                </p>
+                <div class="footer-input">
+                    <input type="email" placeholder="Email address">
+                    <button><i class="fas fa-arrow-right"></i></button>
+                </div>
+            </div>
+            <div>
+                <h3>Shop</h3>
+                <ul>
+                    <li><a href="products.html">Smart Watch Pro</a></li>
+                    <li><a href="products.html">Wireless Earbuds X1</a></li>
+                    <li><a href="products.html">Mini Drone Cam</a></li>
+                    <li><a href="products.html">Shop All</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Info</h3>
+                <ul>
+                    <li><a href="#">Our Approach</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Shipping & Returns</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-socials">
+                <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="#"><i class="fab fa-tiktok"></i> TikTok</a>
+                <a href="#"><i class="fab fa-youtube"></i> YouTube</a>
+            </div>
+            <span>© 2026 Diginess. All rights reserved.</span>
+        </div>
+    </footer>
+
+    <!-- Firebase config and main script -->
+    <script>
+        // ------------------ FIREBASE CONFIG ------------------
+        const firebaseConfig = {
+            apiKey: "AIzaSyDajOB6BPahP6gPjtT-YTh7-9gdlKCqGiU",
+            authDomain: "diginess-store.firebaseapp.com",
+            projectId: "diginess-store",
+            storageBucket: "diginess-store.firebasestorage.app",
+            messagingSenderId: "549723461376",
+            appId: "1:549723461376:web:dab9f5b8e9decd105385e5",
+            measurementId: "G-EXKHB5B23X"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Razorpay Configuration
+        const RAZORPAY_KEY_ID = 'rzp_test_dj5STpTdYQ07hx';
+
+        // ========== GLOBAL VARIABLES ==========
+        let currentUser = null;
+        let bag = [];
+
+        // ========== HEADER CONTROLS ==========
+        window.openMenu = function () {
+            document.getElementById('menuSidebar').classList.add('active');
+            document.getElementById('menuOverlay').classList.add('active');
+        };
+
+        window.closeMenu = function () {
+            document.getElementById('menuSidebar').classList.remove('active');
+            document.getElementById('menuOverlay').classList.remove('active');
+        };
+
+        window.openSearch = function () {
+            document.getElementById('searchOverlay').classList.add('active');
+            setTimeout(() => document.getElementById('searchInput')?.focus(), 100);
+        };
+
+        window.closeSearch = function () {
+            document.getElementById('searchOverlay').classList.remove('active');
+            document.getElementById('searchInput').value = '';
+            document.getElementById('searchResults').innerHTML = '';
+        };
+
+        window.openBag = function () {
+            document.getElementById('bagSidebar').classList.add('active');
+            document.getElementById('bagOverlay').classList.add('active');
+            updateBagUI();
+        };
+
+        window.closeBag = function () {
+            document.getElementById('bagSidebar').classList.remove('active');
+            document.getElementById('bagOverlay').classList.remove('active');
+        };
+
+        // ========== SEARCH FUNCTIONALITY ==========
+        window.handleSearch = function() {
+            const query = document.getElementById('searchInput')?.value.toLowerCase().trim();
+            const resultsContainer = document.getElementById('searchResults');
+            
+            if (!resultsContainer) return;
+            
+            if (!query) {
+                resultsContainer.innerHTML = '';
+                return;
+            }
+
+            if (typeof productData === 'undefined' || !productData.length) {
+                resultsContainer.innerHTML = '<div class="no-results">Loading products...</div>';
+                return;
+            }
+
+            const matches = productData.filter(product => 
+                product.name.toLowerCase().includes(query)
+            );
+
+            if (matches.length > 0) {
+                resultsContainer.innerHTML = matches.map(product => `
+                    <div class="search-result-item" onclick="selectProduct('${product.slug}')">
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <img src="${product.img}" alt="${product.name}" style="width: 40px; height: 40px; object-fit: cover; border-radius: 4px;">
+                            <div>
+                                <div style="font-size: 14px; color: #fff;">${product.name}</div>
+                                <div style="font-size: 12px; color: var(--primary);">${product.price}</div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            } else {
+                resultsContainer.innerHTML = '<div class="no-results">No products found</div>';
+            }
+        };
+
+        window.selectProduct = function(slug) {
+            window.location.href = 'product-detail.html?product=' + slug;
+            closeSearch();
+        };
+
+        // ========== BAG FUNCTIONS ==========
+        function updateBagUI() {
+            const bagCount = document.getElementById('bagCount');
+            const bagBody = document.getElementById('bagBody');
+            const bagFooter = document.getElementById('bagFooter');
+
+            if (!bagCount || !bagBody) return;
+
+            const totalItems = bag.reduce((sum, item) => sum + (item.quantity || 1), 0);
+            bagCount.textContent = totalItems;
+
+            if (bag.length === 0) {
+                bagBody.innerHTML = '<div class="bag-empty">Your bag is empty</div>';
+                if (bagFooter) bagFooter.innerHTML = '';
+                return;
+            }
+
+            let html = '';
+            let total = 0;
+
+            bag.forEach((item, idx) => {
+                const priceNum = item.priceNum || parseInt(item.price.replace(/[^0-9]/g, '')) || 0;
+                const quantity = item.quantity || 1;
+                const itemTotal = priceNum * quantity;
+                total += itemTotal;
+
+                html += `
+                <div class="bag-item">
+                    <img src="${item.img}" alt="${item.name}">
+                    <div class="bag-item-info">
+                        <span class="bag-item-title">${item.name}</span>
+                        <span class="bag-item-price">${item.price}</span>
+                        <div class="bag-quantity" style="display:flex; gap:8px; margin:8px 0;">
+                            <button class="bag-qty-btn" onclick="changeQty(${idx}, -1)">−</button>
+                            <span class="bag-qty-num">${quantity}</span>
+                            <button class="bag-qty-btn" onclick="changeQty(${idx}, 1)">+</button>
+                        </div>
+                        <span class="bag-item-remove" onclick="removeFromBag(${idx})">Remove</span>
+                    </div>
+                </div>
+            `;
+            });
+
+            bagBody.innerHTML = html;
+
+            if (bagFooter) {
+                bagFooter.innerHTML = `
+                <div class="bag-total">
+                    <span>TOTAL</span>
+                    <span>₹${total.toLocaleString()}</span>
+                </div>
+                <button class="btn-primary" onclick="proceedToCheckout()">CHECKOUT</button>
+            `;
+            }
+        }
+
+        window.changeQty = function (index, delta) {
+            if (!bag[index]) return;
+            const newQty = (bag[index].quantity || 1) + delta;
+            if (newQty < 1) {
+                bag.splice(index, 1);
+            } else {
+                bag[index].quantity = newQty;
+            }
+            localStorage.setItem('diginess_bag', JSON.stringify(bag));
+            updateBagUI();
+        };
+
+        window.removeFromBag = function (index) {
+            bag.splice(index, 1);
+            localStorage.setItem('diginess_bag', JSON.stringify(bag));
+            updateBagUI();
+        };
+
+        window.proceedToCheckout = function () {
+            window.location.href = 'checkout.html';
+        };
+
+        // ========== CHECKOUT PAGE FUNCTIONALITY ==========
+
+        // Load bag from localStorage
+        function loadBagFromStorage() {
+            const savedBag = localStorage.getItem('diginess_bag');
+            if (savedBag) {
+                try {
+                    bag = JSON.parse(savedBag);
+                    console.log('Bag loaded:', bag);
+                } catch (e) {
+                    console.error('Error parsing bag:', e);
+                    bag = [];
+                }
+            } else {
+                bag = [];
+            }
+        }
+
+        // Load checkout page
+        function loadCheckoutPage() {
+            const container = document.getElementById('checkoutPage');
+
+            // Check if user is signed in
+            if (!currentUser) {
+                container.innerHTML = `
+                <div class="empty-checkout">
+                    <i class="fas fa-lock"></i>
+                    <h3>Sign in to Checkout</h3>
+                    <p>Please sign in to complete your purchase</p>
+                    <a href="account.html" class="btn-continue-shopping">
+                        <i class="fas fa-sign-in-alt"></i> Sign In
+                    </a>
+                </div>
+            `;
+                return;
+            }
+
+            // Reload bag from localStorage
+            loadBagFromStorage();
+
+            // Check if bag is empty
+            if (!bag || bag.length === 0) {
+                container.innerHTML = `
+                <div class="empty-checkout">
+                    <i class="fas fa-shopping-bag"></i>
+                    <h3>Your bag is empty</h3>
+                    <p>Add some products to your bag and come back!</p>
+                    <a href="products.html" class="btn-continue-shopping">
+                        <i class="fas fa-arrow-left continue-arrow"></i> Continue Shopping
+                    </a>
+                </div>
+            `;
+                return;
+            }
+
+            // Calculate totals
+            let subtotal = 0;
+            let itemsHTML = '';
+
+            bag.forEach(item => {
+                const priceNum = item.priceNum || parseInt(item.price.replace(/[^0-9]/g, '')) || 0;
+                const quantity = item.quantity || 1;
+                const itemTotal = priceNum * quantity;
+                subtotal += itemTotal;
+
+                itemsHTML += `
+                <div class="checkout-item">
+                    <img src="${item.img}" alt="${item.name}">
+                    <div class="checkout-item-details">
+                        <h4>${item.name}</h4>
+                        <div class="checkout-item-price">${item.price}</div>
+                        <div class="checkout-item-quantity">Quantity: ${quantity}</div>
+                    </div>
+                    <div style="color: var(--primary); font-size: 12px;">₹${itemTotal.toLocaleString()}</div>
+                </div>
+            `;
+            });
+
+            const shipping = subtotal > 5000 ? 0 : 99;
+            const total = subtotal + shipping;
+
+            container.innerHTML = `
+            <div class="checkout-container">
+                <!-- Order Summary -->
+                <div class="order-summary">
+                    <h2>Order Summary</h2>
+                    <div class="checkout-items">
+                        ${itemsHTML}
+                    </div>
+                    <div class="checkout-total">
+                        <div class="total-row">
+                            <span>Subtotal</span>
+                            <span>₹${subtotal.toLocaleString()}</span>
+                        </div>
+                        <div class="total-row">
+                            <span>Shipping</span>
+                            <span>${shipping === 0 ? 'Free' : '₹' + shipping}</span>
+                        </div>
+                        <div class="grand-total">
+                            <span>Total</span>
+                            <span>₹${total.toLocaleString()}</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Checkout Form -->
+                <div class="checkout-form">
+                    <h2>Shipping Information</h2>
+                    
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="checkoutEmail" value="${currentUser.email || ''}" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Full Name *</label>
+                        <input type="text" id="fullName" placeholder="Enter your full name" value="${currentUser.displayName || ''}">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Phone Number *</label>
+                        <input type="tel" id="phone" placeholder="Enter your phone number">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Address *</label>
+                        <textarea id="address" rows="3" placeholder="Street address, apartment, suite, etc."></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>City *</label>
+                            <input type="text" id="city" placeholder="City">
+                        </div>
+                        <div class="form-group">
+                            <label>State *</label>
+                            <input type="text" id="state" placeholder="State">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>ZIP / Postal Code *</label>
+                            <input type="text" id="zip" placeholder="PIN code">
+                        </div>
+                        <div class="form-group">
+                            <label>Country</label>
+                            <input type="text" id="country" value="India" readonly>
+                        </div>
+                    </div>
+                    
+                    <div class="instructions">
+                        <i class="fas fa-info-circle"></i>
+                        <strong>Payment Instructions:</strong> You will be redirected to Razorpay secure payment gateway.
+                    </div>
+                    
+                    <button class="btn-payment" onclick="initiatePayment(${total})">
+                        <i class="fas fa-lock"></i> Pay ₹${total.toLocaleString()}
+                    </button>
+                </div>
+            </div>
+        `;
+        }
+
+        // Generate unique order ID
+        function generateOrderId() {
+            const timestamp = Date.now().toString(36).toUpperCase();
+            const random = Math.random().toString(36).substring(2, 8).toUpperCase();
+            return `DIG-${timestamp}-${random}`;
+        }
+
+        // ========== Save order to Firestore ==========
+        async function saveOrderToFirestore(paymentData, shippingInfo, items, total) {
+            if (!currentUser) {
+                console.error('No user logged in');
+                showNotification('Please sign in to complete order');
+                return null;
+            }
+
+            try {
+                const orderId = generateOrderId();
+                const currentDate = new Date().toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+
+                // Process items with proper formatting
+                const processedItems = items.map(item => ({
+                    name: item.name,
+                    quantity: item.quantity || 1,
+                    price: item.price,
+                    priceNum: item.priceNum || parseInt(item.price.replace(/[^0-9]/g, '')) || 0,
+                    img: item.img
+                }));
+
+                // Calculate total again to ensure accuracy
+                const calculatedTotal = processedItems.reduce((sum, item) =>
+                    sum + (item.priceNum * item.quantity), 0
+                );
+
+                const orderData = {
+                    userId: currentUser.uid,
+                    userEmail: currentUser.email,
+                    userName: currentUser.displayName || shippingInfo.fullName || 'Customer',
+                    orderId: orderId,
+                    date: currentDate,
+                    items: processedItems,
+                    total: calculatedTotal,
+                    status: 'Processing',
+                    paymentId: paymentData.razorpay_payment_id || 'test_' + Date.now(),
+                    shippingInfo: shippingInfo,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+
+                console.log('Saving order to Firestore:', orderData);
+
+                // Save to main orders collection
+                const docRef = await db.collection('orders').add(orderData);
+                console.log('Order saved to main collection with ID:', docRef.id);
+
+                // Also save to user's subcollection for redundancy
+                await db.collection('users').doc(currentUser.uid).collection('orders').doc(docRef.id).set(orderData);
+                console.log('Order saved to user subcollection');
+
+                // Clear the global bag variable
+                bag = [];
+
+                // Clear cart from localStorage
+                localStorage.removeItem('diginess_bag');
+                console.log('Cart cleared from localStorage');
+
+                // Clear cart from Firestore if exists
+                try {
+                    await db.collection('carts').doc(currentUser.uid).delete();
+                    console.log('Cart cleared from Firestore');
+                } catch (e) {
+                    console.log('No cart to delete or error:', e);
+                }
+
+                // Update bag UI
+                updateBagUI();
+
+                // Update bag count in header
+                const bagCountElements = document.querySelectorAll('.bag-count');
+                bagCountElements.forEach(el => {
+                    if (el) el.textContent = '0';
+                });
+
+                return { orderId, id: docRef.id, ...orderData };
+            } catch (error) {
+                console.error('Error saving order:', error);
+                throw error;
+            }
+        }
+
+        // ========== Initiate Razorpay payment ==========
+        window.initiatePayment = function (total) {
+            // Validate form
+            const fullName = document.getElementById('fullName')?.value;
+            const phone = document.getElementById('phone')?.value;
+            const address = document.getElementById('address')?.value;
+            const city = document.getElementById('city')?.value;
+            const state = document.getElementById('state')?.value;
+            const zip = document.getElementById('zip')?.value;
+
+            if (!fullName || !phone || !address || !city || !state || !zip) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            // Validate phone number
+            const phoneRegex = /^[6-9]\d{9}$/;
+            if (!phoneRegex.test(phone)) {
+                alert('Please enter a valid 10-digit Indian phone number');
+                return;
+            }
+
+            // Show processing overlay
+            document.getElementById('paymentProcessing').classList.add('active');
+
+            const amountInPaise = Math.round(total * 100);
+            const shippingInfo = { fullName, phone, address, city, state, zip, country: 'India' };
+
+            // Make a copy of the current bag
+            const currentBag = JSON.parse(JSON.stringify(bag));
+
+            const options = {
+                key: RAZORPAY_KEY_ID,
+                amount: amountInPaise,
+                currency: 'INR',
+                name: 'DIGINESS',
+                description: `Order (${bag.length} items)`,
+
+                handler: function (response) {
+                    console.log('Payment successful:', response);
+
+                    saveOrderToFirestore(response, shippingInfo, currentBag, total)
+                        .then(savedOrder => {
+                            console.log('Order saved successfully:', savedOrder);
+                            document.getElementById('paymentProcessing').classList.remove('active');
+
+                            // Show success modal
+                            document.getElementById('successOrderId').textContent = savedOrder.orderId;
+                            document.getElementById('orderSuccessModal').classList.add('active');
+
+                            // Clear bag completely
+                            bag = [];
+                            localStorage.removeItem('diginess_bag');
+                            updateBagUI();
+
+                            // Update checkout page to show empty state
+                            setTimeout(() => {
+                                loadCheckoutPage();
+                            }, 100);
+
+                            // Auto redirect after 3 seconds (optional - can be removed if you want manual click only)
+                            setTimeout(() => {
+                                if (document.getElementById('orderSuccessModal').classList.contains('active')) {
+                                    continueShopping();
+                                }
+                            }, 3000);
+                        })
+                        .catch(error => {
+                            console.error('Error saving order:', error);
+                            document.getElementById('paymentProcessing').classList.remove('active');
+
+                            alert('Payment successful! But there was an issue saving your order. Please check your account page.');
+
+                            // Still clear bag
+                            bag = [];
+                            localStorage.removeItem('diginess_bag');
+                            updateBagUI();
+
+                            setTimeout(() => {
+                                window.location.href = 'account.html';
+                            }, 2000);
+                        });
+                },
+                prefill: {
+                    name: fullName,
+                    email: currentUser.email,
+                    contact: phone
+                },
+                theme: { color: '#ffffff' },
+                modal: {
+                    ondismiss: function () {
+                        document.getElementById('paymentProcessing').classList.remove('active');
+                    }
+                }
+            };
+
+            try {
+                const razorpay = new Razorpay(options);
+                razorpay.open();
+            } catch (error) {
+                console.error('Razorpay error:', error);
+                document.getElementById('paymentProcessing').classList.remove('active');
+                alert('Failed to initialize payment. Please try again.');
+            }
+        };
+
+        // ========== Continue Shopping function ==========
+        window.continueShopping = function () {
+            document.getElementById('orderSuccessModal').classList.remove('active');
+            bag = [];
+            localStorage.removeItem('diginess_bag');
+            updateBagUI();
+            window.location.href = 'products.html';
+        };
+
+        // ========== Show notification ==========
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: #000;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-size: 12px;
+            z-index: 1000;
+            animation: slideUp 0.3s ease;
+        `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // ========== AUTH STATE LISTENER ==========
+        auth.onAuthStateChanged((user) => {
+            currentUser = user;
+            loadCheckoutPage();
+        });
+
+        // Load checkout page on DOM load
+        document.addEventListener('DOMContentLoaded', function () {
+            loadBagFromStorage();
+        });
+
+        // Close overlays on Escape key
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                closeSearch();
+                closeBag();
+                closeMenu();
+            }
+        });
+
+        // Close modals when clicking overlay
+        document.getElementById('menuOverlay')?.addEventListener('click', closeMenu);
+        document.getElementById('bagOverlay')?.addEventListener('click', closeBag);
+    </script>
+</body>
+
+</html>

@@ -1,4 +1,4 @@
-// Product data with rich HTML descriptions
+// Product data with rich HTML descriptions and multiple images
 const productData = [
   {
     slug: "smart-watch-pro",
@@ -6,6 +6,12 @@ const productData = [
     priceNum: 16999,
     price: '₹16,999',
     img: 'https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?w=600&h=800&fit=crop',
+    images: [
+      'https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?w=600&h=800&fit=crop',
+      'https://images.pexels.com/photos/267394/pexels-photo-267394.jpeg?w=600&h=800&fit=crop',
+      'https://images.pexels.com/photos/1462630/pexels-photo-1462630.jpeg?w=600&h=800&fit=crop',
+      'https://images.pexels.com/photos/1649771/pexels-photo-1649771.jpeg?w=600&h=800&fit=crop'
+    ],
     category: 'Watch',
     description: `
       <h3>Premium Smartwatch with Advanced Features</h3>
@@ -38,6 +44,11 @@ const productData = [
     priceNum: 9999,
     price: '₹9,999',
     img: 'https://images.pexels.com/photos/3780681/pexels-photo-3780681.jpeg?w=600&h=800&fit=crop',
+    images: [
+      'https://images.pexels.com/photos/3780681/pexels-photo-3780681.jpeg?w=600&h=800&fit=crop',
+      'https://images.pexels.com/photos/3394659/pexels-photo-3394659.jpeg?w=600&h=800&fit=crop',
+      'https://images.pexels.com/photos/1649771/pexels-photo-1649771.jpeg?w=600&h=800&fit=crop'
+    ],
     category: 'Audio',
     description: `
       <h3>Immersive Sound, True Wireless Freedom</h3>
@@ -69,6 +80,11 @@ const productData = [
     priceNum: 21499,
     price: '₹21,499',
     img: 'https://tse2.mm.bing.net/th/id/OIP.epF6Hxs9i497obQQBjvqBAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3',
+    images: [
+      'https://tse2.mm.bing.net/th/id/OIP.epF6Hxs9i497obQQBjvqBAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3',
+      'https://images.pexels.com/photos/1154510/pexels-photo-1154510.jpeg?w=600&h=800&fit=crop',
+      'https://images.pexels.com/photos/51383/photo-camera-subject-photographer-51383.jpeg?w=600&h=800&fit=crop'
+    ],
     category: 'Camera',
     description: `
       <h3>Capture Life from New Heights</h3>
@@ -100,6 +116,11 @@ const productData = [
     priceNum: 12499,
     price: '₹12,499',
     img: 'https://images.pexels.com/photos/1649771/pexels-photo-1649771.jpeg?w=600&h=800&fit=crop',
+    images: [
+      'https://images.pexels.com/photos/1649771/pexels-photo-1649771.jpeg?w=600&h=800&fit=crop',
+      'https://images.pexels.com/photos/3780681/pexels-photo-3780681.jpeg?w=600&h=800&fit=crop',
+      'https://images.pexels.com/photos/3394659/pexels-photo-3394659.jpeg?w=600&h=800&fit=crop'
+    ],
     category: 'Audio',
     description: `
       <h3>360° Sound for Every Room</h3>
@@ -120,6 +141,11 @@ const productData = [
     priceNum: 5999,
     price: '₹5,999',
     img: 'https://images.pexels.com/photos/267394/pexels-photo-267394.jpeg?w=600&h=800&fit=crop',
+    images: [
+      'https://images.pexels.com/photos/267394/pexels-photo-267394.jpeg?w=600&h=800&fit=crop',
+      'https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?w=600&h=800&fit=crop',
+      'https://images.pexels.com/photos/1462630/pexels-photo-1462630.jpeg?w=600&h=800&fit=crop'
+    ],
     category: 'Watch',
     description: `
       <h3>Your Daily Wellness Companion</h3>
@@ -142,6 +168,11 @@ const productData = [
     priceNum: 32999,
     price: '₹32,999',
     img: 'https://images.pexels.com/photos/414860/pexels-photo-414860.jpeg?w=600&h=800&fit=crop',
+    images: [
+      'https://images.pexels.com/photos/414860/pexels-photo-414860.jpeg?w=600&h=800&fit=crop',
+      'https://images.pexels.com/photos/1462630/pexels-photo-1462630.jpeg?w=600&h=800&fit=crop',
+      'https://images.pexels.com/photos/267301/pexels-photo-267301.jpeg?w=600&h=800&fit=crop'
+    ],
     category: 'VR',
     description: `
       <h3>Step Into New Worlds</h3>
@@ -164,6 +195,11 @@ const productData = [
     priceNum: 3499,
     price: '₹3,499',
     img: 'https://images.pexels.com/photos/699122/pexels-photo-699122.jpeg?w=600&h=800&fit=crop',
+    images: [
+      'https://images.pexels.com/photos/699122/pexels-photo-699122.jpeg?w=600&h=800&fit=crop',
+      'https://images.pexels.com/photos/2582937/pexels-photo-2582937.jpeg?w=600&h=800&fit=crop',
+      'https://images.pexels.com/photos/2764674/pexels-photo-2764674.jpeg?w=600&h=800&fit=crop'
+    ],
     category: 'Accessory',
     description: `
       <h3>Power When You Need It Most</h3>
@@ -186,6 +222,11 @@ const productData = [
     priceNum: 18999,
     price: '₹18,999',
     img: 'https://images.pexels.com/photos/51383/photo-camera-subject-photographer-51383.jpeg?w=600&h=800&fit=crop',
+    images: [
+      'https://images.pexels.com/photos/51383/photo-camera-subject-photographer-51383.jpeg?w=600&h=800&fit=crop',
+      'https://images.pexels.com/photos/1154510/pexels-photo-1154510.jpeg?w=600&h=800&fit=crop',
+      'https://tse2.mm.bing.net/th/id/OIP.epF6Hxs9i497obQQBjvqBAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3'
+    ],
     category: 'Camera',
     description: `
       <h3>Capture Every Adventure</h3>
@@ -208,6 +249,11 @@ const productData = [
     priceNum: 27499,
     price: '₹27,499',
     img: 'https://images.pexels.com/photos/1462630/pexels-photo-1462630.jpeg?w=600&h=800&fit=crop',
+    images: [
+      'https://images.pexels.com/photos/1462630/pexels-photo-1462630.jpeg?w=600&h=800&fit=crop',
+      'https://images.pexels.com/photos/414860/pexels-photo-414860.jpeg?w=600&h=800&fit=crop',
+      'https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?w=600&h=800&fit=crop'
+    ],
     category: 'VR',
     description: `
       <h3>The Future of Wearable Tech</h3>
@@ -230,6 +276,11 @@ const productData = [
     priceNum: 6799,
     price: '₹6,799',
     img: 'https://images.pexels.com/photos/2582937/pexels-photo-2582937.jpeg?w=600&h=800&fit=crop',
+    images: [
+      'https://images.pexels.com/photos/2582937/pexels-photo-2582937.jpeg?w=600&h=800&fit=crop',
+      'https://images.pexels.com/photos/699122/pexels-photo-699122.jpeg?w=600&h=800&fit=crop',
+      'https://images.pexels.com/photos/2764674/pexels-photo-2764674.jpeg?w=600&h=800&fit=crop'
+    ],
     category: 'Accessory',
     description: `
       <h3>Never Lose What Matters</h3>
@@ -252,6 +303,11 @@ const productData = [
     priceNum: 8999,
     price: '₹8,999',
     img: 'https://images.pexels.com/photos/267301/pexels-photo-267301.jpeg?w=600&h=800&fit=crop',
+    images: [
+      'https://images.pexels.com/photos/267301/pexels-photo-267301.jpeg?w=600&h=800&fit=crop',
+      'https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?w=600&h=800&fit=crop',
+      'https://images.pexels.com/photos/267394/pexels-photo-267394.jpeg?w=600&h=800&fit=crop'
+    ],
     category: 'Watch',
     description: `
       <h3>Health Tracking, Discreetly on Your Finger</h3>
@@ -274,6 +330,11 @@ const productData = [
     priceNum: 14999,
     price: '₹14,999',
     img: 'https://images.pexels.com/photos/3394659/pexels-photo-3394659.jpeg?w=600&h=800&fit=crop',
+    images: [
+      'https://images.pexels.com/photos/3394659/pexels-photo-3394659.jpeg?w=600&h=800&fit=crop',
+      'https://images.pexels.com/photos/3780681/pexels-photo-3780681.jpeg?w=600&h=800&fit=crop',
+      'https://images.pexels.com/photos/1649771/pexels-photo-1649771.jpeg?w=600&h=800&fit=crop'
+    ],
     category: 'Audio',
     description: `
       <h3>Escape Into Your Music</h3>
@@ -296,6 +357,11 @@ const productData = [
     priceNum: 11299,
     price: '₹11,299',
     img: 'https://images.pexels.com/photos/4492129/pexels-photo-4492129.jpeg?w=600&h=800&fit=crop',
+    images: [
+      'https://images.pexels.com/photos/4492129/pexels-photo-4492129.jpeg?w=600&h=800&fit=crop',
+      'https://images.pexels.com/photos/699122/pexels-photo-699122.jpeg?w=600&h=800&fit=crop',
+      'https://images.pexels.com/photos/2582937/pexels-photo-2582937.jpeg?w=600&h=800&fit=crop'
+    ],
     category: 'Accessory',
     description: `
       <h3>The Perfect Blend of Paper and Digital</h3>
@@ -318,6 +384,11 @@ const productData = [
     priceNum: 39999,
     price: '₹39,999',
     img: 'https://images.pexels.com/photos/1154510/pexels-photo-1154510.jpeg?w=600&h=800&fit=crop',
+    images: [
+      'https://images.pexels.com/photos/1154510/pexels-photo-1154510.jpeg?w=600&h=800&fit=crop',
+      'https://tse2.mm.bing.net/th/id/OIP.epF6Hxs9i497obQQBjvqBAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3',
+      'https://images.pexels.com/photos/51383/photo-camera-subject-photographer-51383.jpeg?w=600&h=800&fit=crop'
+    ],
     category: 'Camera',
     description: `
       <h3>Professional Aerial Photography</h3>
@@ -340,6 +411,11 @@ const productData = [
     priceNum: 7999,
     price: '₹7,999',
     img: 'https://images.pexels.com/photos/2764674/pexels-photo-2764674.jpeg?w=600&h=800&fit=crop',
+    images: [
+      'https://images.pexels.com/photos/2764674/pexels-photo-2764674.jpeg?w=600&h=800&fit=crop',
+      'https://images.pexels.com/photos/2582937/pexels-photo-2582937.jpeg?w=600&h=800&fit=crop',
+      'https://images.pexels.com/photos/699122/pexels-photo-699122.jpeg?w=600&h=800&fit=crop'
+    ],
     category: 'Accessory',
     description: `
       <h3>See Who's at Your Door, Anywhere</h3>

@@ -9,6 +9,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <!-- Common Styles -->
 <link rel="stylesheet" href="common-styles.css">
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 <style>
 /* Homepage specific styles */
 .hero{
@@ -260,7 +264,7 @@
     <nav class="nav-right">
       <button class="nav-link btn-text desktop-only" onclick="openSearch()"><i class="fas fa-search"></i> Search</button>
       <a href="#about" class="nav-link btn-text desktop-only"><i class="fas fa-info-circle"></i> About</a>
-      <a href="#account" class="nav-link btn-text desktop-only"><i class="fas fa-user"></i> Account</a>
+      <a href="account.html" class="nav-link btn-text desktop-only"><i class="fas fa-user"></i> Account</a>
       <button class="nav-link btn-text bag" onclick="openBag()">
         <i class="fas fa-shopping-bag"></i> Bag <span class="bag-count" id="bagCount">0</span>
       </button>
@@ -282,7 +286,7 @@
     </div>
     <a href="products.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-store"></i> Shop All</a>
     <a href="#about" class="menu-item" onclick="closeMenu()"><i class="fas fa-info-circle"></i> About</a>
-    <a href="#account" class="menu-item" onclick="closeMenu()"><i class="fas fa-user"></i> Account</a>
+    <a href="account.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-user"></i> Account</a>
     <div class="menu-divider"></div>
     <a href="#" class="menu-item" onclick="closeMenu()"><i class="fas fa-truck"></i> Shipping & Returns</a>
   </div>
@@ -467,6 +471,25 @@
     <span>© 2026 Diginess. All rights reserved.</span>
   </div>
 </footer>
+
+<!-- Firebase config -->
+<script>
+  // ------------------ FIREBASE CONFIG ------------------
+  const firebaseConfig = {
+    apiKey: "AIzaSyDajOB6BPahP6gPjtT-YTh7-9gdlKCqGiU",
+    authDomain: "diginess-store.firebaseapp.com",
+    projectId: "diginess-store",
+    storageBucket: "diginess-store.firebasestorage.app",
+    messagingSenderId: "549723461376",
+    appId: "1:549723461376:web:dab9f5b8e9decd105385e5",
+    measurementId: "G-EXKHB5B23X"
+  };
+  
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+</script>
 
 <!-- Scripts -->
 <script src="product-data.js"></script>
