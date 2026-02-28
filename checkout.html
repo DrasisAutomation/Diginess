@@ -448,6 +448,7 @@
                 transform: translateY(30px);
                 opacity: 0;
             }
+
             to {
                 transform: translateY(0);
                 opacity: 1;
@@ -734,12 +735,12 @@
         };
 
         // ========== SEARCH FUNCTIONALITY ==========
-        window.handleSearch = function() {
+        window.handleSearch = function () {
             const query = document.getElementById('searchInput')?.value.toLowerCase().trim();
             const resultsContainer = document.getElementById('searchResults');
-            
+
             if (!resultsContainer) return;
-            
+
             if (!query) {
                 resultsContainer.innerHTML = '';
                 return;
@@ -750,7 +751,7 @@
                 return;
             }
 
-            const matches = productData.filter(product => 
+            const matches = productData.filter(product =>
                 product.name.toLowerCase().includes(query)
             );
 
@@ -771,7 +772,7 @@
             }
         };
 
-        window.selectProduct = function(slug) {
+        window.selectProduct = function (slug) {
             window.location.href = 'product-detail.html?product=' + slug;
             closeSearch();
         };
@@ -1026,91 +1027,91 @@
         }
 
         // ========== Save order to Firestore ==========
-        async function saveOrderToFirestore(paymentData, shippingInfo, items, total) {
-            if (!currentUser) {
-                console.error('No user logged in');
-                showNotification('Please sign in to complete order');
-                return null;
-            }
+async function saveOrderToFirestore(paymentData, shippingInfo, items, total) {
+  if (!currentUser) {
+    console.error('No user logged in');
+    showNotification('Please sign in to complete order');
+    return null;
+  }
 
-            try {
-                const orderId = generateOrderId();
-                const currentDate = new Date().toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                });
+  try {
+    const orderId = generateOrderId();
+    const currentDate = new Date().toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
 
-                // Process items with proper formatting
-                const processedItems = items.map(item => ({
-                    name: item.name,
-                    quantity: item.quantity || 1,
-                    price: item.price,
-                    priceNum: item.priceNum || parseInt(item.price.replace(/[^0-9]/g, '')) || 0,
-                    img: item.img
-                }));
+    // Process items with proper formatting
+    const processedItems = items.map(item => ({
+      name: item.name,
+      quantity: item.quantity || 1,
+      price: item.price,
+      priceNum: item.priceNum || parseInt(item.price.replace(/[^0-9]/g, '')) || 0,
+      img: item.img
+    }));
 
-                // Calculate total again to ensure accuracy
-                const calculatedTotal = processedItems.reduce((sum, item) =>
-                    sum + (item.priceNum * item.quantity), 0
-                );
+    // Calculate total again to ensure accuracy
+    const calculatedTotal = processedItems.reduce((sum, item) =>
+      sum + (item.priceNum * item.quantity), 0
+    );
 
-                const orderData = {
-                    userId: currentUser.uid,
-                    userEmail: currentUser.email,
-                    userName: currentUser.displayName || shippingInfo.fullName || 'Customer',
-                    orderId: orderId,
-                    date: currentDate,
-                    items: processedItems,
-                    total: calculatedTotal,
-                    status: 'Processing',
-                    paymentId: paymentData.razorpay_payment_id || 'test_' + Date.now(),
-                    shippingInfo: shippingInfo,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                };
+    const orderData = {
+      userId: currentUser.uid,
+      userEmail: currentUser.email,
+      userName: currentUser.displayName || shippingInfo.fullName || 'Customer',
+      customerName: shippingInfo.fullName || currentUser.displayName || 'Customer', // For email
+      orderId: orderId,
+      date: currentDate,
+      items: processedItems,
+      total: calculatedTotal,
+      status: 'Processing',
+      paymentId: paymentData.razorpay_payment_id || 'test_' + Date.now(),
+      shippingInfo: shippingInfo,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    };
 
-                console.log('Saving order to Firestore:', orderData);
+    console.log('Saving order to Firestore:', orderData);
 
-                // Save to main orders collection
-                const docRef = await db.collection('orders').add(orderData);
-                console.log('Order saved to main collection with ID:', docRef.id);
+    // Save to main orders collection
+    const docRef = await db.collection('orders').add(orderData);
+    console.log('Order saved to main collection with ID:', docRef.id);
 
-                // Also save to user's subcollection for redundancy
-                await db.collection('users').doc(currentUser.uid).collection('orders').doc(docRef.id).set(orderData);
-                console.log('Order saved to user subcollection');
+    // Also save to user's subcollection for redundancy
+    await db.collection('users').doc(currentUser.uid).collection('orders').doc(docRef.id).set(orderData);
+    console.log('Order saved to user subcollection');
 
-                // Clear the global bag variable
-                bag = [];
+    // Clear the global bag variable
+    bag = [];
 
-                // Clear cart from localStorage
-                localStorage.removeItem('diginess_bag');
-                console.log('Cart cleared from localStorage');
+    // Clear cart from localStorage
+    localStorage.removeItem('diginess_bag');
+    console.log('Cart cleared from localStorage');
 
-                // Clear cart from Firestore if exists
-                try {
-                    await db.collection('carts').doc(currentUser.uid).delete();
-                    console.log('Cart cleared from Firestore');
-                } catch (e) {
-                    console.log('No cart to delete or error:', e);
-                }
+    // Clear cart from Firestore if exists
+    try {
+      await db.collection('carts').doc(currentUser.uid).delete();
+      console.log('Cart cleared from Firestore');
+    } catch (e) {
+      console.log('No cart to delete or error:', e);
+    }
 
-                // Update bag UI
-                updateBagUI();
+    // Update bag UI
+    updateBagUI();
 
-                // Update bag count in header
-                const bagCountElements = document.querySelectorAll('.bag-count');
-                bagCountElements.forEach(el => {
-                    if (el) el.textContent = '0';
-                });
+    // Update bag count in header
+    const bagCountElements = document.querySelectorAll('.bag-count');
+    bagCountElements.forEach(el => {
+      if (el) el.textContent = '0';
+    });
 
-                return { orderId, id: docRef.id, ...orderData };
-            } catch (error) {
-                console.error('Error saving order:', error);
-                throw error;
-            }
-        }
-
+    return { orderId, id: docRef.id, ...orderData };
+  } catch (error) {
+    console.error('Error saving order:', error);
+    throw error;
+  }
+}
         // ========== Initiate Razorpay payment ==========
         window.initiatePayment = function (total) {
             // Validate form
@@ -1148,13 +1149,22 @@
                 currency: 'INR',
                 name: 'DIGINESS',
                 description: `Order (${bag.length} items)`,
-
                 handler: function (response) {
                     console.log('Payment successful:', response);
 
                     saveOrderToFirestore(response, shippingInfo, currentBag, total)
-                        .then(savedOrder => {
+                        .then(async savedOrder => {
                             console.log('Order saved successfully:', savedOrder);
+
+                            // Send email confirmation (don't await - let it run in background)
+                            sendOrderEmail(savedOrder, currentUser.email)
+                                .then(() => {
+                                    console.log('Email process completed');
+                                })
+                                .catch(err => {
+                                    console.error('Email error (non-critical):', err);
+                                });
+
                             document.getElementById('paymentProcessing').classList.remove('active');
 
                             // Show success modal
@@ -1171,7 +1181,7 @@
                                 loadCheckoutPage();
                             }, 100);
 
-                            // Auto redirect after 3 seconds (optional - can be removed if you want manual click only)
+                            // Auto redirect after 3 seconds
                             setTimeout(() => {
                                 if (document.getElementById('orderSuccessModal').classList.contains('active')) {
                                     continueShopping();
@@ -1181,7 +1191,6 @@
                         .catch(error => {
                             console.error('Error saving order:', error);
                             document.getElementById('paymentProcessing').classList.remove('active');
-
                             alert('Payment successful! But there was an issue saving your order. Please check your account page.');
 
                             // Still clear bag
@@ -1273,6 +1282,34 @@
         // Close modals when clicking overlay
         document.getElementById('menuOverlay')?.addEventListener('click', closeMenu);
         document.getElementById('bagOverlay')?.addEventListener('click', closeBag);
+        // ========== EMAIL NOTIFICATION FUNCTION ==========
+        async function sendOrderEmail(orderData, userEmail) {
+            try {
+                console.log('Sending order confirmation email to:', userEmail);
+
+                const response = await fetch('http://localhost:3000/api/send-order-email', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        orderData: orderData,
+                        userEmail: userEmail
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    console.log('✅ Order confirmation email sent successfully');
+                } else {
+                    console.error('❌ Failed to send email:', result.error);
+                }
+            } catch (error) {
+                console.error('❌ Error sending email:', error);
+                // Don't show error to user - email is not critical for order completion
+            }
+        }
     </script>
 </body>
 

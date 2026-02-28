@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>DIGINESS — About</title>
+  <meta name="description" content="Discover the story behind DIGINESS — premium smart gadgets for the modern lifestyle.">
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Common Styles - LINKED directly -->
+  <link rel="stylesheet" href="common-styles.css">
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <style>
+    /* About page specific styles only - everything else from common-styles.css */
+    .about-hero {
+      margin-top: var(--header-h);
+      height: 60dvh;
+      min-height: 500px;
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.3)), url('https://images.pexels.com/photos/1229861/pexels-photo-1229861.jpeg?w=1920&h=1080&fit=crop') center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: #fff;
+    }
+    .about-hero h1 {
+      font-size: clamp(32px, 8vw, 72px);
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      font-weight: 300;
+      background: rgba(255,255,255,0.05);
+      backdrop-filter: blur(12px);
+      padding: 24px 48px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .about-section {
+      max-width: 1200px;
+      margin: 100px auto;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .about-section.reverse {
+      direction: rtl;
+    }
+    .about-section.reverse .about-text {
+      direction: ltr;
+    }
+    .about-text h2 {
+      font-size: 24px;
+      margin-bottom: 24px;
+      color: var(--primary);
+      letter-spacing: .15em;
+    }
+    .about-text p {
+      font-size: 14px;
+      line-height: 1.9;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 24px;
+    }
+    .about-text .signature {
+      font-size: 11px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-top: 32px;
+    }
+    .about-image {
+      width: 100%;
+      height: 450px;
+      object-fit: cover;
+      border: 1px solid #2a2a2a;
+      filter: grayscale(0.4);
+      transition: filter .5s;
+    }
+    .about-image:hover {
+      filter: grayscale(0);
+    }
+    .values-grid {
+      max-width: 1200px;
+      margin: 100px auto;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+    .value-card {
+      background: #111;
+      border: 1px solid #222;
+      padding: 48px 24px;
+      text-align: center;
+      transition: border .3s;
+    }
+    .value-card:hover {
+      border-color: var(--primary);
+    }
+    .value-card i {
+      font-size: 36px;
+      color: var(--primary);
+      margin-bottom: 24px;
+    }
+    .value-card h3 {
+      font-size: 13px;
+      letter-spacing: .15em;
+      margin-bottom: 16px;
+    }
+    .value-card p {
+      font-size: 12px;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.7;
+    }
+    @media (max-width: 900px) {
+      .about-section, .about-section.reverse {
+        grid-template-columns: 1fr;
+        direction: ltr;
+        gap: 30px;
+      }
+      .values-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+<!-- HEADER (identical structure) -->
+<header class="header" id="mainHeader">
+  <div class="header-inner">
+    <nav class="nav-left">
+      <a href="products.html" class="nav-link btn-text">Shop All</a>
+      <button class="mobile-menu-btn btn-text" onclick="openMenu()">
+        <i class="fas fa-bars"></i> Menu
+      </button>
+    </nav>
+    <div style="position: absolute; left: 50%; top: 50%; transform: translate(-43%, -50%);">
+      <a href="products.html" class="logo" style="position: static; transform: none; margin: 0;">
+        <svg viewBox="0 0 200 28" width="120">
+          <text x="0" y="22" font-family="Inter" font-weight="400" font-size="26" letter-spacing="8" fill="currentColor">DIGINESS</text>
+        </svg>
+      </a>
+    </div>
+    <nav class="nav-right">
+      <button class="nav-link btn-text desktop-only" onclick="openSearch()"><i class="fas fa-search"></i> Search</button>
+      <a href="about.html" class="nav-link btn-text desktop-only"><i class="fas fa-info-circle"></i> About</a>
+      <a href="account.html" class="nav-link btn-text desktop-only"><i class="fas fa-user"></i> Account</a>
+      <button class="nav-link btn-text bag" onclick="openBag()">
+        <i class="fas fa-shopping-bag"></i> Bag <span class="bag-count" id="bagCount">0</span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<!-- MENU SIDEBAR (identical) -->
+<div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+<div class="menu-sidebar" id="menuSidebar">
+  <div class="menu-header">
+    <h3>DIGINESS</h3>
+    <button class="menu-close btn-text" onclick="closeMenu()"><i class="fas fa-times"></i> Close</button>
+  </div>
+  <div class="menu-body">
+    <div class="mobile-search-item" onclick="openSearch(); closeMenu();">
+      <span><i class="fas fa-search"></i> Search</span>
+      <span class="mobile-search-icon"><i class="fas fa-arrow-right"></i></span>
+    </div>
+    <a href="products.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-store"></i> Shop All</a>
+    <a href="about.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-info-circle"></i> About</a>
+    <a href="account.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-user"></i> Account</a>
+    <div class="menu-divider"></div>
+    <a href="#" class="menu-item" onclick="closeMenu()"><i class="fas fa-truck"></i> Shipping & Returns</a>
+  </div>
+</div>
+
+<!-- SEARCH OVERLAY (identical) -->
+<div class="search-overlay" id="searchOverlay">
+  <button class="search-close" onclick="closeSearch()"><i class="fas fa-times"></i></button>
+  <div class="search-input-wrapper">
+    <input type="text" placeholder="Search smart gadgets..." id="searchInput" oninput="handleSearch()">
+    <span class="search-icon"><i class="fas fa-search"></i></span>
+  </div>
+  <div class="search-results" id="searchResults"></div>
+</div>
+
+<!-- BAG SIDEBAR (identical) -->
+<div class="bag-overlay" id="bagOverlay" onclick="closeBag()"></div>
+<div class="bag-sidebar" id="bagSidebar">
+  <div class="bag-header">
+    <h3><i class="fas fa-shopping-bag"></i> Your Bag</h3>
+    <button class="bag-close btn-text" onclick="closeBag()"><i class="fas fa-times"></i> Close</button>
+  </div>
+  <div class="bag-body" id="bagBody">
+    <div class="bag-empty">Your bag is empty</div>
+  </div>
+  <div class="bag-footer" id="bagFooter"></div>
+</div>
+
+<!-- ABOUT HERO -->
+<section class="about-hero">
+  <h1>Beyond Gadgets</h1>
+</section>
+
+<!-- STORY SECTION -->
+<section class="about-section">
+  <div class="about-text">
+    <h2>Origin</h2>
+    <p>DIGINESS was born from a simple observation: technology should feel effortless. In 2020, our founders set out to curate a collection of smart devices that blend minimal design with intuitive functionality. No clunky manuals, no unnecessary complexity — just tools that quietly elevate your daily rhythm.</p>
+    <p>We partner with engineers and designers who share our obsession with detail. Every product in our lineup is tested for months to ensure it meets the standard we'd want for ourselves.</p>
+    <div class="signature">— The DIGINESS collective</div>
+  </div>
+  <img class="about-image" src="https://images.pexels.com/photos/205421/pexels-photo-205421.jpeg?w=800&h=800&fit=crop" alt="workspace detail">
+</section>
+
+<!-- REVERSE SECTION -->
+<section class="about-section reverse">
+  <div class="about-text">
+    <h2>Craft & Quality</h2>
+    <p>We believe that a gadget should disappear into your life, not distract from it. That's why we select materials that feel substantial — anodized aluminum, precision glass, soft-touch polymers. And we refuse to compromise on internals: processors, sensors, batteries — only the best components make the cut.</p>
+    <p>From the Smart Watch Pro's sapphire display to the Wireless Earbuds X1's adaptive noise cancellation, every detail is tuned for a seamless experience. We stand behind our products with a 2‑year warranty, because we build them to last.</p>
+  </div>
+  <img class="about-image" src="https://images.pexels.com/photos/2582937/pexels-photo-2582937.jpeg?w=800&h=800&fit=crop" alt="materials detail">
+</section>
+
+<!-- VALUES GRID -->
+<div class="values-grid">
+  <div class="value-card">
+    <i class="fas fa-leaf"></i>
+    <h3>Sustainable</h3>
+    <p>Carbon‑neutral shipping, recycled packaging, and a commitment to repairability. We design for longevity.</p>
+  </div>
+  <div class="value-card">
+    <i class="fas fa-flask"></i>
+    <h3>Innovative</h3>
+    <p>We don't chase trends — we refine what matters. Every feature is purposeful, tested, and obsessively improved.</p>
+  </div>
+  <div class="value-card">
+    <i class="fas fa-hand-sparkles"></i>
+    <h3>Human‑Centered</h3>
+    <p>Technology should serve people, not the other way around. Intuitive interfaces, thoughtful ergonomics.</p>
+  </div>
+</div>
+
+<!-- FOOTER (exactly as index) -->
+<footer class="footer" id="about">
+  <div class="footer-inner">
+    <div>
+      <h3>Stay Connected</h3>
+      <p>Sign up for exclusive access to new gadgets, special offers, and stories from the world of Diginess.</p>
+      <div class="footer-input">
+        <input type="email" placeholder="Email address">
+        <button><i class="fas fa-arrow-right"></i></button>
+      </div>
+    </div>
+    <div>
+      <h3>Shop</h3>
+      <ul>
+        <li><a href="products.html">Smart Watch Pro</a></li>
+        <li><a href="products.html">Wireless Earbuds X1</a></li>
+        <li><a href="products.html">Mini Drone Cam</a></li>
+        <li><a href="products.html">Shop All</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3>Info</h3>
+      <ul>
+        <li><a href="about.html">Our Approach</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Shipping & Returns</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms of Service</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-socials">
+      <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+      <a href="#"><i class="fab fa-tiktok"></i> TikTok</a>
+      <a href="#"><i class="fab fa-youtube"></i> YouTube</a>
+    </div>
+    <span>© 2026 Diginess. All rights reserved.</span>
+  </div>
+</footer>
+
+<!-- Firebase config (same as index) -->
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyDajOB6BPahP6gPjtT-YTh7-9gdlKCqGiU",
+    authDomain: "diginess-store.firebaseapp.com",
+    projectId: "diginess-store",
+    storageBucket: "diginess-store.firebasestorage.app",
+    messagingSenderId: "549723461376",
+    appId: "1:549723461376:web:dab9f5b8e9decd105385e5",
+    measurementId: "G-EXKHB5B23X"
+  };
+  firebase.initializeApp(firebaseConfig);
+</script>
+
+<!-- Link existing JS files - REUSED -->
+<script src="product-data.js"></script>
+<script src="main.js"></script>
+
+<!-- About page specific initialization -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('About page loaded with shared CSS/JS');
+    // Update active nav state if needed
+    const aboutLinks = document.querySelectorAll('a[href="about.html"]');
+    aboutLinks.forEach(link => {
+      link.style.opacity = '1';
+      link.style.fontWeight = '500';
+    });
+  });
+</script>
+</body>
+</html>
