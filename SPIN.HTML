@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>DIGINESS — Lucky Spin</title>
+  <!-- Font Awesome 6 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Common Styles -->
+  <link rel="stylesheet" href="common-styles.css">
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+  <style>
+    /* ===== ADDITIONAL SPIN WHEEL STYLES ===== */
+    .spin-page {
+      max-width: 1200px;
+      margin: calc(var(--header-h) + 30px) auto 60px;
+      padding: 0 20px;
+      width: 100%;
+      overflow-x: hidden;
+    }
+
+    .spin-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .wheel-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      padding: 20px 0;
+    }
+
+    /* WHEEL WRAPPER */
+    .wheel-wrapper {
+      position: relative;
+      width: min(500px, 85vw);
+      height: min(500px, 85vw);
+      margin: 0 auto;
+    }
+
+    .wheel {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      box-shadow: 0 0 30px rgba(255,255,255,0.2), 0 0 60px rgba(255,255,255,0.1);
+      border: 3px solid #444;
+      overflow: hidden;
+      will-change: transform;
+    }
+
+    .pointer {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 20px solid transparent;
+      border-right: 20px solid transparent;
+      border-top: 40px solid #ffffff;
+      filter: drop-shadow(0 6px 6px #00000088);
+      z-index: 15;
+      pointer-events: none;
+    }
+
+    .spin-btn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90px;
+      height: 90px;
+      background: #0f0f0f;
+      border: 2px solid var(--primary);
+      border-radius: 50%;
+      color: var(--primary);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 500;
+      cursor: pointer;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+      backdrop-filter: blur(6px);
+      padding: 0 5px;
+      line-height: 1.2;
+    }
+
+    .spin-btn:hover:not(:disabled) {
+      background: var(--primary);
+      color: #000;
+      transform: translate(-50%, -50%) scale(1.08);
+      box-shadow: 0 0 40px #fff;
+    }
+
+    .spin-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      border-color: #666;
+      color: #aaa;
+    }
+
+    /* Credits display */
+    .credits-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #121212;
+      border: 1px solid #2a2a2a;
+      border-radius: 60px;
+      padding: 12px 30px;
+      margin-bottom: 10px;
+    }
+
+    .credit-badge {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--primary);
+      font-size: 16px;
+      letter-spacing: 1px;
+    }
+
+    .credit-badge i {
+      font-size: 20px;
+    }
+
+    /* Two column layout for tables */
+    .tables-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      width: 100%;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .table-wrapper {
+      flex: 1 1 300px;
+      min-width: 280px;
+      background: #121212;
+      border: 1px solid #2a2a2a;
+      border-radius: 24px;
+      padding: 20px 15px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+    }
+
+    .table-wrapper h3 {
+      color: var(--primary);
+      font-size: 14px;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+      text-align: center;
+      border-bottom: 1px solid #333;
+      padding-bottom: 12px;
+    }
+
+    .reward-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .reward-table th {
+      background: #1e1e1e;
+      color: var(--primary);
+      font-weight: 400;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-size: 10px;
+      padding: 12px 4px;
+      border-bottom: 1px solid #333;
+    }
+
+    .reward-table td {
+      padding: 12px 6px;
+      border-bottom: 1px solid #2a2a2a;
+      color: #ddd;
+      font-size: 12px;
+    }
+
+    .reward-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .color-dot {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      margin-right: 8px;
+      vertical-align: middle;
+      border: 2px solid rgba(255,255,255,0.2);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .coupon-badge {
+      background: #2a2a2a;
+      color: var(--primary);
+      padding: 4px 10px;
+      border-radius: 40px;
+      font-size: 10px;
+      font-family: monospace;
+      letter-spacing: 1px;
+      border: 1px solid #444;
+    }
+
+    .owned-count {
+      font-weight: 600;
+      color: #fff;
+      background: #1e3a2e;
+      border-radius: 20px;
+      padding: 3px 10px;
+      display: inline-block;
+      font-size: 11px;
+    }
+
+    /* ===== CLASSIC MODAL ===== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 300;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .classic-modal {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 16px;
+      padding: 32px 28px;
+      max-width: 400px;
+      width: 90%;
+      color: #eaeaea;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.05);
+      text-align: center;
+      position: relative;
+      animation: fadeScale 0.3s ease;
+    }
+
+    @keyframes fadeScale {
+      0% { transform: scale(0.95); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    .classic-modal .modal-icon {
+      font-size: 56px;
+      margin-bottom: 16px;
+      line-height: 1;
+    }
+
+    .classic-modal h2 {
+      font-size: 26px;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+      color: #ffffff;
+      text-transform: uppercase;
+    }
+
+    .classic-modal .reward-message {
+      font-size: 18px;
+      color: #cccccc;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #333;
+    }
+
+    .classic-modal .coupon-section {
+      background: #252525;
+      border: 1px solid #444;
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .classic-modal .coupon-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #888;
+      margin-bottom: 10px;
+    }
+
+    .classic-modal .coupon-code {
+      font-size: 28px;
+      font-weight: 600;
+      font-family: 'Courier New', monospace;
+      color: var(--primary);
+      letter-spacing: 4px;
+      background: #1a1a1a;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px dashed #555;
+      margin: 10px 0;
+    }
+
+    .classic-modal .copy-btn {
+      background: transparent;
+      border: 1px solid var(--primary);
+      color: var(--primary);
+      padding: 12px 24px;
+      border-radius: 40px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .classic-modal .copy-btn:hover {
+      background: var(--primary);
+      color: #000;
+    }
+
+    .classic-modal .close-modal-btn {
+      background: transparent;
+      border: 1px solid #444;
+      color: #aaa;
+      padding: 12px 32px;
+      border-radius: 40px;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 16px;
+      width: 100%;
+    }
+
+    .classic-modal .close-modal-btn:hover {
+      border-color: #fff;
+      color: #fff;
+    }
+
+    .classic-modal .no-coupon-message {
+      font-size: 18px;
+      color: #aaa;
+      padding: 20px 0;
+      font-style: italic;
+    }
+
+    /* Login Required Overlay */
+    .login-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 400;
+      background: rgba(0, 0, 0, 0.95);
+      backdrop-filter: blur(16px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .login-overlay.active {
+      display: flex;
+    }
+
+    .login-card {
+      background: #111;
+      border: 1px solid #2a2a2a;
+      border-radius: 32px;
+      padding: 48px 40px;
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+    }
+
+    .login-card i {
+      font-size: 64px;
+      color: var(--primary);
+      margin-bottom: 24px;
+    }
+
+    .login-card h2 {
+      font-size: 24px;
+      font-weight: 300;
+      letter-spacing: .2em;
+      margin-bottom: 16px;
+    }
+
+    .login-card p {
+      color: #888;
+      margin-bottom: 32px;
+    }
+
+    .login-btn {
+      background: var(--primary);
+      color: #000;
+      padding: 14px 32px;
+      border-radius: 40px;
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      transition: opacity 0.3s;
+    }
+
+    .login-btn:hover {
+      opacity: 0.8;
+    }
+
+    /* confetti canvas */
+    #confetti-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    @media (max-width: 600px) {
+      .spin-btn { width: 70px; height: 70px; font-size: 10px; }
+      .classic-modal { padding: 24px 16px; }
+      .classic-modal h2 { font-size: 22px; }
+      .classic-modal .coupon-code { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header" id="mainHeader">
+    <div class="header-inner">
+      <nav class="nav-left">
+        <a href="products.html" class="nav-link btn-text">Shop All</a>
+        <button class="mobile-menu-btn btn-text" onclick="openMenu()"><i class="fas fa-bars"></i> Menu</button>
+      </nav>
+      <div style="position: absolute; left: 50%; top: 50%; transform: translate(-43%, -50%);">
+        <a href="products.html" class="logo"><svg viewBox="0 0 200 28" width="120"><text x="0" y="22" font-family="Inter" font-weight="400" font-size="26" letter-spacing="8" fill="currentColor">DIGINESS</text></svg></a>
+      </div>
+      <nav class="nav-right">
+        <button class="nav-link btn-text desktop-only" onclick="openSearch()"><i class="fas fa-search"></i> Search</button>
+        <a href="#about" class="nav-link btn-text desktop-only"><i class="fas fa-info-circle"></i> About</a>
+        <a href="account.html" class="nav-link btn-text desktop-only"><i class="fas fa-user"></i> Account</a>
+        <button class="nav-link btn-text bag" onclick="openBag()"><i class="fas fa-shopping-bag"></i> Bag <span class="bag-count" id="bagCount">0</span></button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- MENU SIDEBAR -->
+  <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+  <div class="menu-sidebar" id="menuSidebar">
+    <div class="menu-header"><h3>DIGINESS</h3><button class="menu-close btn-text" onclick="closeMenu()"><i class="fas fa-times"></i> Close</button></div>
+    <div class="menu-body">
+      <div class="mobile-search-item" onclick="openSearch(); closeMenu();"><span><i class="fas fa-search"></i> Search</span><span class="mobile-search-icon"><i class="fas fa-arrow-right"></i></span></div>
+      <a href="products.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-store"></i> Shop All</a>
+      <a href="spin.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-gift"></i> Lucky Spin</a>
+      <a href="#about" class="menu-item" onclick="closeMenu()"><i class="fas fa-info-circle"></i> About</a>
+      <a href="account.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-user"></i> Account</a>
+      <div class="menu-divider"></div>
+      <a href="#" class="menu-item" onclick="closeMenu()"><i class="fas fa-truck"></i> Shipping & Returns</a>
+    </div>
+  </div>
+
+  <!-- SEARCH OVERLAY -->
+  <div class="search-overlay" id="searchOverlay">
+    <button class="search-close" onclick="closeSearch()"><i class="fas fa-times"></i></button>
+    <div class="search-input-wrapper"><input type="text" placeholder="Search smart gadgets..." id="searchInput" oninput="handleSearch()"><span class="search-icon"><i class="fas fa-search"></i></span></div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+
+  <!-- BAG SIDEBAR -->
+  <div class="bag-overlay" id="bagOverlay" onclick="closeBag()"></div>
+  <div class="bag-sidebar" id="bagSidebar">
+    <div class="bag-header"><h3><i class="fas fa-shopping-bag"></i> Your Bag</h3><button class="bag-close btn-text" onclick="closeBag()"><i class="fas fa-times"></i> Close</button></div>
+    <div class="bag-body" id="bagBody"><div class="bag-empty">Your bag is empty</div></div>
+    <div class="bag-footer" id="bagFooter"></div>
+  </div>
+
+  <!-- LOGIN REQUIRED OVERLAY -->
+  <div class="login-overlay" id="loginOverlay">
+    <div class="login-card">
+      <i class="fas fa-gift"></i>
+      <h2>Sign In Required</h2>
+      <p>Please sign in to spin the wheel and win exclusive coupons!</p>
+      <a href="account.html" class="login-btn" onclick="closeMenu()">
+        <i class="fas fa-sign-in-alt"></i> Sign In
+      </a>
+    </div>
+  </div>
+
+  <!-- MAIN SPIN WHEEL CONTENT -->
+  <div class="spin-page">
+    <div class="spin-container">
+      <!-- Credits Bar -->
+      <div class="credits-bar">
+        <div class="credit-badge"><i class="fas fa-coins"></i> <span id="creditCount">0</span> Spin Credits</div>
+      </div>
+
+      <div class="wheel-section">
+        <div class="wheel-wrapper">
+          <div class="pointer"></div>
+          <div class="wheel" id="wheel"></div>
+          <button class="spin-btn" id="spinButton" onclick="performSpin()">SPIN</button>
+        </div>
+      </div>
+
+      <!-- Two Tables: Wheel Rewards & Owned Coupons -->
+      <div class="tables-container">
+        <!-- Wheel Rewards Legend with color dots -->
+        <div class="table-wrapper">
+          <h3>🎡 Wheel Rewards</h3>
+          <table class="reward-table">
+            <thead><tr><th>Reward</th><th>Coupon</th></tr></thead>
+            <tbody id="legendTableBody"></tbody>
+          </table>
+        </div>
+
+        <!-- Owned Coupons Counter -->
+        <div class="table-wrapper">
+          <h3>📦 Owned Coupons</h3>
+          <table class="reward-table">
+            <thead><tr><th>Reward</th><th>Owned</th></tr></thead>
+            <tbody id="ownedTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLASSIC MODAL -->
+  <div class="modal-overlay" id="resultModal">
+    <div class="classic-modal">
+      <div class="modal-icon" id="modalIcon">🎉</div>
+      <h2 id="modalTitle">Congratulations!</h2>
+      <div class="reward-message" id="modalMessage"></div>
+      
+      <!-- Coupon section (shown only for wins) -->
+      <div id="couponSection" style="display: none;">
+        <div class="coupon-section">
+          <div class="coupon-label">Your coupon code</div>
+          <div class="coupon-code" id="couponCode"></div>
+          <button class="copy-btn" id="copyCouponBtn"><i class="fas fa-copy"></i> Copy Code</button>
+        </div>
+      </div>
+      
+      <!-- Better luck message (shown only for no-coupon) -->
+      <div id="noCouponMessage" class="no-coupon-message" style="display: none;">
+        Better luck next time!
+      </div>
+      
+      <button class="close-modal-btn" onclick="closeModal()">Close</button>
+    </div>
+  </div>
+
+  <canvas id="confetti-canvas" style="display: none;"></canvas>
+
+  <footer class="footer" id="about">
+    <div class="footer-inner">
+      <div><h3>Stay Connected</h3><p>Sign up for exclusive access to new gadgets, special offers, and stories from the world of Diginess.</p><div class="footer-input"><input type="email" placeholder="Email address"><button><i class="fas fa-arrow-right"></i></button></div></div>
+      <div><h3>Shop</h3><ul><li><a href="products.html">Smart Watch Pro</a></li><li><a href="products.html">Wireless Earbuds X1</a></li><li><a href="products.html">Mini Drone Cam</a></li><li><a href="products.html">Shop All</a></li></ul></div>
+      <div><h3>Info</h3><ul><li><a href="#">Our Approach</a></li><li><a href="#">Contact</a></li><li><a href="#">Shipping & Returns</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li></ul></div>
+    </div>
+    <div class="footer-bottom"><div class="footer-socials"><a href="#"><i class="fab fa-instagram"></i> Instagram</a><a href="#"><i class="fab fa-tiktok"></i> TikTok</a><a href="#"><i class="fab fa-youtube"></i> YouTube</a></div><span>© 2026 Diginess. All rights reserved.</span></div>
+  </footer>
+
+  <!-- Firebase config -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDajOB6BPahP6gPjtT-YTh7-9gdlKCqGiU",
+      authDomain: "diginess-store.firebaseapp.com",
+      projectId: "diginess-store",
+      storageBucket: "diginess-store.firebasestorage.app",
+      messagingSenderId: "549723461376",
+      appId: "1:549723461376:web:dab9f5b8e9decd105385e5",
+      measurementId: "G-EXKHB5B23X"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+  </script>
+  <script src="product-data.js"></script>
+  <script src="main.js"></script>
+
+  <!-- SPIN WHEEL SCRIPT - UPDATED IMPLEMENTATION -->
+  <script>
+    (function() {
+      // ========== REWARDS CONFIG ==========
+      const rewards = [
+        { 
+          label: "10% OFF (Above ₹499)", 
+          coupon: "SAVE10", 
+          baseProbability: 2,
+          currentProbability: 2,
+          colorIndex: 0
+        },
+        { 
+          label: "15% OFF (Above ₹799)", 
+          coupon: "SAVE15", 
+          baseProbability: 1,
+          currentProbability: 1,
+          colorIndex: 1
+        },
+        { 
+          label: "20% OFF (Above ₹999)", 
+          coupon: "SAVE20", 
+          baseProbability: 1,
+          currentProbability: 1,
+          colorIndex: 2
+        },
+        { 
+          label: "Free Shipping", 
+          coupon: "FREESHIP", 
+          baseProbability: 32,
+          currentProbability: 32,
+          colorIndex: 3
+        },
+        { 
+          label: "Flat ₹50 OFF", 
+          coupon: "FLAT50", 
+          baseProbability: 32,
+          currentProbability: 32,
+          colorIndex: 4
+        },
+        { 
+          label: "Better Luck Next Time", 
+          coupon: null, 
+          baseProbability: 32,
+          currentProbability: 32,
+          colorIndex: 5
+        }
+      ];
+
+      // Colors for wheel segments (all same size visually)
+      const segmentColors = [
+        '#FF6B6B', // bright red
+        '#4ECDC4', // turquoise
+        '#45B7D1', // sky blue
+        '#96CEB4', // sage green
+        '#FFE194', // light yellow
+        '#C7C7C7'  // grey
+      ];
+
+      // ========== FIREBASE USER DATA ==========
+      let currentUser = null;
+      let userSpinData = null;
+      let ownedCoupons = [0, 0, 0, 0, 0, 0];
+      let spinCredits = 0;
+      let totalSpent = 0;
+
+      // ========== GLOBAL FUNCTION FOR CHECKOUT INTEGRATION ==========
+      window.addSpinCredits = async function(amount) {
+        if (!currentUser) {
+          console.log('No user logged in, cannot add credits');
+          return false;
+        }
+        
+        // Calculate credits: 1 per ₹2000 spent
+        const newCredits = Math.floor(amount / 2000);
+        if (newCredits > 0) {
+          spinCredits += newCredits;
+          
+          try {
+            // Get current total spent from Firestore
+            const userRef = db.collection('users').doc(currentUser.uid);
+            const userDoc = await userRef.get();
+            const currentTotalSpent = userDoc.exists ? (userDoc.data().totalSpent || 0) : 0;
+            const newTotalSpent = currentTotalSpent + amount;
+            
+            // Update user document
+            await userRef.update({
+              spinCredits: spinCredits,
+              totalSpent: newTotalSpent,
+              lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+            });
+            
+            console.log(`\n✅ Added ${newCredits} spin credits for purchase of ₹${amount}`);
+            
+            // Update totalSpent variable
+            totalSpent = newTotalSpent;
+            
+            // Update probabilities based on new total spent
+            updateProbabilitiesFromSpending(newTotalSpent);
+            
+            // Update UI
+            updateCreditUI();
+            
+            return true;
+          } catch (error) {
+            console.error('Error adding spin credits:', error);
+            spinCredits -= newCredits; // Revert on error
+            return false;
+          }
+        }
+        return false;
+      };
+
+      // Initialize user data from Firestore
+      async function initUserData(user) {
+        if (!user) return;
+        
+        try {
+          const userRef = db.collection('users').doc(user.uid);
+          const userDoc = await userRef.get();
+          
+          if (!userDoc.exists) {
+            // New user - create document with 2 free credits
+            const newUserData = {
+              email: user.email,
+              displayName: user.displayName || '',
+              totalSpent: 0,
+              spinCredits: 2,
+              ownedCoupons: [0, 0, 0, 0, 0, 0],
+              probabilities: rewards.map(r => r.baseProbability),
+              createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+              lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+            };
+            await userRef.set(newUserData);
+            userSpinData = newUserData;
+            spinCredits = 2;
+            totalSpent = 0;
+            ownedCoupons = [0, 0, 0, 0, 0, 0];
+          } else {
+            userSpinData = userDoc.data();
+            
+            // Ensure arrays exist
+            ownedCoupons = userSpinData.ownedCoupons || [0, 0, 0, 0, 0, 0];
+            spinCredits = userSpinData.spinCredits || 0;
+            totalSpent = userSpinData.totalSpent || 0;
+            
+            // Load probabilities
+            if (userSpinData.probabilities) {
+              userSpinData.probabilities.forEach((prob, i) => {
+                if (i < rewards.length) rewards[i].currentProbability = prob;
+              });
+            }
+          }
+          
+          // Update UI
+          updateCreditUI();
+          updateOwnedTable();
+          updateLegendTable();
+          initWheel();
+          
+          // Log current state
+          console.log('\n========== USER DATA LOADED ==========');
+          console.log(`Spin Credits: ${spinCredits}`);
+          console.log(`Total Spent: ₹${totalSpent}`);
+          console.log('Owned Coupons:', ownedCoupons);
+          console.log('Current Probabilities:');
+          rewards.forEach((r, i) => {
+            console.log(`  ${r.label}: ${r.currentProbability.toFixed(2)}%`);
+          });
+          console.log('======================================\n');
+          
+        } catch (error) {
+          console.error('Error loading user data:', error);
+        }
+      }
+
+      // ========== PROBABILITY MANAGEMENT ==========
+      function updateProbabilitiesFromSpending(totalSpentAmount) {
+        if (!totalSpentAmount) return;
+        
+        // Calculate probability points: 1 point per ₹1000 spent
+        const probabilityPoints = Math.floor(totalSpentAmount / 1000);
+        
+        // Each point is distributed equally among first 3 rewards
+        const pointsPerReward = probabilityPoints / 3;
+        
+        console.log('\n========== PROBABILITY UPDATE ==========');
+        console.log(`Total Spent: ₹${totalSpentAmount}`);
+        console.log(`Probability Points (per ₹1000): ${probabilityPoints}`);
+        console.log(`Points per Reward (first 3): ${pointsPerReward.toFixed(2)}`);
+        
+        // Store old probabilities for console log
+        const oldProbabilities = rewards.map(r => r.currentProbability);
+        
+        // Update first 3 rewards (add points)
+        for (let i = 0; i < 3; i++) {
+          rewards[i].currentProbability = rewards[i].baseProbability + pointsPerReward;
+        }
+        
+        // Update last 3 rewards (subtract points)
+        for (let i = 3; i < 6; i++) {
+          rewards[i].currentProbability = Math.max(
+            rewards[i].baseProbability - pointsPerReward,
+            1 // Minimum 1% to keep them available
+          );
+        }
+        
+        // Normalize to ensure total is exactly 100%
+        const total = rewards.reduce((sum, r) => sum + r.currentProbability, 0);
+        if (Math.abs(total - 100) > 0.01) {
+          const factor = 100 / total;
+          rewards.forEach(r => {
+            r.currentProbability = r.currentProbability * factor;
+          });
+        }
+        
+        // Log the changes
+        console.log('\nProbability Changes:');
+        console.log('----------------------------------------');
+        rewards.forEach((r, i) => {
+          console.log(`${r.label}: ${oldProbabilities[i].toFixed(2)}% → ${r.currentProbability.toFixed(2)}%`);
+        });
+        console.log('----------------------------------------');
+        console.log(`Total: ${rewards.reduce((sum, r) => sum + r.currentProbability, 0).toFixed(2)}%`);
+        console.log('==========================================\n');
+        
+        // Save to Firestore (hidden from user)
+        if (currentUser) {
+          const probabilities = rewards.map(r => r.currentProbability);
+          db.collection('users').doc(currentUser.uid).update({
+            probabilities: probabilities
+          }).catch(err => console.error('Error saving probabilities:', err));
+        }
+        
+        // Update wheel visually (all segments same size in appearance)
+        initWheel();
+      }
+
+      // Reset probabilities to base values (when user wins 10%, 15%, or 20% off)
+      function resetProbabilities() {
+        console.log('\n========== RESETTING PROBABILITIES ==========');
+        
+        const oldProbabilities = rewards.map(r => r.currentProbability);
+        
+        rewards.forEach((r, i) => {
+          r.currentProbability = r.baseProbability;
+        });
+        
+        // Log the reset
+        console.log('Probability Reset:');
+        console.log('----------------------------------------');
+        rewards.forEach((r, i) => {
+          console.log(`${r.label}: ${oldProbabilities[i].toFixed(2)}% → ${r.currentProbability.toFixed(2)}%`);
+        });
+        console.log('==============================================\n');
+        
+        if (currentUser) {
+          const probabilities = rewards.map(r => r.baseProbability);
+          db.collection('users').doc(currentUser.uid).update({
+            probabilities: probabilities
+          }).catch(err => console.error('Error resetting probabilities:', err));
+        }
+        
+        // Update wheel
+        initWheel();
+      }
+
+      // ========== SPIN CREDITS MANAGEMENT ==========
+      async function useOneCredit() {
+        if (!currentUser || spinCredits <= 0) return false;
+        
+        spinCredits--;
+        
+        try {
+          await db.collection('users').doc(currentUser.uid).update({
+            spinCredits: spinCredits
+          });
+          updateCreditUI();
+          return true;
+        } catch (error) {
+          console.error('Error using credit:', error);
+          spinCredits++; // Revert on error
+          return false;
+        }
+      }
+
+      // ========== COUPON MANAGEMENT ==========
+      async function incrementOwned(index) {
+        if (!currentUser || index < 0 || index >= ownedCoupons.length || !rewards[index].coupon) return;
+        
+        ownedCoupons[index]++;
+        
+        try {
+          await db.collection('users').doc(currentUser.uid).update({
+            ownedCoupons: ownedCoupons
+          });
+          updateOwnedTable();
+          
+          // If user won a premium coupon (10%, 15%, or 20%), reset probabilities
+          if (index < 3) {
+            console.log(`🎉 User won ${rewards[index].label} - resetting probabilities`);
+            resetProbabilities();
+          }
+        } catch (error) {
+          console.error('Error saving coupon:', error);
+        }
+      }
+
+      // ========== UI UPDATES ==========
+      function updateCreditUI() {
+        document.getElementById('creditCount').innerText = spinCredits;
+        const spinBtn = document.getElementById('spinButton');
+        spinBtn.disabled = spinCredits <= 0;
+      }
+
+      function updateLegendTable() {
+        const tbody = document.getElementById('legendTableBody');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+        
+        rewards.forEach((r, idx) => {
+          const tr = document.createElement('tr');
+          
+          // Reward with color dot (no probability shown)
+          const rewardCell = document.createElement('td');
+          rewardCell.innerHTML = `<span class="color-dot" style="background: ${segmentColors[r.colorIndex]};"></span>${r.label}`;
+          
+          // Coupon
+          const couponCell = document.createElement('td');
+          couponCell.innerHTML = r.coupon ? `<span class="coupon-badge">${r.coupon}</span>` : '—';
+          
+          tr.appendChild(rewardCell);
+          tr.appendChild(couponCell);
+          tbody.appendChild(tr);
+        });
+      }
+
+      function updateOwnedTable() {
+        const tbody = document.getElementById('ownedTableBody');
+        if (!tbody) return;
+        tbody.innerHTML = '';
+        
+        rewards.forEach((r, idx) => {
+          const tr = document.createElement('tr');
+          
+          // Reward with color dot
+          const rewardCell = document.createElement('td');
+          rewardCell.innerHTML = `<span class="color-dot" style="background: ${segmentColors[r.colorIndex]};"></span>${r.label}`;
+          
+          // Count
+          const countCell = document.createElement('td');
+          const count = ownedCoupons[idx] || 0;
+          
+          if (r.coupon) {
+            countCell.innerHTML = `<span class="owned-count">${count} ${count === 1 ? 'coupon' : 'coupons'}</span>`;
+          } else {
+            countCell.innerHTML = '—';
+          }
+          
+          tr.appendChild(rewardCell);
+          tr.appendChild(countCell);
+          tbody.appendChild(tr);
+        });
+      }
+
+      // ========== WHEEL INITIALIZATION ==========
+      let currentBaseRotation = 0;
+      let isSpinning = false;
+      const spinBtn = document.getElementById('spinButton');
+      const wheelDiv = document.getElementById('wheel');
+
+      function initWheel() {
+        // For visual appearance, make all segments equal size
+        // This makes the wheel look balanced regardless of probabilities
+        const equalAngle = 360 / rewards.length;
+        let startAngle = 0;
+        const gradientParts = [];
+        
+        // Use fixed equal angles for visual appearance
+        rewards.forEach((r, idx) => {
+          const endAngle = startAngle + equalAngle;
+          gradientParts.push(`${segmentColors[r.colorIndex]} ${startAngle}deg ${endAngle}deg`);
+          startAngle = endAngle;
+        });
+        
+        wheelDiv.style.background = `conic-gradient(${gradientParts.join(', ')})`;
+        wheelDiv.style.transform = `rotate(0deg)`;
+        currentBaseRotation = 0;
+      }
+
+      // ========== SPIN LOGIC (uses actual probabilities for outcome) ==========
+      function getRandomRewardIndex() {
+        const totalProb = rewards.reduce((sum, r) => sum + r.currentProbability, 0);
+        const rand = Math.random() * totalProb;
+        let cumulative = 0;
+        
+        for (let i = 0; i < rewards.length; i++) {
+          cumulative += rewards[i].currentProbability;
+          if (rand < cumulative) return i;
+        }
+        return rewards.length - 1;
+      }
+
+      function getTargetRotation(selectedIndex) {
+        // Use fixed angles for visual rotation (all segments equal)
+        const equalAngle = 360 / rewards.length;
+        const segmentMid = selectedIndex * equalAngle + equalAngle/2;
+        
+        const targetFinalAngle = (360 - segmentMid) % 360;
+        let delta = (targetFinalAngle - currentBaseRotation + 360) % 360;
+        const fullRotations = 5 * 360;
+        const totalRotation = currentBaseRotation + fullRotations + delta;
+        currentBaseRotation = targetFinalAngle;
+        return totalRotation;
+      }
+
+      window.performSpin = async function() {
+        if (isSpinning) return;
+        
+        if (!currentUser) {
+          document.getElementById('loginOverlay').classList.add('active');
+          return;
+        }
+        
+        if (spinCredits <= 0) {
+          alert('No spin credits left! Make a purchase to earn more credits.');
+          return;
+        }
+
+        isSpinning = true;
+        spinBtn.disabled = true;
+
+        const selectedIdx = getRandomRewardIndex();
+        
+        // Log the current probabilities before spin
+        console.log('\n🎡 SPIN WHEEL - Current Probabilities:');
+        rewards.forEach((r, i) => {
+          console.log(`  ${r.label}: ${r.currentProbability.toFixed(2)}%`);
+        });
+        
+        const targetRotation = getTargetRotation(selectedIdx);
+        
+        wheelDiv.style.transition = 'transform 4s cubic-bezier(0.12, 0.75, 0.4, 1)';
+        wheelDiv.style.transform = `rotate(${targetRotation}deg)`;
+
+        setTimeout(async () => {
+          isSpinning = false;
+          
+          // Use one credit
+          await useOneCredit();
+          
+          wheelDiv.style.transition = 'none';
+          wheelDiv.style.transform = `rotate(${currentBaseRotation}deg)`;
+          
+          console.log(`🎯 Spin Result: ${rewards[selectedIdx].label}`);
+          
+          if (rewards[selectedIdx].coupon) {
+            await incrementOwned(selectedIdx);
+          }
+          
+          showResultModal(selectedIdx);
+          
+          if (spinCredits > 0) spinBtn.disabled = false;
+        }, 4000);
+      };
+
+      // ========== MODAL ==========
+      function showResultModal(index) {
+        const reward = rewards[index];
+        const modal = document.getElementById('resultModal');
+        const modalIcon = document.getElementById('modalIcon');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalMessage = document.getElementById('modalMessage');
+        const couponSection = document.getElementById('couponSection');
+        const noCouponMessage = document.getElementById('noCouponMessage');
+        const couponCode = document.getElementById('couponCode');
+
+        couponSection.style.display = 'none';
+        noCouponMessage.style.display = 'none';
+
+        if (reward.coupon) {
+          modalIcon.innerHTML = '🎉';
+          modalTitle.innerText = 'Congratulations!';
+          modalMessage.innerText = `You won ${reward.label}`;
+          couponCode.innerText = reward.coupon;
+          couponSection.style.display = 'block';
+          startConfetti();
+        } else {
+          modalIcon.innerHTML = '😢';
+          modalTitle.innerText = 'Better Luck Next Time!';
+          modalMessage.innerText = reward.label;
+          noCouponMessage.style.display = 'block';
+        }
+
+        modal.classList.add('active');
+      }
+
+      window.closeModal = function() {
+        document.getElementById('resultModal').classList.remove('active');
+        stopConfetti();
+      };
+
+      document.getElementById('copyCouponBtn')?.addEventListener('click', function() {
+        const coupon = document.getElementById('couponCode').innerText;
+        navigator.clipboard.writeText(coupon).then(() => {
+          alert('Coupon copied: ' + coupon);
+        }).catch(() => {
+          alert('Failed to copy coupon');
+        });
+      });
+
+      // ========== CONFETTI ==========
+      let confettiCtx, confettiCanvas, confettiActive = false;
+      
+      function initConfetti() {
+        confettiCanvas = document.getElementById('confetti-canvas');
+        if (!confettiCanvas) return;
+        confettiCtx = confettiCanvas.getContext('2d');
+        confettiCanvas.width = window.innerWidth;
+        confettiCanvas.height = window.innerHeight;
+        window.addEventListener('resize', () => { 
+          confettiCanvas.width = window.innerWidth; 
+          confettiCanvas.height = window.innerHeight; 
+        });
+      }
+      
+      const particles = [];
+      
+      function startConfetti() {
+        if (!confettiCanvas) initConfetti();
+        confettiCanvas.style.display = 'block';
+        confettiActive = true;
+        particles.length = 0;
+        for (let i=0; i<80; i++) {
+          particles.push({ 
+            x: Math.random() * confettiCanvas.width, 
+            y: Math.random() * confettiCanvas.height * 0.2, 
+            size: Math.random() * 5 + 2, 
+            speedY: Math.random() * 3 + 2, 
+            speedX: Math.random() * 2 - 1, 
+            color: `hsl(${Math.random() * 60 + 300}, 100%, 70%)` 
+          });
+        }
+        if (!window.confettiFrame) window.confettiFrame = requestAnimationFrame(renderConfetti);
+      }
+      
+      function renderConfetti() {
+        if (!confettiActive) { 
+          if (window.confettiFrame) cancelAnimationFrame(window.confettiFrame); 
+          window.confettiFrame = null; 
+          return; 
+        }
+        confettiCtx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+        for (let i=particles.length-1; i>=0; i--) {
+          let p = particles[i];
+          p.y += p.speedY; 
+          p.x += p.speedX;
+          confettiCtx.fillStyle = p.color;
+          confettiCtx.fillRect(p.x, p.y, p.size, p.size * 0.6);
+          if (p.y > confettiCanvas.height + 50) particles.splice(i,1);
+        }
+        if (particles.length > 0) window.confettiFrame = requestAnimationFrame(renderConfetti);
+        else { 
+          confettiActive = false; 
+          confettiCanvas.style.display = 'none'; 
+          window.confettiFrame = null; 
+        }
+      }
+      
+      function stopConfetti() { 
+        confettiActive = false; 
+        particles.length = 0; 
+        if (confettiCanvas) confettiCanvas.style.display = 'none'; 
+        if (window.confettiFrame) cancelAnimationFrame(window.confettiFrame); 
+        window.confettiFrame = null; 
+      }
+
+      // ========== AUTH STATE LISTENER ==========
+      auth.onAuthStateChanged(async (user) => {
+        currentUser = user;
+        const loginOverlay = document.getElementById('loginOverlay');
+        
+        if (user) {
+          loginOverlay.classList.remove('active');
+          await initUserData(user);
+        } else {
+          loginOverlay.classList.add('active');
+          spinCredits = 0;
+          ownedCoupons = [0,0,0,0,0,0];
+          updateCreditUI();
+          updateOwnedTable();
+          // Reset to default probabilities
+          rewards.forEach((r, i) => {
+            r.currentProbability = r.baseProbability;
+          });
+          updateLegendTable();
+          initWheel();
+        }
+      });
+
+      // ========== INITIALIZATION ==========
+      window.addEventListener('load', function() {
+        initConfetti();
+        initWheel();
+        updateLegendTable();
+        
+        // Check if user is already logged in
+        if (auth.currentUser) {
+          initUserData(auth.currentUser);
+        } else {
+          document.getElementById('loginOverlay').classList.add('active');
+        }
+      });
+
+      // Close login overlay when clicking outside
+      document.getElementById('loginOverlay')?.addEventListener('click', function(e) {
+        if (e.target === this) {
+          this.classList.remove('active');
+        }
+      });
+
+    })();
+  </script>
+</body>
+</html>

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,26 +8,22 @@
 <meta name="description" content="Premium smart gadgets — dark theme with white accents.">
 <!-- Font Awesome 6 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<!-- Common Styles -->
+<!-- Common Styles (your provided file) -->
 <link rel="stylesheet" href="common-styles.css">
 <!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 <style>
-/* Product detail specific styles */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+  @media (max-width: 700px) {
+  .pincode-input-group,
+  .delivery-estimate-box {
+    height: 44px !important;
+    min-height: 44px !important;
+    max-height: 44px !important;
+  }
 }
-
-body {
-  overflow-x: hidden;
-  width: 100%;
-  min-width: 280px;
-}
-
+/* Product detail specific styles (additional to common-styles) */
 .product-page {
   max-width: 1200px;
   margin: calc(var(--header-h) + 40px) auto 60px;
@@ -39,7 +36,7 @@ body {
   display: flex;
   gap: 60px;
   width: 100%;
-  align-items: flex-start;
+  align-items: stretch;
   flex-wrap: wrap;
 }
 
@@ -48,6 +45,8 @@ body {
   min-width: 280px;
   max-width: 50%;
   width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Image Slider Styles */
@@ -107,13 +106,8 @@ body {
   border-color: var(--primary);
 }
 
-.slider-btn.prev {
-  left: 10px;
-}
-
-.slider-btn.next {
-  right: 10px;
-}
+.slider-btn.prev { left: 10px; }
+.slider-btn.next { right: 10px; }
 
 .slider-dots {
   position: absolute;
@@ -136,14 +130,8 @@ body {
   padding: 0;
 }
 
-.slider-dot.active {
-  background: var(--primary);
-  transform: scale(1.2);
-}
-
-.slider-dot:hover {
-  background: white;
-}
+.slider-dot.active { background: var(--primary); transform: scale(1.2); }
+.slider-dot:hover { background: white; }
 
 /* Thumbnail Navigation */
 .image-thumbnails {
@@ -163,24 +151,15 @@ body {
   transition: all 0.2s;
   object-fit: cover;
 }
+.thumbnail:hover { border-color: #666; }
+.thumbnail.active { border-color: var(--primary); opacity: 1; }
 
-.thumbnail:hover {
-  border-color: #666;
-}
-
-.thumbnail.active {
-  border-color: var(--primary);
-  opacity: 1;
-}
-
-/* Rest of your existing styles */
 .product-info-section {
   flex: 1;
   min-width: 280px;
   max-width: 50%;
   display: flex;
   flex-direction: column;
-  height: auto;
   width: 100%;
 }
 
@@ -190,6 +169,7 @@ body {
   line-height: 1.3;
   margin-bottom: 16px;
   word-break: break-word;
+  color: #fff;
 }
 
 .product-price {
@@ -200,90 +180,41 @@ body {
 }
 
 .product-description-container {
-  margin-bottom: 30px;
+  margin-bottom: 20px;
   overflow: visible;
   max-height: none;
   width: 100%;
+  flex: 1;
 }
 
 @media (min-width: 901px) {
   .product-description-container {
-    flex: 1;
     overflow-y: auto;
     padding-right: 8px;
-    max-height: 300px;
   }
-  
-  .product-description-container::-webkit-scrollbar {
-    width: 4px;
-  }
-  
-  .product-description-container::-webkit-scrollbar-track {
-    background: #2a2a2a;
-  }
-  
-  .product-description-container::-webkit-scrollbar-thumb {
-    background: #666;
-    border-radius: 4px;
-  }
-  
-  .product-description-container::-webkit-scrollbar-thumb:hover {
-    background: var(--primary);
-  }
+  .product-description-container::-webkit-scrollbar { width: 4px; }
+  .product-description-container::-webkit-scrollbar-track { background: #2a2a2a; }
+  .product-description-container::-webkit-scrollbar-thumb { background: #666; border-radius: 4px; }
+  .product-description-container::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 }
 
 .product-description {
   color: #aaa;
   line-height: 1.6;
   font-size: 14px;
-  width: 100%;
-  overflow-x: hidden;
   word-wrap: break-word;
 }
+.product-description h3 { color: var(--primary); font-size: 16px; margin: 20px 0 10px; font-weight: 400; letter-spacing: .1em; }
+.product-description h4 { color: #ddd; font-size: 14px; margin: 15px 0 8px; }
+.product-description ul { list-style: disc; padding-left: 20px; margin: 10px 0; }
+.product-description li { margin-bottom: 5px; color: #bbb; }
+.product-description p { margin: 10px 0; }
 
-.product-description h3 {
-  color: var(--primary);
-  font-size: 16px;
-  margin: 20px 0 10px;
-  font-weight: 400;
-  letter-spacing: .1em;
-  word-break: break-word;
-}
-
-.product-description h4 {
-  color: #ddd;
-  font-size: 14px;
-  margin: 15px 0 8px;
-  font-weight: 400;
-  word-break: break-word;
-}
-
-.product-description ul {
-  list-style: disc;
-  padding-left: 20px;
-  margin: 10px 0;
-  word-break: break-word;
-}
-
-.product-description li {
-  margin-bottom: 5px;
-  color: #bbb;
-  word-break: break-word;
-}
-
-.product-description p {
-  margin: 10px 0;
-  word-break: break-word;
-}
-
-.product-description strong {
-  word-break: break-word;
-}
-
+/* BUTTON CONTAINER — Mobile optimized with equal height */
 .button-container {
   display: flex;
   gap: 12px;
-  margin-top: auto;
+  margin-top: 20px;
   width: 100%;
 }
 
@@ -295,7 +226,6 @@ body {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  transition: opacity .4s var(--ease);
   font-size: 11px;
   letter-spacing: .12em;
   text-transform: uppercase;
@@ -303,20 +233,12 @@ body {
   border: none;
   flex: 2;
   cursor: pointer;
-  min-width: 0;
   white-space: nowrap;
+  height: 52px;
+  min-height: 52px;
+  line-height: 1;
 }
-
-.btn-add-to-bag:hover {
-  opacity: .8;
-  background: #ffffff;
-  color: #000;
-}
-
-.btn-add-to-bag i {
-  font-size: 14px;
-  flex-shrink: 0;
-}
+.btn-add-to-bag:hover { opacity: .8; background: #ffffff; color: #000; }
 
 .btn-back {
   padding: 14px 24px;
@@ -326,220 +248,189 @@ body {
   border: 1px solid var(--primary);
   background: transparent;
   color: var(--primary);
-  transition: all .2s;
-  text-align: center;
-  font-weight: 400;
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   cursor: pointer;
-  min-width: 0;
   white-space: nowrap;
+  height: 52px;
+  min-height: 52px;
+  line-height: 1;
 }
+.btn-back:hover { background: rgba(255,255,255,0.15); color: #fff; }
 
-.btn-back:hover {
-  background: rgba(255,255,255,0.15);
-  color: #fff;
-}
-
-.btn-back i {
-  font-size: 12px;
-  flex-shrink: 0;
-}
-
-/* Ultra small devices (below 400px) */
-@media (max-width: 399px) {
-  .product-page {
-    padding: 0 10px;
-    margin-top: calc(var(--header-h) + 20px);
-  }
-  
-  .product-title {
-    font-size: 18px;
-    letter-spacing: .15em;
-  }
-  
-  .product-price {
-    font-size: 18px;
-    margin-bottom: 16px;
-  }
-  
-  .product-description {
-    font-size: 12px;
-  }
-  
-  .product-description h3 {
-    font-size: 14px;
-  }
-  
-  .product-description h4 {
-    font-size: 12px;
-  }
-  
-  .product-description ul {
-    padding-left: 15px;
-  }
-  
-  .btn-add-to-bag, 
-  .btn-back {
-    padding: 12px 16px;
-    font-size: 10px;
-    white-space: normal;
-    word-break: break-word;
-  }
-  
-  .btn-add-to-bag i,
-  .btn-back i {
-    font-size: 12px;
-  }
-
-  .slider-btn {
-    width: 30px;
-    height: 30px;
-    font-size: 16px;
-  }
-
-  .thumbnail {
-    flex: 0 0 40px;
-    width: 40px;
-    height: 40px;
-  }
-}
-
-/* Below 320px - Extreme small devices */
-@media (max-width: 319px) {
-  .product-page {
-    padding: 0 8px;
-  }
-  
-  .product-image-section,
-  .product-info-section {
-    min-width: 200px;
-  }
-  
-  .product-title {
-    font-size: 16px;
-    letter-spacing: .1em;
-  }
-  
-  .product-price {
-    font-size: 16px;
-  }
-  
-  .product-description {
-    font-size: 11px;
-  }
-  
-  .product-description h3 {
-    font-size: 13px;
-  }
-  
-  .product-description h4 {
-    font-size: 11px;
-  }
-  
-  .product-description ul {
-    padding-left: 12px;
-  }
-  
+/* ===== MOBILE BUTTON OPTIMIZATION ===== */
+@media (max-width: 600px) {
   .button-container {
     flex-direction: column;
     gap: 8px;
   }
-  
   .btn-add-to-bag,
   .btn-back {
     width: 100%;
-    padding: 10px 12px;
-    font-size: 9px;
+    height: 48px;           /* reduced from 56px for better proportion */
+    min-height: 48px;
+    font-size: 12px;
+    padding: 0 16px;
   }
 }
 
-/* Below 280px - Minimum supported */
-@media (max-width: 279px) {
-  .product-page {
-    padding: 0 5px;
-  }
+/* PINCODE CHECKER — full width, outside product container */
+.pincode-wrapper {
+  width: 100%;
+  margin-top: 40px;
+  border-top: 1px solid #2a2a2a;
+  padding: 32px 0 20px;
+}
+.pincode-checker-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 100%;
+}
+.pincode-label {
+  font-size: 11px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pincode-row {
+  display: flex;
+  gap: 30px;
+  align-items: stretch;
+  flex-wrap: wrap;
+}
+.pincode-input-group {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  flex: 1 1 300px;
+  min-width: 240px;
+}
+.pincode-input-wrapper {
+  flex: 1 1 180px;
+  min-width: 140px;
+}
+.pincode-input-wrapper input {
+  width: 100%;
+  background: transparent;
+  border: 1px solid #333;
+  padding: 0 16px;
+  font-size: 14px;
+  color: #fff;
+  outline: none;
+  transition: border 0.2s;
+  height: 52px;
+  min-height: 52px;
+  line-height: 52px;
+}
+.pincode-input-wrapper input:focus { border-color: var(--primary); }
+.pincode-input-wrapper input::placeholder { color: #555; font-size: 12px; line-height: 52px; }
+
+.pincode-check-btn {
+  background: transparent;
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  padding: 0 24px;
+  font-size: 11px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  white-space: nowrap;
+  height: 52px;
+  min-height: 52px;
+  line-height: 1;
+}
+.pincode-check-btn:hover { background: rgba(255,255,255,0.1); border-color: #fff; color: #fff; }
+
+.delivery-estimate-box {
+  flex: 1 1 300px;
+  min-width: 240px;
+  padding: 0 20px;
+  background: #121212;
+  border: 1px solid #2a2a2a;
+  font-size: 13px;
+  color: #ccc;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  line-height: 1.4;
+  margin-top: 0;
+  height: 52px;
+  min-height: 52px;
+}
+.delivery-estimate-box i { color: var(--primary); font-size: 18px; flex-shrink: 0; }
+.delivery-estimate-box strong { font-weight: 500; color: #fff; }
+.delivery-estimate-box span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.delivery-error { color: #ff8a8a; border-color: #662222; background: #1c1212; }
+.delivery-error i { color: #ff8a8a; }
+
+/* mobile adjustments — compact heights */
+@media (max-width: 700px) {
+  .pincode-row { flex-direction: column; gap: 10px; }
+  .pincode-input-group { width: 100%; }
   
-  .product-image-section,
-  .product-info-section {
-    min-width: 160px;
+  /* reduce all heights to 44px for better mobile fit */
+  .pincode-input-wrapper input,
+  .pincode-check-btn,
+  .delivery-estimate-box {
+    height: 44px !important;
+    min-height: 44px !important;
   }
-  
-  .product-title {
-    font-size: 14px;
-    letter-spacing: .08em;
+  .pincode-input-wrapper input {
+    line-height: 44px;
   }
-  
-  .product-price {
-    font-size: 14px;
+  .pincode-input-wrapper input::placeholder {
+    line-height: 44px;
   }
-  
-  .product-description {
+  .pincode-check-btn {
+    padding: 0 16px;
     font-size: 10px;
   }
-  
-  .product-description h3 {
+  .delivery-estimate-box {
+    padding: 0 14px;
     font-size: 12px;
+    gap: 10px;
   }
-  
-  .product-description h4 {
-    font-size: 10px;
+  .delivery-estimate-box i {
+    font-size: 16px;
   }
-  
-  .product-description ul {
-    padding-left: 10px;
+  /* ensure text doesn't overflow */
+  .delivery-estimate-box span {
+    white-space: normal;
+    line-height: 1.3;
+    display: flex;
+    align-items: center;
   }
-  
-  .btn-add-to-bag,
-  .btn-back {
-    padding: 8px 10px;
-    font-size: 8px;
-    gap: 4px;
-  }
-  
-  .btn-add-to-bag i,
-  .btn-back i {
-    font-size: 10px;
-  }
+}
+
+/* extra small devices */
+@media (max-width: 480px) {
+  .pincode-checker-section { padding: 0 12px; }
+  .delivery-estimate-box { font-size: 11px; }
+  .pincode-check-btn { font-size: 9px; padding: 0 12px; }
 }
 
 @media (max-width: 900px) {
-  .product-detail-container {
-    flex-direction: column;
-    gap: 30px;
-  }
-  
-  .product-image-section,
-  .product-info-section {
-    max-width: 100%;
-    width: 100%;
-  }
-  
-  .product-image-section {
-    max-width: 500px;
-    margin: 0 auto;
-  }
-  
-  .button-container {
-    flex-direction: column;
-  }
+  .product-detail-container { flex-direction: column; }
+  .product-image-section, .product-info-section { max-width: 100%; }
 }
 
 @media (max-width: 480px) {
-  .product-page {
-    padding: 0 12px;
-  }
-  
-  .product-title {
-    font-size: 20px;
-  }
-  
-  .product-price {
-    font-size: 20px;
-  }
+  .product-page { padding: 0 12px; }
+  .product-title { font-size: 20px; }
+  .product-price { font-size: 20px; }
 }
 </style>
 </head>
@@ -562,7 +453,7 @@ body {
     </div>
     <nav class="nav-right">
       <button class="nav-link btn-text desktop-only" onclick="openSearch()"><i class="fas fa-search"></i> Search</button>
-      <a href="#about" class="nav-link btn-text desktop-only"><i class="fas fa-info-circle"></i> About</a>
+      <a href="about.html" class="nav-link btn-text desktop-only"><i class="fas fa-info-circle"></i> About</a>
       <a href="account.html" class="nav-link btn-text desktop-only"><i class="fas fa-user"></i> Account</a>
       <button class="nav-link btn-text bag" onclick="openBag()">
         <i class="fas fa-shopping-bag"></i> Bag <span class="bag-count" id="bagCount">0</span>
@@ -584,12 +475,13 @@ body {
       <span class="mobile-search-icon"><i class="fas fa-arrow-right"></i></span>
     </div>
     <a href="products.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-store"></i> Shop All</a>
-    <a href="#about" class="menu-item" onclick="closeMenu()"><i class="fas fa-info-circle"></i> About</a>
+    <a href="about.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-info-circle"></i> About</a>
     <a href="account.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-user"></i> Account</a>
     <div class="menu-divider"></div>
-    <a href="#" class="menu-item" onclick="closeMenu()"><i class="fas fa-truck"></i> Shipping & Returns</a>
+    <a href="shipping&return.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-truck"></i> Shipping & Returns</a>
   </div>
 </div>
+
 
 <!-- SEARCH OVERLAY -->
 <div class="search-overlay" id="searchOverlay">
@@ -616,6 +508,9 @@ body {
 
 <!-- MAIN PRODUCT DETAIL AREA -->
 <div class="product-page" id="productDetailPage"></div>
+
+<!-- PINCODE WRAPPER (outside product-detail-container, full width) -->
+<div class="pincode-wrapper" id="pincodeWrapper"></div>
 
 <!-- FOOTER -->
 <footer class="footer" id="about">
@@ -660,7 +555,6 @@ body {
 
 <!-- Firebase config -->
 <script>
-  // ------------------ FIREBASE CONFIG ------------------
   const firebaseConfig = {
     apiKey: "AIzaSyDajOB6BPahP6gPjtT-YTh7-9gdlKCqGiU",
     authDomain: "diginess-store.firebaseapp.com",
@@ -670,17 +564,69 @@ body {
     appId: "1:549723461376:web:dab9f5b8e9decd105385e5",
     measurementId: "G-EXKHB5B23X"
   };
-  
-  // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
   const db = firebase.firestore();
 </script>
 
-<!-- Scripts -->
+<!-- INCLUDE YOUR EXISTING product-data.js and main.js -->
 <script src="product-data.js"></script>
 <script src="main.js"></script>
+
+<!-- PINCODE ZONES + DELIVERY LOGIC + MODIFIED loadProductDetail -->
 <script>
+// ----- PINCODE ZONES (based on your distance table) -----
+const pincodeZones = [
+  { start: 600001, end: 600118, distance: 0, region: 'Chennai' },
+  { start: 600119, end: 643253, distance: 0, region: 'Tamil Nadu' },
+  { start: 560001, end: 591346, distance: 290, region: 'Karnataka' },
+  { start: 670001, end: 695615, distance: 770, region: 'Kerala' },
+  { start: 500001, end: 534999, distance: 450, region: 'Andhra Pradesh' },
+  { start: 500001, end: 534999, distance: 630, region: 'Telangana' },
+  { start: 400001, end: 444999, distance: 1030, region: 'Maharashtra' },
+  { start: 403001, end: 403806, distance: 750, region: 'Goa' },
+  { start: 360001, end: 396999, distance: 1650, region: 'Gujarat' },
+  { start: 302001, end: 345001, distance: 1600, region: 'Rajasthan' },
+  { start: 110001, end: 110098, distance: 1760, region: 'Delhi' },
+  { start: 201001, end: 285223, distance: 1540, region: 'Uttar Pradesh' },
+  { start: 140001, end: 160055, distance: 2020, region: 'Punjab' },
+  { start: 121001, end: 135133, distance: 2020, region: 'Haryana' },
+  { start: 180001, end: 194404, distance: 2700, region: 'Jammu Kashmir' },
+  { start: 171001, end: 177601, distance: 2300, region: 'Himachal' },
+  { start: 248001, end: 263676, distance: 2100, region: 'Uttarakhand' },
+  { start: 700001, end: 743999, distance: 1350, region: 'West Bengal' },
+  { start: 751001, end: 769999, distance: 1000, region: 'Odisha' },
+  { start: 800001, end: 854333, distance: 1800, region: 'Bihar' },
+  { start: 781001, end: 788999, distance: 2400, region: 'Assam' },
+  { start: 452001, end: 493778, distance: 1250, region: 'Madhya Pradesh' },
+  { start: 491001, end: 497778, distance: 1050, region: 'Chhattisgarh' },
+  { start: 160001, end: 160036, distance: 2020, region: 'Chandigarh' },
+  { start: 605001, end: 609609, distance: 160, region: 'Puducherry' },
+  { start: 744101, end: 744302, distance: 1360, region: 'Andaman' },
+  { start: 194101, end: 194404, distance: 2900, region: 'Ladakh' }
+];
+
+function getDistanceFromPincode(pin) {
+  let code = parseInt(pin, 10);
+  if (isNaN(code) || pin.length !== 6) return null;
+  for (let zone of pincodeZones) {
+    if (code >= zone.start && code <= zone.end) return zone.distance;
+  }
+  return null;
+}
+
+function getDeliveryEstimate(distance, pincode) {
+  let pinNum = parseInt(pincode,10);
+  if (pinNum >= 600001 && pinNum <= 600118) return "🚚 Next day delivery";
+  if (distance === null) return null;
+  if (distance === 0) return "📦 1–3 business days (Tamil Nadu)";
+  else if (distance <= 200) return "📦 2–3 days";
+  else if (distance <= 700) return "📦 3–5 days";
+  else if (distance <= 1200) return "📦 5–7 days";
+  else if (distance <= 1500) return "📦 7–10 days";
+  else return "📦 10–13 days";
+}
+
 // Image Slider Class
 class ImageSlider {
   constructor(container, images) {
@@ -688,204 +634,87 @@ class ImageSlider {
     this.images = images || [];
     this.currentIndex = 0;
     this.sliderWrapper = null;
-    this.dotsContainer = null;
     this.thumbnailsContainer = null;
-    
-    if (this.images.length > 0) {
-      this.init();
-    }
+    if (this.images.length > 0) this.init();
   }
-  
-  init() {
-    this.render();
-    this.attachEvents();
-  }
-  
+  init() { this.render(); this.attachEvents(); }
   render() {
-    // Create slider structure
     this.container.innerHTML = `
       <div class="product-image-slider">
         <div class="slider-container">
           <button class="slider-btn prev"><i class="fas fa-chevron-left"></i></button>
           <button class="slider-btn next"><i class="fas fa-chevron-right"></i></button>
-          
           <div class="slider-wrapper">
-            ${this.images.map(img => `
-              <div class="slider-slide">
-                <img src="${img}" alt="Product image">
-              </div>
-            `).join('')}
+            ${this.images.map(img => `<div class="slider-slide"><img src="${img}" alt="Product image"></div>`).join('')}
           </div>
-          
           <div class="slider-dots">
-            ${this.images.map((_, index) => `
-              <button class="slider-dot ${index === 0 ? 'active' : ''}" data-index="${index}"></button>
-            `).join('')}
+            ${this.images.map((_, index) => `<button class="slider-dot ${index === 0 ? 'active' : ''}" data-index="${index}"></button>`).join('')}
           </div>
         </div>
-        
         ${this.images.length > 1 ? `
           <div class="image-thumbnails">
-            ${this.images.map((img, index) => `
-              <img src="${img}" class="thumbnail ${index === 0 ? 'active' : ''}" data-index="${index}" alt="Thumbnail">
-            `).join('')}
+            ${this.images.map((img, index) => `<img src="${img}" class="thumbnail ${index === 0 ? 'active' : ''}" data-index="${index}" alt="Thumbnail">`).join('')}
           </div>
         ` : ''}
       </div>
     `;
-    
     this.sliderWrapper = this.container.querySelector('.slider-wrapper');
-    this.dotsContainer = this.container.querySelector('.slider-dots');
     this.thumbnailsContainer = this.container.querySelector('.image-thumbnails');
   }
-  
   attachEvents() {
-    // Previous button
-    const prevBtn = this.container.querySelector('.slider-btn.prev');
-    if (prevBtn) {
-      prevBtn.addEventListener('click', () => this.slideTo(this.currentIndex - 1));
-    }
-    
-    // Next button
-    const nextBtn = this.container.querySelector('.slider-btn.next');
-    if (nextBtn) {
-      nextBtn.addEventListener('click', () => this.slideTo(this.currentIndex + 1));
-    }
-    
-    // Dots
-    const dots = this.container.querySelectorAll('.slider-dot');
-    dots.forEach(dot => {
-      dot.addEventListener('click', (e) => {
-        const index = parseInt(e.target.dataset.index);
-        this.slideTo(index);
-      });
-    });
-    
-    // Thumbnails
+    this.container.querySelector('.slider-btn.prev')?.addEventListener('click', () => this.slideTo(this.currentIndex - 1));
+    this.container.querySelector('.slider-btn.next')?.addEventListener('click', () => this.slideTo(this.currentIndex + 1));
+    this.container.querySelectorAll('.slider-dot').forEach(dot => dot.addEventListener('click', (e) => this.slideTo(parseInt(e.target.dataset.index))));
     if (this.thumbnailsContainer) {
-      const thumbnails = this.thumbnailsContainer.querySelectorAll('.thumbnail');
-      thumbnails.forEach(thumb => {
-        thumb.addEventListener('click', (e) => {
-          const index = parseInt(e.target.dataset.index);
-          this.slideTo(index);
-        });
-      });
+      this.thumbnailsContainer.querySelectorAll('.thumbnail').forEach(thumb => thumb.addEventListener('click', (e) => this.slideTo(parseInt(e.target.dataset.index))));
     }
-    
-    // Touch events for mobile
     let touchStartX = 0;
-    let touchEndX = 0;
-    
-    this.sliderWrapper.addEventListener('touchstart', (e) => {
-      touchStartX = e.changedTouches[0].screenX;
-    }, { passive: true });
-    
+    this.sliderWrapper.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
     this.sliderWrapper.addEventListener('touchend', (e) => {
-      touchEndX = e.changedTouches[0].screenX;
-      this.handleSwipe();
+      let diff = touchStartX - e.changedTouches[0].screenX;
+      if (Math.abs(diff) > 50) this.slideTo(this.currentIndex + (diff > 0 ? 1 : -1));
     }, { passive: true });
-    
-    this.handleSwipe = () => {
-      const swipeThreshold = 50;
-      const diff = touchStartX - touchEndX;
-      
-      if (Math.abs(diff) > swipeThreshold) {
-        if (diff > 0) {
-          // Swipe left - next
-          this.slideTo(this.currentIndex + 1);
-        } else {
-          // Swipe right - previous
-          this.slideTo(this.currentIndex - 1);
-        }
-      }
-    };
   }
-  
   slideTo(index) {
     if (index < 0) index = this.images.length - 1;
     if (index >= this.images.length) index = 0;
-    
     this.currentIndex = index;
-    
-    // Update wrapper position
-    if (this.sliderWrapper) {
-      this.sliderWrapper.style.transform = `translateX(-${index * 100}%)`;
-    }
-    
-    // Update dots
-    const dots = this.container.querySelectorAll('.slider-dot');
-    dots.forEach((dot, i) => {
-      if (i === index) {
-        dot.classList.add('active');
-      } else {
-        dot.classList.remove('active');
-      }
-    });
-    
-    // Update thumbnails
+    this.sliderWrapper.style.transform = `translateX(-${index * 100}%)`;
+    this.container.querySelectorAll('.slider-dot').forEach((dot, i) => dot.classList.toggle('active', i === index));
     if (this.thumbnailsContainer) {
-      const thumbnails = this.thumbnailsContainer.querySelectorAll('.thumbnail');
-      thumbnails.forEach((thumb, i) => {
-        if (i === index) {
-          thumb.classList.add('active');
-        } else {
-          thumb.classList.remove('active');
-        }
-      });
+      this.thumbnailsContainer.querySelectorAll('.thumbnail').forEach((thumb, i) => thumb.classList.toggle('active', i === index));
     }
   }
 }
 
-// Load product detail with image slider
+// MODIFIED loadProductDetail (pincode removed from inside, now in separate wrapper)
 function loadProductDetail() {
   const urlParams = new URLSearchParams(window.location.search);
   const slug = urlParams.get('product');
-  
   const container = document.getElementById("productDetailPage");
+  const pincodeWrapper = document.getElementById("pincodeWrapper");
 
-  if (!slug) {
-    container.innerHTML = "<h2 style='margin:120px 20px; text-align:center; color:#aaa; font-size:16px; word-break:break-word;'>Product Not Found</h2>";
-    return;
-  }
-  
+  if (!slug) { container.innerHTML = "<h2 style='margin:120px 20px; text-align:center; color:#aaa;'>Product Not Found</h2>"; return; }
   const product = productData.find(p => p.slug === slug);
-  
-  if (!product) {
-    container.innerHTML = "<h2 style='margin:120px 20px; text-align:center; color:#aaa; font-size:16px; word-break:break-word;'>Product Not Found</h2>";
-    return;
-  }
-  
+  if (!product) { container.innerHTML = "<h2 style='margin:120px 20px; text-align:center; color:#aaa;'>Product Not Found</h2>"; return; }
   document.title = product.name + " | DIGINESS";
+  const productImages = product.images && product.images.length ? product.images : [product.img];
 
-  // Use product.images if available, otherwise create array with main image
-  const productImages = product.images && product.images.length > 0 
-    ? product.images 
-    : [product.img];
-
+  // Product detail HTML (without pincode)
   container.innerHTML = `
     <div class="product-detail-container">
       <div class="product-image-section">
         <div id="productImageSlider"></div>
       </div>
-
       <div class="product-info-section">
         <h1 class="product-title">${product.name}</h1>
         <h2 class="product-price">${product.price}</h2>
-
         <div class="product-description-container">
-          <div class="product-description">
-            ${product.description}
-          </div>
+          <div class="product-description">${product.description}</div>
         </div>
-
         <div class="button-container">
-          <button class="btn-add-to-bag" onclick="addToBag('${product.name}','${product.price}','${product.img}')">
-            <i class="fas fa-shopping-bag"></i> Add to Bag
-          </button>
-
-          <button class="btn-back" onclick="window.location.href='products.html'">
-            <i class="fas fa-arrow-left"></i> Back
-          </button>
+          <button class="btn-add-to-bag" onclick="addToBag('${product.name}','${product.price}','${product.img}')"><i class="fas fa-shopping-bag"></i> Add to Bag</button>
+          <button class="btn-back" onclick="window.location.href='products.html'"><i class="fas fa-arrow-left"></i> Back</button>
         </div>
       </div>
     </div>
@@ -893,78 +722,107 @@ function loadProductDetail() {
 
   // Initialize image slider
   const sliderContainer = document.getElementById('productImageSlider');
-  if (sliderContainer) {
-    new ImageSlider(sliderContainer, productImages);
+  if (sliderContainer) new ImageSlider(sliderContainer, productImages);
+
+  // Inject pincode checker into separate wrapper (full width)
+  pincodeWrapper.innerHTML = `
+    <div class="pincode-checker-section">
+      <div class="pincode-label"><i class="fas fa-map-pin"></i> CHECK DELIVERY</div>
+      <div class="pincode-row">
+        <div class="pincode-input-group">
+          <div class="pincode-input-wrapper">
+            <input type="text" id="pincodeInput" maxlength="6" inputmode="numeric" placeholder="6-digit pincode">
+          </div>
+          <button class="pincode-check-btn" id="checkPincodeBtn"><i class="fas fa-arrow-right"></i> CHECK</button>
+        </div>
+        <div class="delivery-estimate-box" id="deliveryEstimateBox">
+          <i class="fas fa-info-circle"></i> <span>Enter pincode to see estimate.</span>
+        </div>
+      </div>
+    </div>
+  `;
+
+  // Pincode logic
+  const pincodeInput = document.getElementById('pincodeInput');
+  const checkBtn = document.getElementById('checkPincodeBtn');
+  const estimateBox = document.getElementById('deliveryEstimateBox');
+
+  function updateEstimate() {
+    let pin = pincodeInput.value.trim();
+    if (!/^\d{6}$/.test(pin)) {
+      estimateBox.innerHTML = `<i class="fas fa-exclamation-triangle"></i><span>Enter valid 6-digit pincode.</span>`;
+      estimateBox.className = "delivery-estimate-box delivery-error";
+      return;
+    }
+    let distance = getDistanceFromPincode(pin);
+    if (distance === null) {
+      estimateBox.innerHTML = `<i class="fas fa-times-circle"></i><span>Pincode not servable.</span>`;
+      estimateBox.className = "delivery-estimate-box delivery-error";
+      return;
+    }
+    let estimate = getDeliveryEstimate(distance, pin);
+    let zone = pincodeZones.find(z => parseInt(pin) >= z.start && parseInt(pin) <= z.end)?.region || '';
+    let displayText = estimate;
+    if (zone && !estimate.includes(zone)) {
+      if (zone === 'Chennai') displayText = '🚚 Next day delivery (Chennai)';
+      else if (zone === 'Tamil Nadu') displayText = '📦 1–3 business days (Tamil Nadu)';
+      else displayText = estimate + (zone ? ` (${zone})` : '');
+    }
+    estimateBox.innerHTML = `<i class="fas fa-truck"></i><span><strong>${displayText}</strong></span>`;
+    estimateBox.className = "delivery-estimate-box";
   }
 
-  // Adjust description height
+  checkBtn.addEventListener('click', updateEstimate);
+  pincodeInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') updateEstimate(); });
+
+  // Adjust description height (desktop only)
   setTimeout(() => {
     if (window.innerWidth > 900) {
       const imageSection = document.querySelector('.product-image-section');
-      const descriptionContainer = document.querySelector('.product-description-container');
-      
-      if (imageSection && descriptionContainer) {
+      const descContainer = document.querySelector('.product-description-container');
+      if (imageSection && descContainer) {
         const imageHeight = imageSection.offsetHeight;
         const title = document.querySelector('.product-title');
         const price = document.querySelector('.product-price');
         const buttons = document.querySelector('.button-container');
-        
-        const titleHeight = title ? title.offsetHeight : 0;
-        const priceHeight = price ? price.offsetHeight : 0;
-        const buttonsHeight = buttons ? buttons.offsetHeight : 0;
+        const titleH = title ? title.offsetHeight : 0;
+        const priceH = price ? price.offsetHeight : 0;
+        const btnH = buttons ? buttons.offsetHeight : 0;
         const margins = 80;
-        
-        const availableHeight = imageHeight - (titleHeight + priceHeight + buttonsHeight + margins);
-        
-        if (availableHeight > 80) {
-          descriptionContainer.style.maxHeight = availableHeight + 'px';
-        } else {
-          descriptionContainer.style.maxHeight = '150px';
-        }
+        const available = imageHeight - (titleH + priceH + btnH + margins);
+        descContainer.style.maxHeight = (available > 80 ? available : 150) + 'px';
       }
     }
-  }, 100);
+  }, 150);
 }
 
-// Handle resize
+// Handle resize (original)
 window.addEventListener('resize', function() {
   if (window.innerWidth > 900) {
     setTimeout(() => {
       const imageSection = document.querySelector('.product-image-section');
-      const descriptionContainer = document.querySelector('.product-description-container');
-      
-      if (imageSection && descriptionContainer) {
+      const descContainer = document.querySelector('.product-description-container');
+      if (imageSection && descContainer) {
         const imageHeight = imageSection.offsetHeight;
         const title = document.querySelector('.product-title');
         const price = document.querySelector('.product-price');
         const buttons = document.querySelector('.button-container');
-        
-        const titleHeight = title ? title.offsetHeight : 0;
-        const priceHeight = price ? price.offsetHeight : 0;
-        const buttonsHeight = buttons ? buttons.offsetHeight : 0;
+        const titleH = title ? title.offsetHeight : 0;
+        const priceH = price ? price.offsetHeight : 0;
+        const btnH = buttons ? buttons.offsetHeight : 0;
         const margins = 80;
-        
-        const availableHeight = imageHeight - (titleHeight + priceHeight + buttonsHeight + margins);
-        
-        if (availableHeight > 80) {
-          descriptionContainer.style.maxHeight = availableHeight + 'px';
-        } else {
-          descriptionContainer.style.maxHeight = '150px';
-        }
+        const available = imageHeight - (titleH + priceH + btnH + margins);
+        descContainer.style.maxHeight = (available > 80 ? available : 150) + 'px';
       }
     }, 100);
   } else {
-    const descriptionContainer = document.querySelector('.product-description-container');
-    if (descriptionContainer) {
-      descriptionContainer.style.maxHeight = 'none';
-    }
+    const desc = document.querySelector('.product-description-container');
+    if (desc) desc.style.maxHeight = 'none';
   }
 });
 
 // Load product on page load
-document.addEventListener('DOMContentLoaded', function() {
-  loadProductDetail();
-});
+document.addEventListener('DOMContentLoaded', loadProductDetail);
 </script>
 </body>
 </html>

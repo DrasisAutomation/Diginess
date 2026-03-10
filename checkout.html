@@ -539,54 +539,53 @@
 </head>
 
 <body>
-    <!-- HEADER -->
-    <header class="header" id="mainHeader">
-        <div class="header-inner">
-            <nav class="nav-left">
-                <a href="products.html" class="nav-link btn-text">Shop All</a>
-                <button class="mobile-menu-btn btn-text" onclick="openMenu()">
-                    <i class="fas fa-bars"></i> Menu
-                </button>
-            </nav>
-            <div style="position: absolute; left: 50%; top: 50%; transform: translate(-43%, -50%);">
-                <a href="products.html" class="logo" style="position: static; transform: none; margin: 0;">
-                    <svg viewBox="0 0 200 28" width="120">
-                        <text x="0" y="22" font-family="Inter" font-weight="400" font-size="26" letter-spacing="8"
-                            fill="currentColor">DIGINESS</text>
-                    </svg>
-                </a>
-            </div>
-            <nav class="nav-right">
-                <button class="nav-link btn-text desktop-only" onclick="openSearch()"><i class="fas fa-search"></i>
-                    Search</button>
-                <a href="#about" class="nav-link btn-text desktop-only"><i class="fas fa-info-circle"></i> About</a>
-                <a href="account.html" class="nav-link btn-text desktop-only"><i class="fas fa-user"></i> Account</a>
-                <button class="nav-link btn-text bag" onclick="openBag()">
-                    <i class="fas fa-shopping-bag"></i> Bag <span class="bag-count" id="bagCount">0</span>
-                </button>
-            </nav>
-        </div>
-    </header>
-
-    <!-- MENU SIDEBAR -->
-    <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
-    <div class="menu-sidebar" id="menuSidebar">
-        <div class="menu-header">
-            <h3>DIGINESS</h3>
-            <button class="menu-close btn-text" onclick="closeMenu()"><i class="fas fa-times"></i> Close</button>
-        </div>
-        <div class="menu-body">
-            <div class="mobile-search-item" onclick="openSearch(); closeMenu();">
-                <span><i class="fas fa-search"></i> Search</span>
-                <span class="mobile-search-icon"><i class="fas fa-arrow-right"></i></span>
-            </div>
-            <a href="products.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-store"></i> Shop All</a>
-            <a href="#about" class="menu-item" onclick="closeMenu()"><i class="fas fa-info-circle"></i> About</a>
-            <a href="account.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-user"></i> Account</a>
-            <div class="menu-divider"></div>
-            <a href="#" class="menu-item" onclick="closeMenu()"><i class="fas fa-truck"></i> Shipping & Returns</a>
-        </div>
+  <!-- HEADER -->
+<header class="header" id="mainHeader">
+  <div class="header-inner">
+    <nav class="nav-left">
+      <a href="products.html" class="nav-link btn-text">Shop All</a>
+      <button class="mobile-menu-btn btn-text" onclick="openMenu()">
+        <i class="fas fa-bars"></i> Menu
+      </button>
+    </nav>
+    <div style="position: absolute; left: 50%; top: 50%; transform: translate(-43%, -50%);">
+      <a href="products.html" class="logo" style="position: static; transform: none; margin: 0;">
+        <svg viewBox="0 0 200 28" width="120">
+          <text x="0" y="22" font-family="Inter" font-weight="400" font-size="26" letter-spacing="8" fill="currentColor">DIGINESS</text>
+        </svg>
+      </a>
     </div>
+    <nav class="nav-right">
+      <button class="nav-link btn-text desktop-only" onclick="openSearch()"><i class="fas fa-search"></i> Search</button>
+      <a href="about.html" class="nav-link btn-text desktop-only"><i class="fas fa-info-circle"></i> About</a>
+      <a href="account.html" class="nav-link btn-text desktop-only"><i class="fas fa-user"></i> Account</a>
+      <button class="nav-link btn-text bag" onclick="openBag()">
+        <i class="fas fa-shopping-bag"></i> Bag <span class="bag-count" id="bagCount">0</span>
+      </button>
+    </nav>
+  </div>
+</header>
+
+<!-- MENU SIDEBAR -->
+<div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
+<div class="menu-sidebar" id="menuSidebar">
+  <div class="menu-header">
+    <h3>DIGINESS</h3>
+    <button class="menu-close btn-text" onclick="closeMenu()"><i class="fas fa-times"></i> Close</button>
+  </div>
+  <div class="menu-body">
+    <div class="mobile-search-item" onclick="openSearch(); closeMenu();">
+      <span><i class="fas fa-search"></i> Search</span>
+      <span class="mobile-search-icon"><i class="fas fa-arrow-right"></i></span>
+    </div>
+    <a href="products.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-store"></i> Shop All</a>
+    <a href="about.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-info-circle"></i> About</a>
+    <a href="account.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-user"></i> Account</a>
+    <div class="menu-divider"></div>
+    <a href="shipping&return.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-truck"></i> Shipping & Returns</a>
+  </div>
+</div>
+
 
     <!-- SEARCH OVERLAY -->
     <div class="search-overlay" id="searchOverlay">
@@ -884,8 +883,7 @@
                     <i class="fas fa-lock"></i>
                     <h3>Sign in to Checkout</h3>
                     <p>Please sign in to complete your purchase</p>
-                    <a href="account.html" class="btn-continue-shopping">
-                        <i class="fas fa-sign-in-alt"></i> Sign In
+                    <a href="account.html" class="btn-continue-shopping"></i> Sign In
                     </a>
                 </div>
             `;
@@ -1112,6 +1110,26 @@ async function saveOrderToFirestore(paymentData, shippingInfo, items, total) {
     throw error;
   }
 }
+// Add this function to checkout.html where you save the order
+async function saveOrderAndAddCredits(paymentData, shippingInfo, items, total) {
+  if (!currentUser) return null;
+  
+  try {
+    // Save order first
+    const orderData = await saveOrderToFirestore(paymentData, shippingInfo, items, total);
+    
+    // Calculate and add spin credits (1 credit per ₹2000 spent)
+    const spinCreditsToAdd = Math.floor(total / 2000);
+    if (spinCreditsToAdd > 0 && window.addSpinCredits) {
+      await window.addSpinCredits(total);
+    }
+    
+    return orderData;
+  } catch (error) {
+    console.error('Error in order process:', error);
+    throw error;
+  }
+}
         // ========== Initiate Razorpay payment ==========
         window.initiatePayment = function (total) {
             // Validate form
@@ -1149,61 +1167,71 @@ async function saveOrderToFirestore(paymentData, shippingInfo, items, total) {
                 currency: 'INR',
                 name: 'DIGINESS',
                 description: `Order (${bag.length} items)`,
-                handler: function (response) {
-                    console.log('Payment successful:', response);
+// Add this to checkout.html - Replace the payment handler section
 
-                    saveOrderToFirestore(response, shippingInfo, currentBag, total)
-                        .then(async savedOrder => {
-                            console.log('Order saved successfully:', savedOrder);
-
-                            // Send email confirmation (don't await - let it run in background)
-                            sendOrderEmail(savedOrder, currentUser.email)
-                                .then(() => {
-                                    console.log('Email process completed');
-                                })
-                                .catch(err => {
-                                    console.error('Email error (non-critical):', err);
-                                });
-
-                            document.getElementById('paymentProcessing').classList.remove('active');
-
-                            // Show success modal
-                            document.getElementById('successOrderId').textContent = savedOrder.orderId;
-                            document.getElementById('orderSuccessModal').classList.add('active');
-
-                            // Clear bag completely
-                            bag = [];
-                            localStorage.removeItem('diginess_bag');
-                            updateBagUI();
-
-                            // Update checkout page to show empty state
-                            setTimeout(() => {
-                                loadCheckoutPage();
-                            }, 100);
-
-                            // Auto redirect after 3 seconds
-                            setTimeout(() => {
-                                if (document.getElementById('orderSuccessModal').classList.contains('active')) {
-                                    continueShopping();
-                                }
-                            }, 3000);
-                        })
-                        .catch(error => {
-                            console.error('Error saving order:', error);
-                            document.getElementById('paymentProcessing').classList.remove('active');
-                            alert('Payment successful! But there was an issue saving your order. Please check your account page.');
-
-                            // Still clear bag
-                            bag = [];
-                            localStorage.removeItem('diginess_bag');
-                            updateBagUI();
-
-                            setTimeout(() => {
-                                window.location.href = 'account.html';
-                            }, 2000);
-                        });
-                },
-                prefill: {
+handler: async function (response) {
+  console.log('Payment successful:', response);
+  
+  try {
+    // Hide processing overlay first
+    document.getElementById('paymentProcessing').classList.remove('active');
+    
+    // Save order first
+    const savedOrder = await saveOrderToFirestore(response, shippingInfo, currentBag, total);
+    
+    if (savedOrder) {
+      // Calculate and add spin credits (1 credit per ₹2000 spent)
+      const creditsToAdd = Math.floor(total / 2000);
+      if (creditsToAdd > 0) {
+        console.log(`Adding ${creditsToAdd} spin credits for purchase of ₹${total}`);
+        
+        // Call the global addSpinCredits function
+        if (window.addSpinCredits) {
+          await window.addSpinCredits(total);
+        } else {
+          // Fallback: Update directly
+          if (currentUser) {
+            const userRef = db.collection('users').doc(currentUser.uid);
+            const userDoc = await userRef.get();
+            
+            if (userDoc.exists) {
+              const currentCredits = userDoc.data().spinCredits || 0;
+              const currentSpent = userDoc.data().totalSpent || 0;
+              
+              await userRef.update({
+                spinCredits: currentCredits + creditsToAdd,
+                totalSpent: currentSpent + total,
+                lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
+              });
+              
+              console.log(`Added ${creditsToAdd} credits directly via Firestore`);
+            }
+          }
+        }
+      }
+      
+      // Show success modal
+      document.getElementById('successOrderId').textContent = savedOrder.orderId;
+      document.getElementById('orderSuccessModal').classList.add('active');
+      
+      // Clear bag
+      bag = [];
+      localStorage.removeItem('diginess_bag');
+      updateBagUI();
+      
+      // Auto redirect
+      setTimeout(() => {
+        if (document.getElementById('orderSuccessModal').classList.contains('active')) {
+          continueShopping();
+        }
+      }, 3000);
+    }
+  } catch (error) {
+    console.error('Error in payment handler:', error);
+    alert('Payment successful! But there was an issue saving your order. Please check your account page.');
+  }
+},
+prefill: {
                     name: fullName,
                     email: currentUser.email,
                     contact: phone
