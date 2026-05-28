@@ -108,7 +108,7 @@
 .bottom-carousel{
   position:relative;
   width:100%;
-  height:100dvh;
+  aspect-ratio:16/9;
   overflow:hidden;
 }
 .bottom-container {
@@ -193,25 +193,20 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--primary);
-  color: #000;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
   border-radius: 50%;
   font-size: 18px;
-  border: none;
+  border: 1px solid rgba(255, 255, 255, 0.35);
   font-weight: 600;
   cursor: pointer;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: all 0.3s ease;
 }
-.product-mobile-btn.view-btn {
-  background: rgba(0, 0, 0, 0.2);
-  color: #fff;
-  border: 2px solid rgb(255, 255, 255);
-}
-.product-mobile-btn.view-btn:hover {
-  background: var(--primary);
-  color: #000;
-}
-.product-mobile-btn.add-btn:hover {
-  background: #f0f0f0;
+.product-mobile-btn:hover {
+  background: rgba(0, 0, 0, 0.8);
+  border-color: #fff;
 }
 
 @media (min-width:768px) and (max-width:1023px){
@@ -256,9 +251,7 @@
     </nav>
     <div style="position: absolute; left: 50%; top: 50%; transform: translate(-43%, -50%);">
       <a href="products.html" class="logo" style="position: static; transform: none; margin: 0;">
-        <svg viewBox="0 0 200 28" width="120">
-          <text x="0" y="22" font-family="Inter" font-weight="400" font-size="26" letter-spacing="8" fill="currentColor">DIGINESS</text>
-        </svg>
+        <img src="assets/logo.png" alt="Diginess" width="120">
       </a>
     </div>
     <nav class="nav-right">
@@ -318,9 +311,9 @@
 <!-- HERO CAROUSEL -->
 <section class="hero" id="heroCarousel">
   <div class="hero-container" id="heroContainer">
-    <div class="hero-slide"><img src="1.png" alt="Tech lifestyle"></div>
-    <div class="hero-slide"><img src="2.png" alt="Smart home"></div>
-    <div class="hero-slide"><img src="3.png" alt="Gadget setup"></div>
+    <div class="hero-slide"><img src="assets/hero/1.png" alt="Tech lifestyle"></div>
+    <div class="hero-slide"><img src="assets/hero/2.png" alt="Smart home"></div>
+    <div class="hero-slide"><img src="assets/hero/3.png" alt="Gadget setup"></div>
   </div>
   <div class="hero-text btn-text">Experience Innovation</div>
   <div class="hero-dots" id="heroDots">
@@ -338,24 +331,24 @@
   <div class="products-grid">
     <!-- Product 1 -->
     <div class="product-card">
-      <img src="https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?w=600&h=800&fit=crop" alt="Smart Watch Pro" loading="lazy">
+      <img src="assets/products/1.png" alt="AI Peluche Intelligent Robot" loading="lazy">
       <div class="product-mobile-actions">
-        <button class="product-mobile-btn view-btn" onclick="event.stopPropagation(); goToProduct('smart-watch-pro')">
+        <button class="product-mobile-btn view-btn" onclick="event.stopPropagation(); goToProduct('ai-intelligent-robot')">
           <i class="fas fa-eye"></i>
         </button>
-        <button class="product-mobile-btn add-btn" onclick="event.stopPropagation(); addToBag('Smart Watch Pro','₹16,999','https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?w=600&h=800&fit=crop')">
+        <button class="product-mobile-btn add-btn" onclick="event.stopPropagation(); addToBag('AI Peluche Intelligent Robot','₹1','assets/products/1.png')">
           <i class="fas fa-plus"></i>
         </button>
       </div>
       <div class="product-info">
-        <h4>Smart Watch Pro</h4>
-        <span>₹16,999</span>
+        <h4>AI Peluche Intelligent Robot</h4>
+        <span>₹1,999</span>
       </div>
       <div class="product-hover-actions">
-        <button class="btn-hover view-more" onclick="event.stopPropagation(); goToProduct('smart-watch-pro')">
+        <button class="btn-hover view-more" onclick="event.stopPropagation(); goToProduct('ai-intelligent-robot')">
           <i class="fas fa-eye"></i> View
         </button>
-        <button class="btn-hover add-to-bag" onclick="event.stopPropagation(); addToBag('Smart Watch Pro','₹16,999','https://images.pexels.com/photos/437037/pexels-photo-437037.jpeg?w=600&h=800&fit=crop')">
+        <button class="btn-hover add-to-bag" onclick="event.stopPropagation(); addToBag('AI Peluche Intelligent Robot','₹1','assets/products/1.png')">
           <i class="fas fa-shopping-bag"></i> Add
         </button>
       </div>
@@ -363,24 +356,24 @@
 
     <!-- Product 2 -->
     <div class="product-card">
-      <img src="https://images.pexels.com/photos/3780681/pexels-photo-3780681.jpeg?w=600&h=800&fit=crop" alt="Wireless Earbuds X1" loading="lazy">
+      <img src="assets/products/30.png" alt="Smart Lock Box" loading="lazy">
       <div class="product-mobile-actions">
-        <button class="product-mobile-btn view-btn" onclick="event.stopPropagation(); goToProduct('wireless-earbuds-x1')">
+        <button class="product-mobile-btn view-btn" onclick="event.stopPropagation(); goToProduct('smart-lock-box')">
           <i class="fas fa-eye"></i>
         </button>
-        <button class="product-mobile-btn add-btn" onclick="event.stopPropagation(); addToBag('Wireless Earbuds X1','₹9,999','https://images.pexels.com/photos/3780681/pexels-photo-3780681.jpeg?w=600&h=800&fit=crop')">
+        <button class="product-mobile-btn add-btn" onclick="event.stopPropagation(); addToBag('Smart Lock Box','₹4,999','assets/products/30.png')">
           <i class="fas fa-plus"></i>
         </button>
       </div>
       <div class="product-info">
-        <h4>Wireless Earbuds X1</h4>
-        <span>₹9,999</span>
+        <h4>Smart Lock Box</h4>
+        <span>₹4,999</span>
       </div>
       <div class="product-hover-actions">
-        <button class="btn-hover view-more" onclick="event.stopPropagation(); goToProduct('wireless-earbuds-x1')">
+        <button class="btn-hover view-more" onclick="event.stopPropagation(); goToProduct('smart-lock-box')">
           <i class="fas fa-eye"></i> View
         </button>
-        <button class="btn-hover add-to-bag" onclick="event.stopPropagation(); addToBag('Wireless Earbuds X1','₹9,999','https://images.pexels.com/photos/3780681/pexels-photo-3780681.jpeg?w=600&h=800&fit=crop')">
+        <button class="btn-hover add-to-bag" onclick="event.stopPropagation(); addToBag('Smart Lock Box','₹4,999','assets/products/30.png')">
           <i class="fas fa-shopping-bag"></i> Add
         </button>
       </div>
@@ -388,24 +381,24 @@
 
     <!-- Product 3 -->
     <div class="product-card">
-      <img src="https://tse2.mm.bing.net/th/id/OIP.epF6Hxs9i497obQQBjvqBAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Mini Drone Cam" loading="lazy">
+      <img src="assets/products/8.png" alt="LED Bluetooth T-Shirt" loading="lazy">
       <div class="product-mobile-actions">
-        <button class="product-mobile-btn view-btn" onclick="event.stopPropagation(); goToProduct('mini-drone-cam')">
+        <button class="product-mobile-btn view-btn" onclick="event.stopPropagation(); goToProduct('led-bluetooth-tshirt')">
           <i class="fas fa-eye"></i>
         </button>
-        <button class="product-mobile-btn add-btn" onclick="event.stopPropagation(); addToBag('Mini Drone Cam','₹21,499','https://tse2.mm.bing.net/th/id/OIP.epF6Hxs9i497obQQBjvqBAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3')">
+        <button class="product-mobile-btn add-btn" onclick="event.stopPropagation(); addToBag('LED Bluetooth T-Shirt','₹2,499','assets/products/8.png')">
           <i class="fas fa-plus"></i>
         </button>
       </div>
       <div class="product-info">
-        <h4>Mini Drone Cam</h4>
-        <span>₹21,499</span>
+        <h4>LED Bluetooth T-Shirt</h4>
+        <span>₹2,499</span>
       </div>
       <div class="product-hover-actions">
-        <button class="btn-hover view-more" onclick="event.stopPropagation(); goToProduct('mini-drone-cam')">
+        <button class="btn-hover view-more" onclick="event.stopPropagation(); goToProduct('led-bluetooth-tshirt')">
           <i class="fas fa-eye"></i> View
         </button>
-        <button class="btn-hover add-to-bag" onclick="event.stopPropagation(); addToBag('Mini Drone Cam','₹21,499','https://tse2.mm.bing.net/th/id/OIP.epF6Hxs9i497obQQBjvqBAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3')">
+        <button class="btn-hover add-to-bag" onclick="event.stopPropagation(); addToBag('LED Bluetooth T-Shirt','₹2,499','assets/products/8.png')">
           <i class="fas fa-shopping-bag"></i> Add
         </button>
       </div>
@@ -416,10 +409,9 @@
 <!-- BOTTOM CAROUSEL -->
 <section class="bottom-carousel" id="bottomCarousel">
   <div class="bottom-container" id="bottomContainer">
-    <div class="bottom-slide"><img src="https://images.pexels.com/photos/1229861/pexels-photo-1229861.jpeg?w=1920&h=1080&fit=crop" alt="Tech lifestyle"></div>
-    <div class="bottom-slide"><img src="https://images.pexels.com/photos/205421/pexels-photo-205421.jpeg?w=1920&h=1080&fit=crop" alt="Smart home"></div>
-    <div class="bottom-slide"><img src="https://images.pexels.com/photos/2582937/pexels-photo-2582937.jpeg?w=1920&h=1080&fit=crop" alt="Gadget setup"></div>
-    <div class="bottom-slide"><img src="https://images.pexels.com/photos/1266285/pexels-photo-1266285.jpeg?w=1920&h=1080&fit=crop" alt="Innovation"></div>
+    <div class="bottom-slide"><img src="./assets/hero1/1.png" alt="Tech lifestyle"></div>
+    <div class="bottom-slide"><img src="./assets/hero1/2.png" alt="Smart home"></div>
+    <div class="bottom-slide"><img src="./assets/hero1/3.png" alt="Gadget setup"></div>
   </div>
   <button class="carousel-arrow left" onclick="prevBottomSlide()"><i class="fas fa-chevron-left"></i></button>
   <button class="carousel-arrow right" onclick="nextBottomSlide()"><i class="fas fa-chevron-right"></i></button>

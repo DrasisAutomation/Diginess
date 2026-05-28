@@ -2,6 +2,38 @@
 var bag = [];
 var currentUser = null;
 
+// Ensure Firebase Auth session exists (for phone number users, signs in to a deterministic unique account)
+window.ensureUniquePhoneAuth = async function(phoneNumber) {
+  if (typeof firebase === 'undefined' || !firebase.auth || !phoneNumber) return null;
+  const auth = firebase.auth();
+  
+  const email = `phone_${phoneNumber}@diginess.com`;
+  const password = `phone_${phoneNumber}_pass`;
+  
+  if (auth.currentUser && auth.currentUser.email === email) {
+    return auth.currentUser;
+  }
+  
+  try {
+    console.log('Establishing unique authenticated Firebase session for phone guest:', email);
+    const userCredential = await auth.signInWithEmailAndPassword(email, password);
+    return userCredential.user;
+  } catch (error) {
+    if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password') {
+      try {
+        console.log('Creating unique shared phone guest account:', email);
+        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
+        return userCredential.user;
+      } catch (createError) {
+        console.error('Error creating unique guest account:', createError);
+      }
+    } else {
+      console.error('Error signing in as phone guest:', error);
+    }
+  }
+  return null;
+};
+
 // ========== FIREBASE INITIALIZATION ==========
 if (typeof firebase !== 'undefined' && firebase.apps && firebase.apps.length) {
   console.log('Firebase already initialized');
@@ -14,6 +46,9 @@ async function loadCartFromFirestore(user) {
   if (!user || !firebase.firestore) return false;
   
   try {
+    if (user.isPhoneUser && user.phoneNumber && typeof window.ensureUniquePhoneAuth !== 'undefined') {
+      await window.ensureUniquePhoneAuth(user.phoneNumber);
+    }
     const cartRef = firebase.firestore().collection('carts').doc(user.uid);
     const cartDoc = await cartRef.get();
     
@@ -51,6 +86,9 @@ async function saveCartToFirestore() {
   if (!currentUser || !firebase.firestore) return;
   
   try {
+    if (currentUser.isPhoneUser && currentUser.phoneNumber && typeof window.ensureUniquePhoneAuth !== 'undefined') {
+      await window.ensureUniquePhoneAuth(currentUser.phoneNumber);
+    }
     const cartRef = firebase.firestore().collection('carts').doc(currentUser.uid);
     await cartRef.set({
       items: bag,
@@ -163,7 +201,10 @@ function updateBagUI() {
 
 // Check if user is signed in
 function isUserSignedIn() {
-  return currentUser !== null;
+  if (currentUser !== null) return true;
+  const storedUser = localStorage.getItem('diginess_user');
+  const authMethod = localStorage.getItem('diginess_auth_method');
+  return !!(storedUser && authMethod === 'phone');
 }
 
 // Show sign-in prompt
@@ -271,9 +312,6 @@ window.addToBag = function(name, price, img) {
   // Show success message
   showNotification('Added to bag!');
   
-  // Open bag sidebar
-  openBag();
-  
   // Prevent event bubbling
   event.stopPropagation();
   return false;
@@ -342,7 +380,7 @@ window.checkout = function() {
 };
 
 // Show notification
-function showNotification(message) {
+window.showNotification = function(message) {
   // Remove existing notification if any
   const existing = document.querySelector('.bag-notification');
   if (existing) existing.remove();
@@ -555,13 +593,70 @@ window.goToProduct = function(slug) {
 if (typeof firebase !== 'undefined' && firebase.auth) {
   firebase.auth().onAuthStateChanged(async (user) => {
     const wasLoggedIn = currentUser !== null;
-    currentUser = user;
     
     if (user) {
+      // If it is a unique phone guest user, keep phone user's custom properties and sync to UID
+      if (user.email && user.email.startsWith('phone_') && user.email.endsWith('@diginess.com')) {
+        const storedUser = localStorage.getItem('diginess_user');
+        const authMethod = localStorage.getItem('diginess_auth_method');
+        if (storedUser && authMethod === 'phone') {
+          try {
+            const phoneUser = JSON.parse(storedUser);
+            const phone = user.email.split('_')[1].split('@')[0];
+            currentUser = {
+              uid: user.uid,
+              email: user.email,
+              phoneNumber: phone,
+              displayName: phoneUser.displayName || 'Customer ' + phone,
+              isPhoneUser: true,
+              firebaseUser: user
+            };
+            
+            // Sync UID to localStorage if it's different (e.g. newly created account)
+            if (phoneUser.userId !== user.uid) {
+              phoneUser.userId = user.uid;
+              localStorage.setItem('diginess_user', JSON.stringify(phoneUser));
+            }
+            
+            console.log('Keeping unique phone user session with custom Firestore access');
+            await loadCartFromFirestore(currentUser);
+            return;
+          } catch(e) {}
+        }
+      }
+      
+      currentUser = user;
       console.log('User signed in:', user.email);
       await loadCartFromFirestore(user);
     } else {
+      // Check for phone user login as fallback
+      const storedUser = localStorage.getItem('diginess_user');
+      const authMethod = localStorage.getItem('diginess_auth_method');
+      if (storedUser && authMethod === 'phone') {
+        try {
+          const phoneUser = JSON.parse(storedUser);
+          currentUser = {
+            uid: phoneUser.userId,
+            email: phoneUser.phoneNumber + '@phone.diginess.com',
+            phoneNumber: phoneUser.phoneNumber,
+            displayName: phoneUser.displayName,
+            isPhoneUser: true
+          };
+          console.log('Phone user signed in fallback:', phoneUser.phoneNumber);
+          
+          if (typeof window.ensureUniquePhoneAuth !== 'undefined') {
+            window.ensureUniquePhoneAuth(phoneUser.phoneNumber).catch(err => console.error('Firebase unique auth error:', err));
+          }
+          
+          await loadCartFromFirestore(currentUser);
+          return;
+        } catch (e) {
+          console.error('Error restoring phone user session:', e);
+        }
+      }
+      
       console.log('User signed out');
+      currentUser = null;
       if (wasLoggedIn) {
         // User just logged out - clear bag completely
         clearBagCompletely();
@@ -580,6 +675,30 @@ if (typeof firebase !== 'undefined' && firebase.auth) {
 document.addEventListener('DOMContentLoaded', function() {
   // Load bag from localStorage as fallback
   loadBagFromLocal();
+  
+  // Also check for existing phone user immediately
+  const storedUser = localStorage.getItem('diginess_user');
+  const authMethod = localStorage.getItem('diginess_auth_method');
+  if (storedUser && authMethod === 'phone') {
+    try {
+      const phoneUser = JSON.parse(storedUser);
+      currentUser = {
+        uid: phoneUser.userId,
+        email: phoneUser.phoneNumber + '@phone.diginess.com',
+        phoneNumber: phoneUser.phoneNumber,
+        displayName: phoneUser.displayName,
+        isPhoneUser: true
+      };
+      if (typeof window.ensureUniquePhoneAuth !== 'undefined') {
+        window.ensureUniquePhoneAuth(phoneUser.phoneNumber).catch(err => console.error('Firebase unique auth error:', err));
+      }
+      if (typeof firebase !== 'undefined' && firebase.firestore) {
+        loadCartFromFirestore(currentUser);
+      }
+    } catch (e) {
+      console.error('Error restoring phone user session on DOMContentLoaded:', e);
+    }
+  }
   
   // Debug: Check if productData is loaded
   console.log('DOM loaded - checking productData:', 
