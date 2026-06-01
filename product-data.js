@@ -3,8 +3,8 @@ const productData = [
   {
     slug: "ai-intelligent-robot",
     name: 'AI Peluche Intelligent Robot',
-    priceNum: 1,
-    price: '₹1',
+    priceNum: 1999,
+    price: '₹1999',
     img: 'assets/products/1.png',
     images: [
       'assets/products/1.png',
