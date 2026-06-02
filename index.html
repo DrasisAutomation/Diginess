@@ -315,13 +315,12 @@
   <div class="hero-container" id="heroContainer">
     <div class="hero-slide"><img src="assets/hero/1.png" alt="Tech lifestyle"></div>
     <div class="hero-slide"><img src="assets/hero/2.png" alt="Smart home"></div>
-    <div class="hero-slide"><img src="assets/hero/3.png" alt="Gadget setup"></div>
   </div>
   <div class="hero-text btn-text">Experience Innovation</div>
   <div class="hero-dots" id="heroDots">
     <button class="hero-dot active" onclick="goToHeroSlide(0)"></button>
     <button class="hero-dot" onclick="goToHeroSlide(1)"></button>
-    <button class="hero-dot" onclick="goToHeroSlide(2)"></button>
+    <!-- <button class="hero-dot" onclick="goToHeroSlide(2)"></button> -->
   </div>
   <button class="hero-pause" onclick="togglePause()" id="pauseBtn">
     <i class="fa-solid fa-pause"></i>
@@ -332,7 +331,7 @@
 <section class="products" id="shop">
   <div class="products-grid">
     <!-- Product 1 -->
-    <div class="product-card">
+    <div class="product-card" style="padding:10px;">
       <img src="assets/products/1.png" alt="AI Peluche Intelligent Robot" loading="lazy">
       <div class="product-mobile-actions">
         <button class="product-mobile-btn view-btn" onclick="event.stopPropagation(); goToProduct('ai-intelligent-robot')">
@@ -357,7 +356,7 @@
     </div>
 
     <!-- Product 2 -->
-    <div class="product-card">
+    <div class="product-card"  style="padding:10px;">
       <img src="assets/products/30.png" alt="Smart Lock Box" loading="lazy">
       <div class="product-mobile-actions">
         <button class="product-mobile-btn view-btn" onclick="event.stopPropagation(); goToProduct('smart-lock-box')">
@@ -382,7 +381,7 @@
     </div>
 
     <!-- Product 3 -->
-    <div class="product-card">
+    <div class="product-card" style="padding:10px;">
       <img src="assets/products/8.png" alt="LED Bluetooth T-Shirt" loading="lazy">
       <div class="product-mobile-actions">
         <button class="product-mobile-btn view-btn" onclick="event.stopPropagation(); goToProduct('led-bluetooth-tshirt')">
@@ -421,7 +420,6 @@
     <button class="bottom-dot active" onclick="goToBottomSlide(0)"></button>
     <button class="bottom-dot" onclick="goToBottomSlide(1)"></button>
     <button class="bottom-dot" onclick="goToBottomSlide(2)"></button>
-    <button class="bottom-dot" onclick="goToBottomSlide(3)"></button>
   </div>
 </section>
 
