@@ -287,6 +287,19 @@ window.addToBag = function(name, price, img) {
     return false;
   }
   
+  // Stock validation
+  if (typeof productData !== 'undefined') {
+    const product = productData.find(p => p.name === name);
+    if (product && window.productStocks && window.productStocks[product.slug]) {
+      const stock = window.productStocks[product.slug].available;
+      if (stock <= 0) {
+        window.showNotification('Sorry, this product is out of stock!');
+        if (event) event.stopPropagation();
+        return false;
+      }
+    }
+  }
+  
   // Find product in productData if available
   let priceNum = 0;
   if (typeof productData !== 'undefined') {
@@ -733,4 +746,184 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
+  
+  // Initialize stock subscription
+  subscribeToStockUpdates();
 });
+
+// ========== STOCK SYNC AND VALIDATION ==========
+window.productStocks = {};
+
+window.subscribeToStockUpdates = function() {
+  if (typeof firebase === 'undefined' || !firebase.firestore) {
+    console.warn('Firebase or Firestore not loaded yet for stock sync');
+    return;
+  }
+  const db = firebase.firestore();
+  
+  db.collection('stocks').onSnapshot((snapshot) => {
+    snapshot.forEach(doc => {
+      const slug = doc.id;
+      const data = doc.data();
+      const priceNum = typeof data.priceNum !== 'undefined' ? data.priceNum : 0;
+      window.productStocks[slug] = {
+        current: data.currentStock || 0,
+        available: data.availableStock || 0,
+        priceNum: priceNum
+      };
+      
+      // Update global productData array in memory
+      if (typeof productData !== 'undefined') {
+        const prod = productData.find(p => p.slug === slug);
+        if (prod) {
+          prod.priceNum = priceNum;
+          prod.price = '₹' + priceNum.toLocaleString();
+        }
+      }
+    });
+    
+    // Trigger UI updates based on stock
+    if (typeof window.updateStoreUIForStock === 'function') {
+      window.updateStoreUIForStock();
+    }
+  }, (error) => {
+    console.error('Error listening to stock updates:', error);
+  });
+};
+
+window.updateStoreUIForStock = function() {
+  // Update UI on products.html, index.html (grid of products)
+  const productCards = document.querySelectorAll('.product-card');
+  if (productCards.length > 0) {
+    productCards.forEach(card => {
+      let slug = '';
+      
+      // 1. Try finding slug from card level onclick goToProduct
+      const onclickAttr = card.getAttribute('onclick') || '';
+      let match = onclickAttr.match(/goToProduct\('([^']+)'\)/);
+      if (match) {
+        slug = match[1];
+      } else {
+        // 2. Search child elements (like View buttons) for goToProduct callback
+        const viewBtn = card.querySelector('[onclick*="goToProduct"]');
+        if (viewBtn) {
+          const btnOnclick = viewBtn.getAttribute('onclick') || '';
+          match = btnOnclick.match(/goToProduct\('([^']+)'\)/);
+          if (match) {
+            slug = match[1];
+          }
+        }
+      }
+      
+      // 3. Fallback: match by product name parameter inside addToBag function call
+      if (!slug) {
+        const addBtn = card.querySelector('[onclick*="addToBag"]');
+        if (addBtn) {
+          const addOnclick = addBtn.getAttribute('onclick') || '';
+          match = addOnclick.match(/addToBag\('([^']*)'/);
+          if (match && typeof productData !== 'undefined') {
+            const prodName = match[1];
+            const product = productData.find(p => p.name === prodName);
+            if (product) {
+              slug = product.slug;
+            }
+          }
+        }
+      }
+      
+      if (slug) {
+        const stockInfo = window.productStocks[slug];
+        if (stockInfo) {
+          const isOutOfStock = stockInfo.available <= 0;
+          const product = typeof productData !== 'undefined' ? productData.find(p => p.slug === slug) : null;
+          
+          // Update price in UI on card if product is found
+          if (product) {
+            const priceSpan = card.querySelector('.product-info span');
+            if (priceSpan) {
+              priceSpan.textContent = product.price;
+            }
+          }
+          
+          // Disable Add button in hover actions
+          const hoverAddBtn = card.querySelector('.btn-hover.add-to-bag');
+          if (hoverAddBtn) {
+            if (isOutOfStock) {
+              hoverAddBtn.innerHTML = '<i class="fas fa-ban"></i> Out of Stock';
+              hoverAddBtn.style.background = '#333';
+              hoverAddBtn.style.color = '#777';
+              hoverAddBtn.style.borderColor = '#333';
+              hoverAddBtn.style.cursor = 'not-allowed';
+              hoverAddBtn.setAttribute('onclick', 'event.stopPropagation(); return false;');
+            } else {
+              if (product) {
+                hoverAddBtn.innerHTML = '<i class="fas fa-shopping-bag"></i> Add';
+                hoverAddBtn.style.background = 'var(--primary)';
+                hoverAddBtn.style.color = '#0a0a0a';
+                hoverAddBtn.style.borderColor = 'var(--primary)';
+                hoverAddBtn.style.cursor = 'pointer';
+                hoverAddBtn.setAttribute('onclick', `event.stopPropagation(); addToBag('${product.name}','${product.price}','${product.img}')`);
+              }
+            }
+          }
+          
+          // Disable Add button in mobile actions (both checkmarks or buttons)
+          const mobileAddBtn = card.querySelector('.product-mobile-btn.add-btn');
+          if (mobileAddBtn) {
+            if (isOutOfStock) {
+              mobileAddBtn.innerHTML = '<i class="fas fa-ban" style="font-size: 14px; color: #ff5555;"></i>';
+              mobileAddBtn.style.cursor = 'not-allowed';
+              mobileAddBtn.setAttribute('onclick', 'event.stopPropagation(); return false;');
+            } else {
+              if (product) {
+                mobileAddBtn.innerHTML = '<i class="fas fa-plus"></i>';
+                mobileAddBtn.style.cursor = 'pointer';
+                mobileAddBtn.setAttribute('onclick', `event.stopPropagation(); addToBag('${product.name}','${product.price}','${product.img}')`);
+              }
+            }
+          }
+        }
+      }
+    });
+  }
+
+  // Update UI on product-detail.html
+  const urlParams = new URLSearchParams(window.location.search);
+  const currentSlug = urlParams.get('product');
+  if (currentSlug) {
+    const stockInfo = window.productStocks[currentSlug];
+    if (stockInfo) {
+      const isOutOfStock = stockInfo.available <= 0;
+      const product = typeof productData !== 'undefined' ? productData.find(p => p.slug === currentSlug) : null;
+      
+      // Update price text on detail page
+      if (product) {
+        const detailPrice = document.querySelector('.product-price');
+        if (detailPrice) {
+          detailPrice.textContent = product.price;
+        }
+      }
+      
+      const addToBagBtn = document.querySelector('.btn-add-to-bag');
+      if (addToBagBtn) {
+        if (isOutOfStock) {
+          addToBagBtn.innerHTML = '<i class="fas fa-ban"></i> Out of Stock';
+          addToBagBtn.style.background = '#333';
+          addToBagBtn.style.color = '#777';
+          addToBagBtn.style.cursor = 'not-allowed';
+          addToBagBtn.disabled = true;
+          addToBagBtn.setAttribute('onclick', 'return false;');
+        } else {
+          if (product) {
+            addToBagBtn.innerHTML = '<i class="fas fa-shopping-bag"></i> Add to Bag';
+            addToBagBtn.style.background = 'var(--primary)';
+            addToBagBtn.style.color = 'var(--primary-fg)';
+            addToBagBtn.style.cursor = 'pointer';
+            addToBagBtn.disabled = false;
+            addToBagBtn.setAttribute('onclick', `addToBag('${product.name}','${product.price}','${product.img}')`);
+          }
+        }
+      }
+    }
+  }
+};

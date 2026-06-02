@@ -87,6 +87,10 @@ h1,h2,h3,h4{font-weight:400;letter-spacing:.06em;text-transform:uppercase}
   margin:0;
   color: #fff;
   white-space:nowrap;
+  z-index:10;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 .header .logo svg{width:120px;height:auto;fill: currentColor; color: #fff; display: block; }
 .nav-left,
@@ -682,4 +686,21 @@ h1,h2,h3,h4{font-weight:400;letter-spacing:.06em;text-transform:uppercase}
 
 .auth-message{
   display: none;
+}
+
+/* ===== GLOBAL TABLES UX ===== */
+.table-container, .table-wrapper {
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+}
+table th, table td {
+  white-space: nowrap;
+}
+/* Wrapping exceptions for product details if needed */
+.product-name-title, 
+.product-name, 
+.product-details, 
+.product-title {
+  white-space: normal !important;
+  word-break: break-word;
 }

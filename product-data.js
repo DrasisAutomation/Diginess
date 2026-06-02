@@ -3,8 +3,6 @@ const productData = [
   {
     slug: "ai-intelligent-robot",
     name: 'AI Peluche Intelligent Robot',
-    priceNum: 1999,
-    price: '₹1999',
     img: 'assets/products/1.png',
     images: [
       'assets/products/1.png',
@@ -14,7 +12,6 @@ const productData = [
     description: `
       <h3>Interactive AI Intelligent Peluche Robot</h3>
       <p>Your friendly AI companion that speaks and engages in intelligent conversations with you. Perfect for all ages!</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>AI Powered Conversations:</strong> Natural language processing for friendly interactions</li>
@@ -24,7 +21,6 @@ const productData = [
         <li><strong>Multi-language Support:</strong> Communicate in multiple languages</li>
         <li><strong>USB Rechargeable:</strong> Long battery life for continuous play</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>AI Engine: Advanced NLP technology</li>
@@ -32,15 +28,12 @@ const productData = [
         <li>Charging: USB-C charging cable included</li>
         <li>Material: Soft premium plush with internal electronics</li>
       </ul>
-      
       <p>Make a new friend with DIGINESS AI Robot - Your personal intelligent companion!</p>
     `
   },
   {
     slug: "led-stylish-cap",
     name: 'LED Stylish Cap with Display',
-    priceNum: 1499,
-    price: '₹1,499',
     img: 'assets/products/3.png',
     images: [
       'assets/products/3.png',
@@ -51,7 +44,6 @@ const productData = [
     description: `
       <h3>Premium LED Display Cap</h3>
       <p>Stylish baseball cap with programmable LED display on the front. Create custom animations and messages!</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>Full LED Display:</strong> Bright, programmable LED panel on cap front</li>
@@ -61,7 +53,6 @@ const productData = [
         <li><strong>Stylish Design:</strong> Premium fabric with LED integration</li>
         <li><strong>Water Resistant:</strong> Splash-resistant electronics</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>LED Type: Full RGB programmable display</li>
@@ -69,15 +60,12 @@ const productData = [
         <li>Battery: Rechargeable lithium-ion, 12+ hours</li>
         <li>Charging: Micro-USB charging port</li>
       </ul>
-      
       <p>Stand out from the crowd with DIGINESS LED Cap - Express yourself with light!</p>
     `
   },
   {
     slug: "tactical-pen",
     name: 'Tactical Multi-Tool Pen',
-    priceNum: 899,
-    price: '₹899',
     img: 'assets/products/6.png',
     images: [
       'assets/products/6.png',
@@ -87,7 +75,6 @@ const productData = [
     description: `
       <h3>Professional Tactical Pen with Multiple Tools</h3>
       <p>An essential everyday carry tool combining pen, flashlight, blade, and glass breaker in one compact design.</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>Premium Writing:</strong> Smooth ballpoint pen for everyday writing</li>
@@ -97,7 +84,6 @@ const productData = [
         <li><strong>Robust Construction:</strong> Aircraft-grade aluminum body</li>
         <li><strong>Pocket Clip:</strong> Secure carrying clip for easy access</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>Material: Aircraft-grade aluminum alloy</li>
@@ -105,15 +91,12 @@ const productData = [
         <li>LED Power: 150+ lumens</li>
         <li>Battery: Two AAA batteries included</li>
       </ul>
-      
       <p>Your ultimate multi-tool companion from DIGINESS - Always ready for any situation!</p>
     `
   },
   {
     slug: "led-bluetooth-tshirt",
     name: 'LED Bluetooth T-Shirt',
-    priceNum: 2499,
-    price: '₹2,499',
     img: 'assets/products/8.png',
     images: [
       'assets/products/8.png',
@@ -123,7 +106,6 @@ const productData = [
     description: `
       <h3>Smart LED Display T-Shirt</h3>
       <p>Revolutionary wearable technology - a comfortable t-shirt with a full front LED display for animations and messages.</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>LED Front Display:</strong> Programmable RGB LED grid on chest area</li>
@@ -133,7 +115,6 @@ const productData = [
         <li><strong>Comfortable Fit:</strong> Premium cotton blend fabric</li>
         <li><strong>Long Battery:</strong> 10+ hours of continuous display</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>Material: 70% Cotton, 30% Polyester blend</li>
@@ -142,15 +123,12 @@ const productData = [
         <li>Connectivity: Bluetooth 5.0</li>
         <li>Available Sizes: XS to XXL</li>
       </ul>
-      
       <p>Express your style in motion with DIGINESS LED T-Shirt - Tech fashion reimagined!</p>
     `
   },
   {
     slug: "car-power-inverter",
     name: 'Car Power Inverter 220V Converter',
-    priceNum: 3499,
-    price: '₹3,499',
     img: 'assets/products/10.png',
     images: [
       'assets/products/10.png',
@@ -160,7 +138,6 @@ const productData = [
     description: `
       <h3>Premium Car Power Inverter with USB Sockets</h3>
       <p>Convert your car's 12V DC power to 220V AC power for all your devices on the road!</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>DC to AC Conversion:</strong> 12V to 220V efficient power conversion</li>
@@ -170,7 +147,6 @@ const productData = [
         <li><strong>Compact Design:</strong> Fits easily in car cup holder</li>
         <li><strong>LED Display:</strong> Real-time voltage and power monitoring</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>Input: 12V DC car battery</li>
@@ -179,15 +155,12 @@ const productData = [
         <li>Efficiency: 94% power conversion</li>
         <li>Cooling: Built-in cooling fan</li>
       </ul>
-      
       <p>Never run out of power on long drives with DIGINESS Car Inverter - Power on the go!</p>
     `
   },
   {
     slug: "mini-hygrometer",
     name: 'Mini Digital Hygrometer',
-    priceNum: 599,
-    price: '₹599',
     img: 'assets/products/12.png',
     images: [
       'assets/products/12.png',
@@ -197,7 +170,6 @@ const productData = [
     description: `
       <h3>Digital Hygrometer - Temperature & Humidity Monitor</h3>
       <p>Compact device that displays real-time room temperature and humidity levels with precision sensors.</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>Dual Display:</strong> Shows temperature and humidity simultaneously</li>
@@ -207,7 +179,6 @@ const productData = [
         <li><strong>Compact Design:</strong> Fits anywhere - desk, shelf, or wall-mounted</li>
         <li><strong>Long Battery Life:</strong> 12+ months on two AAA batteries</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>Temperature Range: -10°C to +50°C</li>
@@ -216,15 +187,12 @@ const productData = [
         <li>Power: 2x AAA batteries (included)</li>
         <li>Dimensions: Compact pocket size</li>
       </ul>
-      
       <p>Monitor your room conditions perfectly with DIGINESS Hygrometer - Small device, big comfort!</p>
     `
   },
   {
     slug: "magnetic-super-pen",
     name: 'Magnetic Super Pen',
-    priceNum: 749,
-    price: '₹749',
     img: 'assets/products/14.png',
     images: [
       'assets/products/14.png',
@@ -234,7 +202,6 @@ const productData = [
     description: `
       <h3>Premium Magnetic Super Pen with Magnetic Page</h3>
       <p>Stylish pen with powerful magnetic properties - sticks to any metal surface for convenient desk organization and unique decoration.</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>Strong Magnetic Base:</strong> Adheres to any ferrous metal surface</li>
@@ -244,7 +211,6 @@ const productData = [
         <li><strong>Desk Decor:</strong> Modern design that enhances any workspace</li>
         <li><strong>Multiple Colors:</strong> Available in various stylish finishes</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>Material: Premium aluminum and steel</li>
@@ -253,15 +219,12 @@ const productData = [
         <li>Dimensions: Standard pen size (6 inches)</li>
         <li>Weight: Balanced for comfortable writing</li>
       </ul>
-      
       <p>Add magnetism to your desk with DIGINESS Magnetic Super Pen - Form meets function!</p>
     `
   },
   {
     slug: "magnetic-floating-pen",
     name: 'Magnetic Floating Pen with Base',
-    priceNum: 1299,
-    price: '₹1,299',
     img: 'assets/products/16.png',
     images: [
       'assets/products/16.png',
@@ -272,7 +235,6 @@ const productData = [
     description: `
       <h3>Magnetic Floating Pen Display with Premium Base</h3>
       <p>Watch your pen float effortlessly in mid-air with our magnetic levitation technology - a stunning desk decoration.</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>Magnetic Levitation:</strong> Pen floats silently in the magnetic field</li>
@@ -282,7 +244,6 @@ const productData = [
         <li><strong>Desk Showpiece:</strong> Modern art meets functionality</li>
         <li><strong>USB Powered:</strong> Powers the magnetic levitation system</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>Levitation Technology: Electromagnetic suspension</li>
@@ -291,15 +252,12 @@ const productData = [
         <li>Floating Height: 2-3 inches above base</li>
         <li>Display Stability: Rotating and hovering capabilities</li>
       </ul>
-      
       <p>Defy gravity with DIGINESS Magnetic Floating Pen - Innovation as a decorative art!</p>
     `
   },
   {
     slug: "type-c-lighter",
     name: 'USB Type-C Lighter',
-    priceNum: 699,
-    price: '₹699',
     img: 'assets/products/19.png',
     images: [
       'assets/products/19.png'
@@ -308,7 +266,6 @@ const productData = [
     description: `
       <h3>Modern USB Type-C Rechargeable Lighter</h3>
       <p>Innovative rechargeable lighter that charges via USB Type-C - no fuel or flint needed!</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>USB Type-C Charging:</strong> Charges from your phone charger or power bank</li>
@@ -318,7 +275,6 @@ const productData = [
         <li><strong>Compact Size:</strong> Pocket-friendly design</li>
         <li><strong>Eco-Friendly:</strong> No fuel, butane, or flint required</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>Ignition: Electric arc technology</li>
@@ -327,15 +283,12 @@ const productData = [
         <li>Uses: 50+ per charge</li>
         <li>Material: Premium stainless steel</li>
       </ul>
-      
       <p>The future of lighting with DIGINESS USB Lighter - Tech meets practicality!</p>
     `
   },
   {
     slug: "nas-256gb",
     name: '256GB NAS Private Cloud Storage',
-    priceNum: 12999,
-    price: '₹12,999',
     img: 'assets/products/20.png',
     images: [
       'assets/products/20.png',
@@ -345,7 +298,6 @@ const productData = [
     description: `
       <h3>Personal 256GB NAS - Your Private Cloud</h3>
       <p>Enterprise-grade Network-Attached Storage for secure, personal cloud storage and backup solutions.</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>256GB Storage:</strong> Massive capacity for all your files</li>
@@ -355,7 +307,6 @@ const productData = [
         <li><strong>Multiple Users:</strong> Share files with family and colleagues securely</li>
         <li><strong>Mobile Apps:</strong> Seamless access from iOS and Android devices</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>Storage: 256GB total capacity</li>
@@ -364,15 +315,12 @@ const productData = [
         <li>Users: Up to 64 concurrent users</li>
         <li>Power: Energy-efficient 24/7 operation</li>
       </ul>
-      
       <p>Your data, your rules with DIGINESS NAS - Ultimate privacy and accessibility!</p>
     `
   },
   {
     slug: "laser-measuring-device",
     name: 'Digital Laser Measuring Device',
-    priceNum: 2199,
-    price: '₹2,199',
     img: 'assets/products/22.png',
     images: [
       'assets/products/22.png',
@@ -382,7 +330,6 @@ const productData = [
     description: `
       <h3>Compact Laser Distance Measuring Device</h3>
       <p>Professional-grade digital laser measurement tool for precision measurements up to 100 meters away.</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>Laser Precision:</strong> Accurate measurements up to 100m distance</li>
@@ -392,7 +339,6 @@ const productData = [
         <li><strong>Backlit Display:</strong> Works in low light conditions</li>
         <li><strong>Data Storage:</strong> Save and recall up to 20 measurements</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>Range: Up to 100 meters</li>
@@ -401,15 +347,12 @@ const productData = [
         <li>Display: LCD with backlight</li>
         <li>Battery: 2x AAA batteries included</li>
       </ul>
-      
       <p>Measure with precision using DIGINESS Laser Meter - Professional accuracy in your hands!</p>
     `
   },
   {
     slug: "mini-bluetooth-mouse",
     name: 'Mini Bluetooth Mouse Card Reader',
-    priceNum: 1099,
-    price: '₹1,099',
     img: 'assets/products/24.png',
     images: [
       'assets/products/24.png',
@@ -419,7 +362,6 @@ const productData = [
     description: `
       <h3>Ultra-Thin Bluetooth Mouse with Card Reader</h3>
       <p>Thinner than a credit card, this Bluetooth mouse also features a built-in card reader for convenience.</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>Card Thin Design:</strong> Slimmer than any traditional mouse</li>
@@ -429,7 +371,6 @@ const productData = [
         <li><strong>Portable:</strong> Lightweight, fits in shirt pocket</li>
         <li><strong>Long Battery:</strong> 3+ months on a single charge</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>Thickness: 5mm (thinner than credit card)</li>
@@ -438,15 +379,12 @@ const productData = [
         <li>Battery: Rechargeable lithium, lasts 3 months</li>
         <li>Compatibility: Windows, macOS, iOS, Android</li>
       </ul>
-      
       <p>Ultimate portability with DIGINESS Card Mouse - Innovation in thinness!</p>
     `
   },
   {
     slug: "desk-calendar",
     name: 'Stainless Steel Perpetual Desk Calendar',
-    priceNum: 849,
-    price: '₹849',
     img: 'assets/products/26.png',
     images: [
       'assets/products/26.png',
@@ -456,7 +394,6 @@ const productData = [
     description: `
       <h3>Premium Stainless Steel Desktop Calendar</h3>
       <p>Elegant perpetual calendar made of premium stainless steel - works for any year, forever!</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>Perpetual Design:</strong> Valid for all upcoming years, no need to replace</li>
@@ -466,7 +403,6 @@ const productData = [
         <li><strong>Professional Look:</strong> Modern minimalist design</li>
         <li><strong>Desk Organizer:</strong> Great gift and workspace accessory</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>Material: Premium stainless steel</li>
@@ -475,15 +411,12 @@ const productData = [
         <li>Components: Magnetic date and day tiles</li>
         <li>Finishing: Polished matte finish</li>
       </ul>
-      
       <p>Stay organized in style with DIGINESS Steel Calendar - Elegance that lasts forever!</p>
     `
   },
   {
     slug: "professional-screwdriver-set",
     name: 'Professional Electric Screwdriver Set',
-    priceNum: 2899,
-    price: '₹2,899',
     img: 'assets/products/28.png',
     images: [
       'assets/products/28.png',
@@ -493,7 +426,6 @@ const productData = [
     description: `
       <h3>Complete Electric Screwdriver Set with 80+ Bits</h3>
       <p>Professional-grade cordless electric screwdriver with comprehensive bit set, tweezers, and spudger tools.</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>Electric Power:</strong> Cordless rechargeable operation</li>
@@ -503,7 +435,6 @@ const productData = [
         <li><strong>Plus Accessories:</strong> Tweezers, spudger, and precision tools included</li>
         <li><strong>Compact Design:</strong> Comfortable grip, travel-friendly</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>Motor: Brushless electric motor</li>
@@ -513,15 +444,12 @@ const productData = [
         <li>Charging: USB-C, fully charges in 2 hours</li>
         <li>Torque: Adjustable from 0.4 to 0.8 N·m</li>
       </ul>
-      
       <p>Every repair made easy with DIGINESS Pro Screwdriver Set - Complete solution for any job!</p>
     `
   },
   {
     slug: "smart-lock-box",
     name: 'Smart Biometric Lock Box',
-    priceNum: 4999,
-    price: '₹4,999',
     img: 'assets/products/30.png',
     images: [
       'assets/products/30.png'
@@ -530,7 +458,6 @@ const productData = [
     description: `
       <h3>Intelligent Biometric Smart Lock Box</h3>
       <p>Secure your valuables with advanced biometric technology - works for doors, drawers, and grills!</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>Biometric Security:</strong> Fingerprint recognition for authorized access</li>
@@ -540,7 +467,6 @@ const productData = [
         <li><strong>Anti-Tamper:</strong> Alarm triggers on unauthorized attempts</li>
         <li><strong>Durable Build:</strong> Heavy-duty steel construction</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>Security Type: Biometric fingerprint + PIN backup</li>
@@ -550,15 +476,12 @@ const productData = [
         <li>Power: Rechargeable battery, 6+ months per charge</li>
         <li>Alarm: Audio alert on unauthorized attempts</li>
       </ul>
-      
       <p>Protect what matters with DIGINESS Smart Lock Box - Security in your hands!</p>
     `
   },
   {
     slug: "smart-display-pen",
     name: 'Smart Display Pen with Usage Tracker',
-    priceNum: 1899,
-    price: '₹1,899',
     img: 'assets/products/31.png',
     images: [
       'assets/products/31.png',
@@ -568,7 +491,6 @@ const productData = [
     description: `
       <h3>Intelligent Pen with Built-in Usage Display</h3>
       <p>Track your writing time with this innovative pen that displays daily usage hours on its built-in screen.</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>Display Screen:</strong> Shows writing hours and usage statistics</li>
@@ -578,7 +500,6 @@ const productData = [
         <li><strong>Data Analytics:</strong> Weekly and monthly usage reports</li>
         <li><strong>Stylish Design:</strong> Modern pen with tech integration</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>Display: Small OLED screen for stats</li>
@@ -588,15 +509,12 @@ const productData = [
         <li>Storage: Cloud sync of usage data</li>
         <li>Material: Premium aluminum and plastic</li>
       </ul>
-      
       <p>Know your productivity with DIGINESS Smart Pen - Track, write, and improve!</p>
     `
   },
   {
     slug: "magnetic-doorbell",
     name: 'Magnetic Smart Doorbell',
-    priceNum: 1599,
-    price: '₹1,599',
     img: 'assets/products/33.png',
     images: [
       'assets/products/33.png',
@@ -606,7 +524,6 @@ const productData = [
     description: `
       <h3>Magnetic Smart Doorbell with Motion Alert</h3>
       <p>Easy-to-install doorbell with magnetic mounting - triggers bell sound on door movement.</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>Magnetic Installation:</strong> No drilling - simply attach to metal door</li>
@@ -616,7 +533,6 @@ const productData = [
         <li><strong>Easy Removal:</strong> Take off anytime, leave no traces</li>
         <li><strong>Weather-Proof:</strong> Works in all weather conditions</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>Installation: Magnetic, no tools needed</li>
@@ -626,15 +542,12 @@ const productData = [
         <li>Power: Rechargeable battery, 30+ days</li>
         <li>Frequency: 433 MHz</li>
       </ul>
-      
       <p>Smart security meets convenience with DIGINESS Magnetic Doorbell - Instant alerts!</p>
     `
   },
   {
     slug: "2in1-comb",
     name: '2-in-1 Multi-Function Comb',
-    priceNum: 499,
-    price: '₹499',
     img: 'assets/products/35.png',
     images: [
       'assets/products/35.png'
@@ -643,7 +556,6 @@ const productData = [
     description: `
       <h3>Multi-Purpose 2-in-1 Smart Comb</h3>
       <p>Innovative comb with dual functionality - hair comb and styling tool in one compact design.</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>Dual Design:</strong> Two combing surfaces for different hair types</li>
@@ -653,7 +565,6 @@ const productData = [
         <li><strong>Ergonomic Grip:</strong> Comfortable to hold for extended use</li>
         <li><strong>Durable Material:</strong> Premium quality construction</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>Material: Premium eco-friendly polymer</li>
@@ -662,15 +573,12 @@ const productData = [
         <li>Weight: Ultra-lightweight</li>
         <li>Design: Ergonomic with dual-function surfaces</li>
       </ul>
-      
       <p>Groom with ease using DIGINESS 2-in-1 Comb - Simplicity meets functionality!</p>
     `
   },
   {
     slug: "ultra-thin-powerbank",
     name: 'Ultra-Thin Power Bank 2650mAh',
-    priceNum: 999,
-    price: '₹999',
     img: 'assets/products/36.png',
     images: [
       'assets/products/36.png'
@@ -679,7 +587,6 @@ const productData = [
     description: `
       <h3>Ultra-Slim Power Bank - 2650mAh Capacity</h3>
       <p>Thinner and lighter than your smartphone - the most portable charging solution on the market.</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>Ultra-Thin Design:</strong> Slimmer than most phones, weighs just 95g</li>
@@ -689,7 +596,6 @@ const productData = [
         <li><strong>LED Indicator:</strong> Battery level display</li>
         <li><strong>Premium Build:</strong> Metal and aluminum construction</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>Capacity: 2650mAh (10Wh)</li>
@@ -699,15 +605,12 @@ const productData = [
         <li>Input: USB-C charging</li>
         <li>Charging Time: 1 hour from 0-100%</li>
       </ul>
-      
       <p>Stay charged, stay thin with DIGINESS Ultra Power Bank - Portability redefined!</p>
     `
   },
   {
     slug: 'fingerprint-clutch-purse',
     name: 'Fingerprint Clutch Purse',
-    priceNum: 1299,
-    price: '₹1,299',
     img: 'assets/products/37.png',
     images: [
       'assets/products/37.png'
@@ -716,7 +619,6 @@ const productData = [
     description: `
       <h3>Smart Fingerprint Clutch Purse</h3>
       <p>Secure your essentials with a sleek clutch purse that opens only with your fingerprint.</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>Fingerprint Lock:</strong> Quick biometric access for added security</li>
@@ -725,7 +627,6 @@ const productData = [
         <li><strong>Multiple Compartments:</strong> Holds cards, cash, and phone safely</li>
         <li><strong>LED Status:</strong> Indicator light for lock/unlock state</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>Lock Type: Biometric fingerprint sensor</li>
@@ -733,15 +634,12 @@ const productData = [
         <li>Capacity: Cards, cash, and small essentials</li>
         <li>Material: High-grade synthetic leather</li>
       </ul>
-      
       <p>A secure and stylish clutch for on-the-go moments.</p>
     `
   },
   {
     slug: 'fingerprint-handbag',
     name: 'Fingerprint Hand Bag',
-    priceNum: 1799,
-    price: '₹1,799',
     img: 'assets/products/38.png',
     images: [
       'assets/products/38.png'
@@ -750,7 +648,6 @@ const productData = [
     description: `
       <h3>Fingerprint Secure Hand Bag</h3>
       <p>A premium handbag with biometric locking for fashionable security.</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>Secure Biometric Access:</strong> Open instantly with your fingerprint</li>
@@ -758,22 +655,18 @@ const productData = [
         <li><strong>Extra Pockets:</strong> Organized storage for phone, wallet, and keys</li>
         <li><strong>Comfortable Handles:</strong> Easy to carry all day</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>Lock Type: Fingerprint sensor</li>
         <li>Material: Premium vegan leather</li>
         <li>Dimensions: Spacious everyday carry fit</li>
       </ul>
-      
       <p>Secure style for the modern woman who values both fashion and safety.</p>
     `
   },
   {
     slug: 'fingerprint-backpack',
     name: 'Fingerprint Backpack',
-    priceNum: 2399,
-    price: '₹2,399',
     img: 'assets/products/39.png',
     images: [
       'assets/products/39.png'
@@ -782,7 +675,6 @@ const productData = [
     description: `
       <h3>Fingerprint Secure Backpack</h3>
       <p>Carry your essentials with confidence in a backpack protected by biometric locking.</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>Fingerprint Lock:</strong> Fast unlocking and superior security</li>
@@ -790,22 +682,18 @@ const productData = [
         <li><strong>Comfort Padding:</strong> Ergonomic straps for long wear</li>
         <li><strong>Water Resistant:</strong> Keeps your belongings safe from light rain</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>Lock Type: Biometric fingerprint sensor</li>
         <li>Material: Durable fabric with water resistance</li>
         <li>Capacity: Large everyday backpack</li>
       </ul>
-      
       <p>Perfect for smart travelers and commuters who need security and comfort.</p>
     `
   },
   {
     slug: 'yumi-ai-intelligent-toy',
     name: 'Yumi AI Intelligent Toy',
-    priceNum: 2199,
-    price: '₹2,199',
     img: 'assets/products/40.png',
     images: [
       'assets/products/40.png'
@@ -814,7 +702,6 @@ const productData = [
     description: `
       <h3>Yumi AI Intelligent Toy</h3>
       <p>A playful AI companion with learning features and interactive responses.</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>Smart Interaction:</strong> Responds to voice and gestures</li>
@@ -822,22 +709,18 @@ const productData = [
         <li><strong>Safe for Kids:</strong> Soft design with durable construction</li>
         <li><strong>Fun Activities:</strong> Games, stories, and educational play</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>AI Type: Interactive companion intelligence</li>
         <li>Battery: Rechargeable with USB-C</li>
         <li>Age Range: Suitable for children and families</li>
       </ul>
-      
       <p>Yumi brings smart play and learning together in one adorable toy.</p>
     `
   },
   {
     slug: 'ct-plus-scientific-calculator',
     name: 'CT Plus Scientific Calculator',
-    priceNum: 799,
-    price: '₹799',
     img: 'assets/products/41.png',
     images: [
       'assets/products/41.png'
@@ -846,7 +729,6 @@ const productData = [
     description: `
       <h3>CT Plus Scientific Calculator</h3>
       <p>High-precision calculator for students, engineers, and professionals.</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>Scientific Functions:</strong> Includes trigonometry, logarithms, and statistics</li>
@@ -854,22 +736,18 @@ const productData = [
         <li><strong>Solar + Battery:</strong> Dual power backup for reliability</li>
         <li><strong>Compact Design:</strong> Lightweight and portable</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>Display: Multi-line LCD</li>
         <li>Power: Solar panel with battery backup</li>
         <li>Functions: 240+ scientific operations</li>
       </ul>
-      
       <p>Smart, precise calculation for study and work.</p>
     `
   },
   {
     slug: 'escult-premium-smart-switches',
     name: 'Escult Premium Smart Switches',
-    priceNum: 1499,
-    price: '₹1,499',
     img: 'assets/products/42.png',
     images: [
       'assets/products/42.png'
@@ -878,7 +756,6 @@ const productData = [
     description: `
       <h3>Escult Premium Smart Switches</h3>
       <p>Modern smart switches that combine style, performance, and home automation control.</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>Touch Control:</strong> Smooth touch buttons for lights and fans</li>
@@ -886,22 +763,18 @@ const productData = [
         <li><strong>Premium Finish:</strong> Sleek glass surface for luxury rooms</li>
         <li><strong>Remote Access:</strong> Control from your phone</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>Compatibility: WiFi-enabled smart home systems</li>
         <li>Power: 220V AC</li>
         <li>Installation: Standard wall switch box</li>
       </ul>
-      
       <p>Upgrade any room with intelligent, premium home controls.</p>
     `
   },
   {
     slug: 'lumi-glass-smart-switches',
     name: 'Lumi Glass Smart Switches',
-    priceNum: 1599,
-    price: '₹1,599',
     img: 'assets/products/43.png',
     images: [
       'assets/products/43.png'
@@ -910,7 +783,6 @@ const productData = [
     description: `
       <h3>Lumi Glass Smart Switches</h3>
       <p>Elegant glass-panel switches for smart lighting and scene control.</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>Glass Touch Panel:</strong> Premium look and smooth touch feedback</li>
@@ -918,22 +790,18 @@ const productData = [
         <li><strong>Custom Scenes:</strong> Program multiple lighting scenes</li>
         <li><strong>Easy Installation:</strong> Fits standard switch boxes</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>Compatibility: WiFi + smart assistant support</li>
         <li>Capacity: 16A switches</li>
         <li>Material: Tempered glass touch panel</li>
       </ul>
-      
       <p>Beautiful glass switches for modern smart homes.</p>
     `
   },
   {
     slug: 'lumi-knx-ai-display',
     name: 'Lumi KNX AI Display',
-    priceNum: 2999,
-    price: '₹2,999',
     img: 'assets/products/44.png',
     images: [
       'assets/products/44.png'
@@ -942,7 +810,6 @@ const productData = [
     description: `
       <h3>Lumi KNX AI Display</h3>
       <p>AI-powered home control display with KNX integration for advanced smart environments.</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>AI Home Automation:</strong> Smart control for lights, climate, and security</li>
@@ -950,22 +817,18 @@ const productData = [
         <li><strong>Interactive Display:</strong> Touchscreen interface for easy management</li>
         <li><strong>Voice Control:</strong> Built-in voice assistant support</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>Screen: Touch-enabled color display</li>
         <li>Connectivity: KNX, WiFi, Bluetooth</li>
         <li>Power: Wired installation</li>
       </ul>
-      
       <p>Advanced smart building display for modern homes and offices.</p>
     `
   },
   {
     slug: 'lumi-duo-quad-tactile',
     name: 'Lumi Duo Quad Tactile',
-    priceNum: 1699,
-    price: '₹1,699',
     img: 'assets/products/45.png',
     images: [
       'assets/products/45.png'
@@ -974,7 +837,6 @@ const productData = [
     description: `
       <h3>Lumi Duo Quad Tactile</h3>
       <p>Multi-button tactile switch panel designed for flexible smart lighting control.</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>Quad Control:</strong> Four tactile buttons for room scenes and devices</li>
@@ -982,22 +844,18 @@ const productData = [
         <li><strong>Elegant Finish:</strong> Durable matte surface for premium feel</li>
         <li><strong>Programmable:</strong> Customizable button actions</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>Compatibility: Smart home automation protocols</li>
         <li>Buttons: Four tactile controls</li>
         <li>Installation: Wall-mounted switch panel</li>
       </ul>
-      
       <p>Powerful smart switch panel for intuitive room control.</p>
     `
   },
   {
     slug: 'lumi-versa-smart-switches',
     name: 'Lumi Versa Smart Switches',
-    priceNum: 1799,
-    price: '₹1,799',
     img: 'assets/products/48.png',
     images: [
       'assets/products/48.png'
@@ -1006,7 +864,6 @@ const productData = [
     description: `
       <h3>Lumi Versa Smart Switches</h3>
       <p>Versatile smart switches built for reliable lighting and device automation.</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>Versatile Control:</strong> Supports multiple load types and scenes</li>
@@ -1014,22 +871,18 @@ const productData = [
         <li><strong>Durable Design:</strong> Engineered for consistent performance</li>
         <li><strong>Energy Monitoring:</strong> Tracks power usage when paired with smart systems</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>Compatibility: Smart home systems and voice assistants</li>
         <li>Capacity: Suitable for home lighting and appliances</li>
         <li>Installation: Standard switch box</li>
       </ul>
-      
       <p>Reliable and flexible smart switches for every room in the house.</p>
     `
   },
   {
     slug: 'smartgreeter-sense',
     name: 'SmartGreeter Sense',
-    priceNum: 8499,
-    price: '₹8,499',
     img: 'assets/products/46.png',
     images: [
       'assets/products/46.png'
@@ -1038,7 +891,6 @@ const productData = [
     description: `
       <h3>SmartGreeter Sense</h3>
       <p>An intelligent visitor engagement robot that detects arrivals and delivers personalized welcome messages.</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>Presence Detection:</strong> Detects human movement in reception areas</li>
@@ -1046,22 +898,18 @@ const productData = [
         <li><strong>Reception Ready:</strong> Ideal for offices, showrooms, and smart buildings</li>
         <li><strong>Engaging Design:</strong> Friendly robot interface for guest interactions</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>Function: Visitor engagement and welcome messaging</li>
         <li>Connectivity: WiFi-enabled</li>
         <li>Power: Rechargeable battery or plug-in</li>
       </ul>
-      
       <p>Enhance first impressions with smart reception automation.</p>
     `
   },
   {
     slug: 'scooter-luggage-trolley',
     name: 'Scooter Luggage Trolley',
-    priceNum: 6499,
-    price: '₹6,499',
     img: 'assets/products/47.png',
     images: [
       'assets/products/47.png'
@@ -1070,7 +918,6 @@ const productData = [
     description: `
       <h3>Scooter Luggage Trolley</h3>
       <p>A smart luggage trolley that drives you through airports and stations with ease.</p>
-      
       <h4>Key Features:</h4>
       <ul>
         <li><strong>Motorized Ride:</strong> Drive your luggage for hands-free travel</li>
@@ -1078,14 +925,12 @@ const productData = [
         <li><strong>Sturdy Frame:</strong> Durable construction for frequent journeys</li>
         <li><strong>Storage Capacity:</strong> Plenty of room for essentials and carry-on gear</li>
       </ul>
-      
       <h4>Specifications:</h4>
       <ul>
         <li>Mode: Electric scooter luggage trolley</li>
         <li>Battery: Rechargeable battery pack</li>
         <li>Capacity: Travel-size luggage compartment</li>
       </ul>
-      
       <p>Travel smarter with luggage that moves with you.</p>
     `
   }
