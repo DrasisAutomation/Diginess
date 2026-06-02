@@ -34,6 +34,23 @@
   position: sticky;
   top: calc(var(--header-h) + 20px);
   border: 1px solid var(--border-light);
+  max-height: calc(100vh - var(--header-h) - 40px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+/* Style the scrollbar to make it look premium and slim */
+.filter-sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+.filter-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.filter-sidebar::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 2px;
+}
+.filter-sidebar::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
 }
 .filter-sidebar h3 {
   font-size: 13px;
@@ -68,20 +85,92 @@
   width: 14px;
   height: 14px;
 }
-.price-range {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-.price-range input[type="range"] {
+.price-slider-container {
+  position: relative;
   width: 100%;
-  accent-color: var(--primary);
+  height: 24px;
+  margin-bottom: 4px;
+}
+.price-slider-container input[type="range"] {
+  position: absolute;
+  pointer-events: none;
+  -webkit-appearance: none;
+  appearance: none;
+  width: calc(100% + 16px);
+  left: -8px;
+  height: 6px;
+  background: none;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0;
+  outline: none;
+}
+/* Ensure track is transparent */
+.price-slider-container input[type="range"]::-webkit-slider-runnable-track {
+  -webkit-appearance: none;
+  height: 6px;
+  background: transparent;
+}
+.price-slider-container input[type="range"]::-moz-range-track {
+  height: 6px;
+  background: transparent;
+}
+
+/* Enable pointer events on the thumbs only */
+.price-slider-container input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  pointer-events: auto;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--primary);
+  border: 2px solid #0a0a0a;
+  cursor: pointer;
+  z-index: 2;
+  position: relative;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+  box-shadow: 0 0 4px rgba(0,0,0,0.5);
+  margin-top: -5px;
+}
+.price-slider-container input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  background: #fff;
+}
+.price-slider-container input[type="range"]::-moz-range-thumb {
+  pointer-events: auto;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--primary);
+  border: 2px solid #0a0a0a;
+  cursor: pointer;
+  z-index: 2;
+  position: relative;
+  transition: transform 0.15s ease, background-color 0.15s ease;
+  box-shadow: 0 0 4px rgba(0,0,0,0.5);
+}
+.price-slider-container input[type="range"]::-moz-range-thumb:hover {
+  transform: scale(1.2);
+  background: #fff;
+}
+
+/* Track background */
+.slider-track {
+  position: absolute;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: #333;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
 }
 .range-values {
   display: flex;
   justify-content: space-between;
   font-size: 11px;
   color: #aaa;
+  margin-top: 8px;
 }
 .sort-radio {
   display: flex;
@@ -330,13 +419,14 @@
 <header class="header" id="mainHeader">
   <div class="header-inner">
     <nav class="nav-left">
+      <a href="index.html" class="nav-link btn-text desktop-only">Home</a>
       <a href="products.html" class="nav-link btn-text">Shop All</a>
       <button class="mobile-menu-btn btn-text" onclick="openMenu()">
         <i class="fas fa-bars"></i> Menu
       </button>
     </nav>
-    <div style="position: absolute; left: 50%; top: 50%; transform: translate(-43%, -50%);">
-      <a href="products.html" class="logo" style="position: static; transform: none; margin: 0;">
+    <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+      <a href="index.html" class="logo" style="position: static; transform: none; margin: 0;">
         <img src="assets/logo.png" alt="Diginess" width="120">
       </a>
     </div>
@@ -424,13 +514,14 @@
 
   <div class="filter-group">
     <h4>PRICE RANGE (₹)</h4>
-    <div class="price-range">
-      <input type="range" id="mobileMinPrice" min="0" max="40000" step="500" value="0" oninput="updateMobileRange()" onchange="applyMobileFilters()">
-      <input type="range" id="mobileMaxPrice" min="0" max="40000" step="500" value="40000" oninput="updateMobileRange()" onchange="applyMobileFilters()">
-      <div class="range-values">
-        <span id="mobileMinVal">₹0</span>
-        <span id="mobileMaxVal">₹40,000+</span>
-      </div>
+    <div class="price-slider-container">
+      <div class="slider-track" id="mobileSliderTrack"></div>
+      <input type="range" id="mobileMinPrice" min="0" max="40000" step="500" value="0" oninput="updateMobileRange(); applyMobileFilters()">
+      <input type="range" id="mobileMaxPrice" min="0" max="40000" step="500" value="40000" oninput="updateMobileRange(); applyMobileFilters()">
+    </div>
+    <div class="range-values">
+      <span id="mobileMinVal">₹0</span>
+      <span id="mobileMaxVal">₹40,000+</span>
     </div>
   </div>
 
@@ -464,13 +555,14 @@
     </div>
     <div class="filter-group">
       <h4>PRICE RANGE (₹)</h4>
-      <div class="price-range">
-        <input type="range" id="minPrice" min="0" max="40000" step="500" value="0" oninput="updateRange()" onchange="applyFilters()">
-        <input type="range" id="maxPrice" min="0" max="40000" step="500" value="40000" oninput="updateRange()" onchange="applyFilters()">
-        <div class="range-values">
-          <span id="minVal">₹0</span>
-          <span id="maxVal">₹40,000+</span>
-        </div>
+      <div class="price-slider-container">
+        <div class="slider-track" id="sliderTrack"></div>
+        <input type="range" id="minPrice" min="0" max="40000" step="500" value="0" oninput="updateRange(); applyFilters()">
+        <input type="range" id="maxPrice" min="0" max="40000" step="500" value="40000" oninput="updateRange(); applyFilters()">
+      </div>
+      <div class="range-values">
+        <span id="minVal">₹0</span>
+        <span id="maxVal">₹40,000+</span>
       </div>
     </div>
     <div class="filter-group">
@@ -527,6 +619,7 @@
   <div class="footer-bottom">
     <div class="footer-socials">
       <a href="https://www.instagram.com/diginess.store/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+      <a href="https://www.facebook.com/diginess.store/" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
     </div>
     <span>© 2026 Diginess. All rights reserved.</span>
   </div>
@@ -838,11 +931,35 @@ function applyFilters() {
 }
 
 function updateRange() {
-  let min = parseInt(document.getElementById('minPrice').value);
-  let max = parseInt(document.getElementById('maxPrice').value);
-  if (min > max) { [min, max] = [max, min]; }
-  document.getElementById('minVal').innerText = '₹' + min.toLocaleString();
-  document.getElementById('maxVal').innerText = max >= 40000 ? '₹40,000+' : '₹' + max.toLocaleString();
+  const minPriceInput = document.getElementById('minPrice');
+  const maxPriceInput = document.getElementById('maxPrice');
+  const minValSpan = document.getElementById('minVal');
+  const maxValSpan = document.getElementById('maxVal');
+  const track = document.getElementById('sliderTrack');
+  
+  let min = parseInt(minPriceInput.value);
+  let max = parseInt(maxPriceInput.value);
+  
+  const minGap = 500;
+  if (max - min < minGap) {
+    if (document.activeElement === minPriceInput) {
+      minPriceInput.value = max - minGap;
+      min = max - minGap;
+    } else {
+      maxPriceInput.value = min + minGap;
+      max = min + minGap;
+    }
+  }
+  
+  minValSpan.innerText = '₹' + min.toLocaleString();
+  maxValSpan.innerText = max >= 40000 ? '₹40,000+' : '₹' + max.toLocaleString();
+  
+  const minPercent = (min / minPriceInput.max) * 100;
+  const maxPercent = (max / maxPriceInput.max) * 100;
+  
+  if (track) {
+    track.style.background = `linear-gradient(to right, #333 ${minPercent}%, var(--primary) ${minPercent}%, var(--primary) ${maxPercent}%, #333 ${maxPercent}%)`;
+  }
 }
 
 function clearFilters() {
@@ -881,11 +998,35 @@ function applyMobileFilters() {
 }
 
 function updateMobileRange() {
-  let min = parseInt(document.getElementById('mobileMinPrice').value);
-  let max = parseInt(document.getElementById('mobileMaxPrice').value);
-  if (min > max) { [min, max] = [max, min]; }
-  document.getElementById('mobileMinVal').innerText = '₹' + min;
-  document.getElementById('mobileMaxVal').innerText = max >= 40000 ? '₹40,000+' : '₹' + max;
+  const minPriceInput = document.getElementById('mobileMinPrice');
+  const maxPriceInput = document.getElementById('mobileMaxPrice');
+  const minValSpan = document.getElementById('mobileMinVal');
+  const maxValSpan = document.getElementById('mobileMaxVal');
+  const track = document.getElementById('mobileSliderTrack');
+  
+  let min = parseInt(minPriceInput.value);
+  let max = parseInt(maxPriceInput.value);
+  
+  const minGap = 500;
+  if (max - min < minGap) {
+    if (document.activeElement === minPriceInput) {
+      minPriceInput.value = max - minGap;
+      min = max - minGap;
+    } else {
+      maxPriceInput.value = min + minGap;
+      max = min + minGap;
+    }
+  }
+  
+  minValSpan.innerText = '₹' + min.toLocaleString();
+  maxValSpan.innerText = max >= 40000 ? '₹40,000+' : '₹' + max.toLocaleString();
+  
+  const minPercent = (min / minPriceInput.max) * 100;
+  const maxPercent = (max / maxPriceInput.max) * 100;
+  
+  if (track) {
+    track.style.background = `linear-gradient(to right, #333 ${minPercent}%, var(--primary) ${minPercent}%, var(--primary) ${maxPercent}%, #333 ${maxPercent}%)`;
+  }
 }
 
 function updateMobileFilterCount(catCount, min, max) {
@@ -914,6 +1055,104 @@ auth.onAuthStateChanged((user) => {
 document.addEventListener('DOMContentLoaded', function() {
   loadBag();
   
+  // Prevent wheel scroll bubbling from sidebar to main page
+  const filterSidebar = document.querySelector('.filter-sidebar');
+  if (filterSidebar) {
+    filterSidebar.addEventListener('wheel', function(e) {
+      const scrollTop = this.scrollTop;
+      const scrollHeight = this.scrollHeight;
+      const height = this.clientHeight;
+      const delta = e.deltaY;
+      const bouncing = (delta > 0 && scrollTop + height >= scrollHeight) || (delta < 0 && scrollTop <= 0);
+      if (bouncing) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+  }
+
+  const mobileFilterDropdown = document.getElementById('mobileFilterDropdown');
+  if (mobileFilterDropdown) {
+    mobileFilterDropdown.addEventListener('wheel', function(e) {
+      const scrollTop = this.scrollTop;
+      const scrollHeight = this.scrollHeight;
+      const height = this.clientHeight;
+      const delta = e.deltaY;
+      const bouncing = (delta > 0 && scrollTop + height >= scrollHeight) || (delta < 0 && scrollTop <= 0);
+      if (bouncing) {
+        e.preventDefault();
+      }
+    }, { passive: false });
+  }
+  
+  // Handle overlapping range slider inputs dynamically
+  const setupSliderZIndex = (containerSelector, minSelector, maxSelector) => {
+    const container = document.querySelector(containerSelector);
+    const minInput = document.querySelector(minSelector);
+    const maxInput = document.querySelector(maxSelector);
+    if (!container || !minInput || !maxInput) return;
+    
+    const updateZ = (clientX) => {
+      const rect = container.getBoundingClientRect();
+      const clickX = clientX - rect.left;
+      const width = rect.width;
+      const clickPercent = clickX / width;
+      
+      const minVal = parseInt(minInput.value);
+      const maxVal = parseInt(maxInput.value);
+      const maxLimit = parseInt(minInput.max || 40000);
+      
+      const minPercent = minVal / maxLimit;
+      const maxPercent = maxVal / maxLimit;
+      
+      const distToMin = Math.abs(clickPercent - minPercent);
+      const distToMax = Math.abs(clickPercent - maxPercent);
+      
+      if (distToMin < distToMax) {
+        minInput.style.zIndex = "3";
+        maxInput.style.zIndex = "2";
+      } else {
+        maxInput.style.zIndex = "3";
+        minInput.style.zIndex = "2";
+      }
+    };
+    
+    container.addEventListener('mousemove', (e) => updateZ(e.clientX));
+    container.addEventListener('touchmove', (e) => {
+      if (e.touches && e.touches[0]) {
+        updateZ(e.touches[0].clientX);
+      }
+    });
+  };
+  
+  setupSliderZIndex('.filter-sidebar .price-slider-container', '#minPrice', '#maxPrice');
+  setupSliderZIndex('.mobile-filter-dropdown .price-slider-container', '#mobileMinPrice', '#mobileMaxPrice');
+
+  const minPriceInput = document.getElementById('minPrice');
+  const maxPriceInput = document.getElementById('maxPrice');
+  if (minPriceInput && maxPriceInput) {
+    minPriceInput.addEventListener('input', () => {
+      minPriceInput.style.zIndex = "3";
+      maxPriceInput.style.zIndex = "2";
+    });
+    maxPriceInput.addEventListener('input', () => {
+      maxPriceInput.style.zIndex = "3";
+      minPriceInput.style.zIndex = "2";
+    });
+  }
+
+  const mobileMinPriceInput = document.getElementById('mobileMinPrice');
+  const mobileMaxPriceInput = document.getElementById('mobileMaxPrice');
+  if (mobileMinPriceInput && mobileMaxPriceInput) {
+    mobileMinPriceInput.addEventListener('input', () => {
+      mobileMinPriceInput.style.zIndex = "3";
+      mobileMaxPriceInput.style.zIndex = "2";
+    });
+    mobileMaxPriceInput.addEventListener('input', () => {
+      mobileMaxPriceInput.style.zIndex = "3";
+      mobileMinPriceInput.style.zIndex = "2";
+    });
+  }
+
   // Check if productData is loaded
   if (typeof productData !== 'undefined' && productData.length) {
     renderProducts(productData);

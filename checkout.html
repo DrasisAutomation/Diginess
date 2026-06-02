@@ -545,18 +545,20 @@
     <header class="header" id="mainHeader">
         <div class="header-inner">
             <nav class="nav-left">
+                <a href="index.html" class="nav-link btn-text desktop-only">Home</a>
                 <a href="products.html" class="nav-link btn-text">Shop All</a>
                 <button class="mobile-menu-btn btn-text" onclick="openMenu()">
                     <i class="fas fa-bars"></i> Menu
                 </button>
             </nav>
-            <div style="position: absolute; left: 50%; top: 50%; transform: translate(-43%, -50%);">
-                <a href="products.html" class="logo" style="position: static; transform: none; margin: 0;">
+            <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+                <a href="index.html" class="logo" style="position: static; transform: none; margin: 0;">
                     <img src="assets/logo.png" alt="Diginess" width="120">
                 </a>
             </div>
             <nav class="nav-right">
-                <button class="nav-link btn-text desktop-only" onclick="openSearch()"><i class="fas fa-search"></i> Search</button>
+                <button class="nav-link btn-text desktop-only" onclick="openSearch()"><i class="fas fa-search"></i>
+                    Search</button>
                 <a href="about.html" class="nav-link btn-text desktop-only"><i class="fas fa-info-circle"></i> About</a>
                 <a href="account.html" class="nav-link btn-text desktop-only"><i class="fas fa-user"></i> Account</a>
                 <button class="nav-link btn-text bag" onclick="openBag()">
@@ -578,11 +580,13 @@
                 <span><i class="fas fa-search"></i> Search</span>
                 <span class="mobile-search-icon"><i class="fas fa-arrow-right" style="display:none"></i></span>
             </div>
+            <a href="index.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-home"></i> Home</a>
             <a href="products.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-store"></i> Shop All</a>
             <a href="about.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-info-circle"></i> About</a>
             <a href="account.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-user"></i> Account</a>
             <div class="menu-divider"></div>
-            <a href="shipping&return.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-truck"></i> Shipping & Returns</a>
+            <a href="shipping&return.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-truck"></i> Shipping
+                & Returns</a>
         </div>
     </div>
 
@@ -640,7 +644,8 @@
         <div class="footer-inner">
             <div>
                 <h3>Stay Connected</h3>
-                <p>Sign up for exclusive access to new gadgets, special offers, and stories from the world of Diginess.</p>
+                <p>Sign up for exclusive access to new gadgets, special offers, and stories from the world of Diginess.
+                </p>
                 <div class="footer-input">
                     <input type="email" placeholder="Email address">
                     <button><i class="fas fa-arrow-right"></i></button>
@@ -668,9 +673,10 @@
         </div>
         <div class="footer-bottom">
             <div class="footer-socials">
-                <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
-                <a href="#"><i class="fab fa-tiktok"></i> TikTok</a>
-                <a href="#"><i class="fab fa-youtube"></i> YouTube</a>
+                <a href="https://www.instagram.com/diginess.store/" target="_blank"><i class="fab fa-instagram"></i>
+                    Instagram</a>
+                <a href="https://www.facebook.com/diginess.store/" target="_blank"><i class="fab fa-facebook"></i>
+                    Facebook</a>
             </div>
             <span>© 2026 Diginess. All rights reserved.</span>
         </div>
@@ -754,7 +760,7 @@
                     isPhoneUser: false
                 };
             }
-            
+
             // Check localStorage for phone user
             const storedUser = localStorage.getItem('diginess_user');
             const authMethod = localStorage.getItem('diginess_auth_method');
@@ -768,11 +774,11 @@
                         phoneNumber: phoneUser.phoneNumber,
                         isPhoneUser: true
                     };
-                } catch(e) {
+                } catch (e) {
                     console.error('Error parsing stored user:', e);
                 }
             }
-            
+
             return null;
         }
 
@@ -966,7 +972,7 @@
         // ========== Save order to Firestore (Supports Phone Users) ==========
         async function saveOrderToFirestore(paymentData, shippingInfo, items, total) {
             const userInfo = getCurrentUserInfo();
-            
+
             if (!userInfo) {
                 console.error('No user logged in');
                 alert('Please sign in to complete your order');
@@ -1091,7 +1097,7 @@
                     <i class="fas fa-lock"></i>
                     <h3>Sign in to Checkout</h3>
                     <p>Please sign in to complete your purchase</p>
-                    <a href="account.html" class="btn-continue-shopping"><i class="fas fa-arrow-left continue-arrow"></i> Sign In</a>
+                    <a href="account.html" class="btn-continue-shopping">Sign In</a>
                 </div>
             `;
                 return;
@@ -1108,7 +1114,7 @@
                     <h3>Your bag is empty</h3>
                     <p>Add some products to your bag and come back!</p>
                     <a href="products.html" class="btn-continue-shopping">
-                        <i class="fas fa-arrow-left continue-arrow"></i> Continue Shopping
+                        Continue Shopping
                     </a>
                 </div>
             `;
@@ -1140,7 +1146,7 @@
 
             const shipping = subtotal > 1999 ? 0 : 149;
             const total = subtotal + shipping;
-            
+
             // Get user email and display name (handle phone users)
             const userEmail = userInfo && !userInfo.isPhoneUser ? (userInfo.email || '') : '';
             const userDisplayName = userInfo ? (userInfo.displayName || '') : '';
@@ -1274,17 +1280,17 @@
                 description: `Order (${bag.length} items)`,
                 handler: async function (response) {
                     console.log('Payment successful:', response);
-                    
+
                     try {
                         // Save order
                         const savedOrder = await saveOrderToFirestore(response, shippingInfo, currentBag, total);
-                        
+
                         if (savedOrder) {
                             // Calculate and add spin credits (1 credit per ₹2000 spent)
                             const creditsToAdd = Math.floor(total / 2000);
                             if (creditsToAdd > 0 && userInfo) {
                                 console.log(`Adding ${creditsToAdd} spin credits for purchase of ₹${total}`);
-                                
+
                                 // Update user credits (both Google and Phone users)
                                 try {
                                     if (userInfo.isPhoneUser && userInfo.phoneNumber && typeof window.ensureUniquePhoneAuth !== 'undefined') {
@@ -1292,17 +1298,17 @@
                                     }
                                     const userRef = db.collection('users').doc(savedOrder.userId || userInfo.uid);
                                     const userDoc = await userRef.get();
-                                    
+
                                     if (userDoc.exists) {
                                         const currentCredits = userDoc.data().spinCredits || 0;
                                         const currentSpent = userDoc.data().totalSpent || 0;
-                                        
+
                                         await userRef.update({
                                             spinCredits: currentCredits + creditsToAdd,
                                             totalSpent: currentSpent + total,
                                             lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
                                         });
-                                        
+
                                         console.log(`Added ${creditsToAdd} credits`);
                                     } else {
                                         await userRef.set({
@@ -1319,14 +1325,14 @@
                                     console.log('Could not update credits:', e);
                                 }
                             }
-                            
+
                             // Hide processing overlay
                             document.getElementById('paymentProcessing').classList.remove('active');
-                            
+
                             // Show success modal
                             document.getElementById('successOrderId').textContent = savedOrder.orderId;
                             document.getElementById('orderSuccessModal').classList.add('active');
-                            
+
                             // Clear bag
                             bag = [];
                             localStorage.removeItem('diginess_bag');
@@ -1377,7 +1383,7 @@
         });
 
         // Also listen for storage events (for phone users)
-        window.addEventListener('storage', function(e) {
+        window.addEventListener('storage', function (e) {
             if (e.key === 'diginess_user' || e.key === 'diginess_auth_method') {
                 console.log('Storage changed, reloading checkout page');
                 loadCheckoutPage();

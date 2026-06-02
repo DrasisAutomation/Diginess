@@ -221,13 +221,14 @@
 <header class="header" id="mainHeader">
   <div class="header-inner">
     <nav class="nav-left">
+      <a href="index.html" class="nav-link btn-text desktop-only">Home</a>
       <a href="products.html" class="nav-link btn-text">Shop All</a>
       <button class="mobile-menu-btn btn-text" onclick="openMenu()">
         <i class="fas fa-bars"></i> Menu
       </button>
     </nav>
-    <div style="position: absolute; left: 50%; top: 50%; transform: translate(-43%, -50%);">
-      <a href="products.html" class="logo" style="position: static; transform: none; margin: 0;">
+    <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+      <a href="index.html" class="logo" style="position: static; transform: none; margin: 0;">
         <img src="assets/logo.png" alt="Diginess" width="120">
       </a>
     </div>
@@ -249,17 +250,18 @@
     <h3>DIGINESS</h3>
     <button class="menu-close btn-text" onclick="closeMenu()"><i class="fas fa-times"></i> Close</button>
   </div>
-  <div class="menu-body">
-    <div class="mobile-search-item" onclick="openSearch(); closeMenu();">
-      <span><i class="fas fa-search"></i> Search</span>
-      <span class="mobile-search-icon"><i class="fas fa-arrow-right"></i></span>
+    <div class="menu-body">
+      <div class="mobile-search-item" onclick="openSearch(); closeMenu();">
+        <span><i class="fas fa-search"></i> Search</span>
+        <span class="mobile-search-icon"><i class="fas fa-arrow-right"></i></span>
+      </div>
+      <a href="index.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-home"></i> Home</a>
+      <a href="products.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-store"></i> Shop All</a>
+      <a href="about.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-info-circle"></i> About</a>
+      <a href="account.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-user"></i> Account</a>
+      <div class="menu-divider"></div>
+      <a href="shipping&return.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-truck"></i> Shipping & Returns</a>
     </div>
-    <a href="products.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-store"></i> Shop All</a>
-    <a href="about.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-info-circle"></i> About</a>
-    <a href="account.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-user"></i> Account</a>
-    <div class="menu-divider"></div>
-    <a href="shipping&return.html" class="menu-item" onclick="closeMenu()"><i class="fas fa-truck"></i> Shipping & Returns</a>
-  </div>
 </div>
 
 
@@ -579,9 +581,8 @@
   </div>
   <div class="footer-bottom">
     <div class="footer-socials">
-      <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
-      <a href="#"><i class="fab fa-tiktok"></i> TikTok</a>
-      <a href="#"><i class="fab fa-youtube"></i> YouTube</a>
+      <a href="https://www.instagram.com/diginess.store/" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+      <a href="https://www.facebook.com/diginess.store/" target="_blank"><i class="fab fa-facebook"></i> Facebook</a>
     </div>
     <span>© 2026 Diginess. All rights reserved.</span>
   </div>
