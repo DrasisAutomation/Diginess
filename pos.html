@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DIGINESS · POS & Stock Management</title>
+    <link rel="icon" type="image/png" href="assets/logo2.png">
     <!-- Fonts & Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -25,7 +27,8 @@
             --muted: #a1a1aa;
             --primary: #ffffff;
             --primary-fg: #09090b;
-            --accent: #10b981; /* Emerald green for positive values/success */
+            --accent: #10b981;
+            /* Emerald green for positive values/success */
             --accent-muted: rgba(16, 185, 129, 0.1);
             --error: #ef4444;
             --error-muted: rgba(239, 68, 68, 0.1);
@@ -33,11 +36,13 @@
             --warning-muted: rgba(245, 158, 11, 0.1);
             --active-tab: #27272a;
         }
+
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
+
         body {
             font-family: 'Inter', sans-serif;
             background: var(--bg);
@@ -46,28 +51,37 @@
             display: flex;
             overflow-x: hidden;
         }
+
         /* Scrollbars */
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
         }
+
         ::-webkit-scrollbar-track {
             background: transparent;
         }
+
         ::-webkit-scrollbar-thumb {
             background: #27272a;
             border-radius: 3px;
         }
+
         ::-webkit-scrollbar-thumb:hover {
             background: #3f3f46;
         }
-        input, select, button, textarea {
+
+        input,
+        select,
+        button,
+        textarea {
             font-family: inherit;
             color: inherit;
             background: transparent;
             border: none;
             outline: none;
         }
+
         /* ===== LOGIN SCREEN ===== */
         .login-overlay {
             position: fixed;
@@ -78,6 +92,7 @@
             align-items: center;
             justify-content: center;
         }
+
         .login-card {
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -88,10 +103,12 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
             text-align: center;
         }
+
         .login-card img {
             width: 130px;
             margin-bottom: 24px;
         }
+
         .login-card h2 {
             font-size: 20px;
             font-weight: 500;
@@ -99,15 +116,18 @@
             letter-spacing: 0.05em;
             text-transform: uppercase;
         }
+
         .login-card p {
             color: var(--muted);
             font-size: 13px;
             margin-bottom: 30px;
         }
+
         .form-group {
             text-align: left;
             margin-bottom: 20px;
         }
+
         .form-group label {
             display: block;
             font-size: 11px;
@@ -117,6 +137,7 @@
             margin-bottom: 8px;
             font-weight: 600;
         }
+
         .form-group input {
             width: 100%;
             background: rgba(255, 255, 255, 0.03);
@@ -127,10 +148,12 @@
             font-size: 14px;
             transition: all 0.2s;
         }
+
         .form-group input:focus {
             border-color: rgba(255, 255, 255, 0.3);
             background: rgba(255, 255, 255, 0.05);
         }
+
         .login-btn {
             width: 100%;
             background: var(--primary);
@@ -145,14 +168,17 @@
             text-transform: uppercase;
             letter-spacing: 0.1em;
         }
+
         .login-btn:hover {
             opacity: 0.9;
         }
+
         .login-error {
             color: var(--error);
             font-size: 13px;
             margin-top: 16px;
         }
+
         /* ===== SIDEBAR NAVIGATION ===== */
         .sidebar {
             width: 260px;
@@ -165,6 +191,7 @@
             position: sticky;
             top: 0;
         }
+
         .sidebar-brand {
             padding: 24px 20px;
             border-bottom: 1px solid var(--border);
@@ -172,9 +199,11 @@
             align-items: center;
             gap: 12px;
         }
+
         .sidebar-brand img {
             width: 100px;
         }
+
         .sidebar-brand span {
             font-size: 9px;
             background: var(--accent-muted);
@@ -185,6 +214,7 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
+
         .sidebar-nav {
             padding: 24px 12px;
             display: flex;
@@ -192,6 +222,7 @@
             gap: 4px;
             flex: 1;
         }
+
         .nav-item {
             display: flex;
             align-items: center;
@@ -204,29 +235,35 @@
             transition: all 0.2s;
             font-weight: 500;
         }
+
         .nav-item:hover {
             color: #fff;
             background: rgba(255, 255, 255, 0.02);
         }
+
         .nav-item.active {
             color: #fff;
             background: var(--active-tab);
         }
+
         .nav-item i {
             font-size: 16px;
             width: 20px;
             text-align: center;
         }
+
         .sidebar-footer {
             padding: 20px 16px;
             border-top: 1px solid var(--border);
         }
+
         .operator-info {
             display: flex;
             align-items: center;
             gap: 12px;
             margin-bottom: 12px;
         }
+
         .operator-avatar {
             width: 32px;
             height: 32px;
@@ -239,6 +276,7 @@
             font-size: 12px;
             font-weight: 600;
         }
+
         .operator-name {
             font-size: 12px;
             font-weight: 500;
@@ -248,10 +286,12 @@
             text-overflow: ellipsis;
             max-width: 140px;
         }
+
         .operator-role {
             font-size: 10px;
             color: var(--muted);
         }
+
         .logout-btn {
             width: 100%;
             padding: 10px;
@@ -267,9 +307,11 @@
             justify-content: center;
             gap: 8px;
         }
+
         .logout-btn:hover {
             background: rgba(239, 68, 68, 0.2);
         }
+
         /* ===== MAIN WORKSPACE ===== */
         .main-content {
             flex: 1;
@@ -277,28 +319,33 @@
             overflow-y: auto;
             max-height: 100vh;
         }
+
         .page-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 32px;
         }
+
         .page-title h1 {
             font-size: 24px;
             font-weight: 600;
             letter-spacing: -0.02em;
             text-transform: capitalize;
         }
+
         .page-title p {
             font-size: 13px;
             color: var(--muted);
             margin-top: 4px;
         }
+
         .page-actions {
             display: flex;
             align-items: center;
             gap: 12px;
         }
+
         .time-badge {
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -310,9 +357,11 @@
             align-items: center;
             gap: 8px;
         }
+
         .time-badge i {
             color: var(--accent);
         }
+
         /* ===== COMMON COMPONENTS ===== */
         .card {
             background: var(--card-bg);
@@ -321,12 +370,14 @@
             padding: 24px;
             margin-bottom: 24px;
         }
+
         .card-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 20px;
         }
+
         .card-title {
             font-size: 14px;
             font-weight: 600;
@@ -334,6 +385,7 @@
             letter-spacing: 0.05em;
             color: #fff;
         }
+
         .btn-primary-action {
             background: var(--primary);
             color: var(--primary-fg);
@@ -349,9 +401,11 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
+
         .btn-primary-action:hover {
             opacity: 0.9;
         }
+
         .btn-secondary-action {
             background: transparent;
             border: 1px solid var(--border);
@@ -365,10 +419,12 @@
             align-items: center;
             gap: 8px;
         }
+
         .btn-secondary-action:hover {
             background: rgba(255, 255, 255, 0.03);
             border-color: rgba(255, 255, 255, 0.2);
         }
+
         /* ===== TAB 1: DASHBOARD PANEL ===== */
         .stats-grid {
             display: grid;
@@ -376,6 +432,7 @@
             gap: 16px;
             margin-bottom: 32px;
         }
+
         .stat-card {
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -386,6 +443,7 @@
             justify-content: space-between;
             height: 120px;
         }
+
         .stat-label {
             font-size: 11px;
             text-transform: uppercase;
@@ -393,17 +451,20 @@
             color: var(--muted);
             font-weight: 500;
         }
+
         .stat-val-container {
             display: flex;
             align-items: flex-end;
             justify-content: space-between;
             margin-top: 8px;
         }
+
         .stat-value {
             font-size: 26px;
             font-weight: 700;
             color: #fff;
         }
+
         .stat-icon-box {
             width: 36px;
             height: 36px;
@@ -414,30 +475,36 @@
             justify-content: center;
             color: var(--muted);
         }
+
         .stat-icon-box.accent {
             background: var(--accent-muted);
             color: var(--accent);
         }
+
         .stat-icon-box.warning {
             background: var(--warning-muted);
             color: var(--warning);
         }
+
         .dashboard-row {
             display: grid;
             grid-template-columns: 65fr 35fr;
             gap: 24px;
         }
+
         /* ===== TABLES ===== */
         .table-container {
             width: 100%;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
             text-align: left;
         }
+
         th {
             padding: 14px 16px;
             font-size: 11px;
@@ -448,6 +515,7 @@
             font-weight: 600;
             white-space: nowrap;
         }
+
         td {
             padding: 16px;
             font-size: 13px;
@@ -456,13 +524,16 @@
             vertical-align: middle;
             white-space: nowrap;
         }
+
         .product-name-title {
             white-space: normal !important;
             word-break: break-word;
         }
+
         tr:hover td {
             background: rgba(255, 255, 255, 0.01);
         }
+
         .badge {
             display: inline-flex;
             align-items: center;
@@ -472,27 +543,33 @@
             font-size: 11px;
             font-weight: 500;
         }
+
         .badge.success {
             background: var(--accent-muted);
             color: var(--accent);
         }
+
         .badge.warning {
             background: var(--warning-muted);
             color: var(--warning);
         }
+
         .badge.error {
             background: var(--error-muted);
             color: var(--error);
         }
+
         .badge.info {
             background: rgba(59, 130, 246, 0.1);
             color: #3b82f6;
         }
+
         .product-thumbnail-cell {
             display: flex;
             align-items: center;
             gap: 12px;
         }
+
         .product-thumbnail-cell img {
             width: 36px;
             height: 48px;
@@ -500,19 +577,23 @@
             border-radius: 4px;
             border: 1px solid var(--border);
         }
+
         .product-name-info {
             display: flex;
             flex-direction: column;
             gap: 2px;
         }
+
         .product-name-title {
             font-weight: 500;
             color: #fff;
         }
+
         .product-subtext {
             font-size: 11px;
             color: var(--muted);
         }
+
         /* ===== TAB 2: POS BILLING PANEL ===== */
         .pos-grid {
             display: grid;
@@ -520,14 +601,17 @@
             gap: 24px;
             align-items: start;
         }
+
         .search-autocomplete-container {
             position: relative;
             margin-bottom: 24px;
         }
+
         .search-bar-input-wrapper {
             position: relative;
             width: 100%;
         }
+
         .search-bar-input-wrapper input {
             width: 100%;
             background: var(--card-bg);
@@ -538,10 +622,12 @@
             color: #fff;
             transition: all 0.2s;
         }
+
         .search-bar-input-wrapper input:focus {
             border-color: rgba(255, 255, 255, 0.2);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
+
         .search-bar-input-wrapper i {
             position: absolute;
             left: 18px;
@@ -550,6 +636,7 @@
             color: var(--muted);
             font-size: 18px;
         }
+
         .suggestions-dropdown {
             position: absolute;
             top: 100%;
@@ -565,6 +652,7 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
             display: none;
         }
+
         .suggestion-item {
             padding: 12px 16px;
             display: flex;
@@ -574,38 +662,46 @@
             border-bottom: 1px solid var(--border-light);
             transition: background 0.15s;
         }
+
         .suggestion-item:hover {
             background: rgba(255, 255, 255, 0.02);
         }
+
         .suggestion-product-info {
             display: flex;
             align-items: center;
             gap: 12px;
         }
+
         .suggestion-product-info img {
             width: 30px;
             height: 40px;
             object-fit: cover;
             border-radius: 4px;
         }
+
         .suggestion-title {
             font-size: 13px;
             font-weight: 500;
             color: #fff;
         }
+
         .suggestion-model {
             font-size: 11px;
             color: var(--muted);
             margin-top: 2px;
         }
+
         .suggestion-stock-badge {
             font-size: 11px;
         }
+
         .qty-controls {
             display: flex;
             align-items: center;
             gap: 8px;
         }
+
         .qty-btn {
             width: 24px;
             height: 24px;
@@ -619,10 +715,12 @@
             font-size: 12px;
             transition: all 0.2s;
         }
+
         .qty-btn:hover {
             background: rgba(255, 255, 255, 0.15);
             color: #fff;
         }
+
         .qty-input {
             width: 32px;
             text-align: center;
@@ -630,15 +728,18 @@
             color: #fff;
             font-weight: 600;
         }
+
         .btn-remove {
             color: var(--muted);
             cursor: pointer;
             transition: color 0.15s;
             font-size: 14px;
         }
+
         .btn-remove:hover {
             color: var(--error);
         }
+
         /* Right Billing Sidebar */
         .billing-summary-card {
             background: var(--card-bg);
@@ -648,6 +749,7 @@
             position: sticky;
             top: 104px;
         }
+
         .summary-row {
             display: flex;
             justify-content: space-between;
@@ -656,6 +758,7 @@
             font-size: 13px;
             color: var(--muted);
         }
+
         .summary-row.total {
             border-top: 1px solid var(--border);
             padding-top: 16px;
@@ -664,15 +767,18 @@
             font-weight: 600;
             color: #fff;
         }
+
         .summary-row span.val {
             color: #fff;
             font-weight: 500;
         }
+
         .summary-row.total span.val {
             font-size: 20px;
             color: var(--accent);
             font-weight: 700;
         }
+
         .billing-inputs {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -681,17 +787,20 @@
             border-bottom: 1px solid var(--border-light);
             padding-bottom: 20px;
         }
+
         .billing-input-group {
             display: flex;
             flex-direction: column;
             gap: 6px;
         }
+
         .billing-input-group label {
             font-size: 10px;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             color: var(--muted);
         }
+
         .billing-input-group input {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--border);
@@ -700,12 +809,15 @@
             font-size: 13px;
             color: #fff;
         }
+
         .billing-input-group input:focus {
             border-color: rgba(255, 255, 255, 0.2);
         }
+
         .payment-mode-selector {
             margin-bottom: 24px;
         }
+
         .payment-label {
             font-size: 11px;
             text-transform: uppercase;
@@ -714,11 +826,13 @@
             margin-bottom: 10px;
             font-weight: 600;
         }
+
         .payment-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 8px;
         }
+
         .payment-option {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--border);
@@ -735,18 +849,22 @@
             gap: 6px;
             color: var(--muted);
         }
+
         .payment-option:hover {
             border-color: rgba(255, 255, 255, 0.2);
             color: #fff;
         }
+
         .payment-option.active {
             background: var(--active-tab);
             border-color: var(--primary);
             color: #fff;
         }
+
         .payment-option i {
             font-size: 18px;
         }
+
         .btn-checkout {
             width: 100%;
             background: var(--accent);
@@ -764,15 +882,18 @@
             justify-content: center;
             gap: 8px;
         }
+
         .btn-checkout:hover {
             opacity: 0.9;
         }
+
         /* Customer Details POS Input */
         .customer-pos-details {
             margin-bottom: 16px;
             border-bottom: 1px solid var(--border-light);
             padding-bottom: 16px;
         }
+
         /* ===== TAB 3: STOCK MANAGER ===== */
         .search-filter-row {
             display: flex;
@@ -781,11 +902,13 @@
             margin-bottom: 24px;
             gap: 16px;
         }
+
         .search-stock-wrapper {
             position: relative;
             flex: 1;
             max-width: 400px;
         }
+
         .search-stock-wrapper input {
             width: 100%;
             background: var(--card-bg);
@@ -795,6 +918,7 @@
             font-size: 13px;
             color: #fff;
         }
+
         .search-stock-wrapper i {
             position: absolute;
             left: 12px;
@@ -803,11 +927,13 @@
             color: var(--muted);
             font-size: 14px;
         }
+
         .stock-adjust-actions {
             display: flex;
             align-items: center;
             gap: 8px;
         }
+
         .btn-adjust-qty {
             padding: 6px 12px;
             border: 1px solid var(--border);
@@ -820,33 +946,40 @@
             align-items: center;
             gap: 4px;
         }
+
         .btn-adjust-qty:hover {
             background: rgba(255, 255, 255, 0.05);
             border-color: rgba(255, 255, 255, 0.2);
             color: #fff;
         }
+
         .btn-adjust-qty.inc {
             color: var(--accent);
             border-color: rgba(16, 185, 129, 0.2);
             background: rgba(16, 185, 129, 0.05);
         }
+
         .btn-adjust-qty.inc:hover {
             background: rgba(16, 185, 129, 0.15);
         }
+
         .btn-adjust-qty.dec {
             color: var(--error);
             border-color: rgba(239, 68, 68, 0.2);
             background: rgba(239, 68, 68, 0.05);
         }
+
         .btn-adjust-qty.dec:hover {
             background: rgba(239, 68, 68, 0.15);
         }
+
         /* ===== TAB 4: ORDER HISTORY ===== */
         .history-filters {
             display: flex;
             gap: 12px;
             margin-bottom: 24px;
         }
+
         .history-filter-btn {
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -858,20 +991,24 @@
             transition: all 0.2s;
             color: var(--muted);
         }
+
         .history-filter-btn:hover {
             color: #fff;
             border-color: rgba(255, 255, 255, 0.2);
         }
+
         .history-filter-btn.active {
             background: var(--primary);
             color: var(--primary-fg);
             border-color: var(--primary);
         }
+
         .action-row-btns {
             display: flex;
             align-items: center;
             gap: 6px;
         }
+
         .btn-row-action {
             width: 28px;
             height: 28px;
@@ -885,21 +1022,25 @@
             font-size: 12px;
             color: var(--muted);
         }
+
         .btn-row-action:hover {
             border-color: rgba(255, 255, 255, 0.2);
             color: #fff;
             background: rgba(255, 255, 255, 0.03);
         }
+
         .btn-row-action.pdf:hover {
             color: #3b82f6;
             border-color: rgba(59, 130, 246, 0.3);
             background: rgba(59, 130, 246, 0.05);
         }
+
         .btn-row-action.print:hover {
             color: var(--accent);
             border-color: rgba(16, 185, 129, 0.3);
             background: rgba(16, 185, 129, 0.05);
         }
+
         /* ===== MODAL & INVOICE LAYOUT ===== */
         .modal-overlay {
             position: fixed;
@@ -912,9 +1053,11 @@
             justify-content: center;
             padding: 20px;
         }
+
         .modal-overlay.active {
             display: flex;
         }
+
         .modal-box {
             background: var(--card-bg);
             border: 1px solid var(--border);
@@ -928,10 +1071,19 @@
             overflow: hidden;
             animation: modalFadeIn 0.3s ease;
         }
+
         @keyframes modalFadeIn {
-            from { transform: scale(0.95); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
+            from {
+                transform: scale(0.95);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
+
         .modal-header {
             padding: 20px 24px;
             border-bottom: 1px solid var(--border);
@@ -939,26 +1091,31 @@
             align-items: center;
             justify-content: space-between;
         }
+
         .modal-header h3 {
             font-size: 15px;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
+
         .modal-close {
             color: var(--muted);
             cursor: pointer;
             font-size: 18px;
             transition: color 0.15s;
         }
+
         .modal-close:hover {
             color: #fff;
         }
+
         .modal-body {
             padding: 24px;
             overflow-y: auto;
             flex: 1;
         }
+
         .modal-footer {
             padding: 20px 24px;
             border-top: 1px solid var(--border);
@@ -966,12 +1123,14 @@
             gap: 12px;
             justify-content: flex-end;
         }
+
         /* Custom stock adjust Modal */
         .stock-adjust-form {
             display: flex;
             flex-direction: column;
             gap: 16px;
         }
+
         .stock-adjust-form select,
         .stock-adjust-form input {
             background: rgba(255, 255, 255, 0.02);
@@ -982,6 +1141,7 @@
             color: #fff;
             width: 100%;
         }
+
         /* A4 Invoice styling (Inside modal/print/download) */
         #invoicePaper {
             background: #fff;
@@ -992,20 +1152,23 @@
             line-height: 1.6;
             border: 1px solid #e5e5e5;
             border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
             max-width: 100%;
             margin: 0 auto;
         }
+
         .invoice-header-block {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 30px;
         }
+
         .invoice-logo-area {
             width: 50%;
             padding-right: 20px;
         }
+
         .invoice-logo-area h2 {
             font-size: 24px;
             font-weight: 800;
@@ -1013,15 +1176,18 @@
             color: #000;
             margin-bottom: 4px;
         }
+
         .invoice-logo-area p {
             color: #666;
             font-size: 12px;
             line-height: 1.4;
         }
+
         .invoice-title-area {
             width: 50%;
             text-align: right;
         }
+
         .invoice-title-area h1 {
             font-size: 26px;
             font-weight: 700;
@@ -1030,10 +1196,12 @@
             letter-spacing: 0.05em;
             margin-bottom: 8px;
         }
+
         .invoice-title-area p {
             font-size: 13px;
             color: #555;
         }
+
         .invoice-details-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -1042,6 +1210,7 @@
             padding-bottom: 20px;
             border-bottom: 1px solid #eee;
         }
+
         .invoice-col h3 {
             font-size: 12px;
             text-transform: uppercase;
@@ -1050,19 +1219,23 @@
             letter-spacing: 0.05em;
             font-weight: 600;
         }
+
         .invoice-col p {
             color: #333;
             font-size: 13px;
             margin-bottom: 4px;
         }
+
         .invoice-col p strong {
             color: #000;
         }
+
         .invoice-table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 30px;
         }
+
         .invoice-table th {
             background: #f8f9fa;
             color: #000;
@@ -1074,6 +1247,7 @@
             border-bottom: 2px solid #ddd;
             text-align: left;
         }
+
         .invoice-table td {
             padding: 14px 16px;
             border-bottom: 1px solid #eee;
@@ -1081,27 +1255,33 @@
             font-size: 13px;
             background: transparent !important;
         }
+
         .invoice-table tr:last-child td {
             border-bottom: 2px solid #ddd;
         }
+
         .invoice-table-desc {
             font-weight: 600;
             color: #000;
         }
+
         .invoice-table-sub {
             font-size: 11px;
             color: #666;
             margin-top: 2px;
         }
+
         .invoice-summary-block {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
             margin-bottom: 40px;
         }
+
         .invoice-payment-details {
             max-width: 50%;
         }
+
         .invoice-payment-details h4 {
             font-size: 12px;
             text-transform: uppercase;
@@ -1109,13 +1289,16 @@
             margin-bottom: 8px;
             font-weight: 600;
         }
+
         .invoice-payment-details p {
             font-size: 12px;
             color: #555;
         }
+
         .invoice-totals {
             width: 280px;
         }
+
         .invoice-totals-row {
             display: flex;
             justify-content: space-between;
@@ -1124,6 +1307,7 @@
             color: #555;
             border-bottom: 1px solid #f3f3f3;
         }
+
         .invoice-totals-row.grand {
             border-top: 2px solid #000;
             border-bottom: none;
@@ -1132,6 +1316,7 @@
             font-size: 16px;
             color: #000;
         }
+
         .invoice-footer-block {
             text-align: center;
             border-top: 1px solid #eee;
@@ -1139,6 +1324,7 @@
             color: #777;
             font-size: 12px;
         }
+
         /* Toast Notifications */
         .toast-container {
             position: fixed;
@@ -1149,6 +1335,7 @@
             flex-direction: column;
             gap: 8px;
         }
+
         .toast {
             background: #18181b;
             border: 1px solid var(--border);
@@ -1163,34 +1350,50 @@
             gap: 10px;
             animation: toastSlideIn 0.3s ease;
         }
+
         .toast.success {
             border-color: rgba(16, 185, 129, 0.4);
             color: #d1fae5;
         }
+
         .toast.error {
             border-color: rgba(239, 68, 68, 0.4);
             color: #fee2e2;
         }
+
         @keyframes toastSlideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
+
         /* ===== A4 SHEET PRINTING OVERRIDES ===== */
         @page {
             size: A4;
             margin: 15mm;
         }
+
         @media print {
             body {
                 background: #fff !important;
                 color: #000 !important;
             }
+
             body * {
                 visibility: hidden;
             }
-            #invoicePaper, #invoicePaper * {
+
+            #invoicePaper,
+            #invoicePaper * {
                 visibility: visible;
             }
+
             #invoicePaper {
                 position: absolute;
                 left: 0;
@@ -1204,6 +1407,7 @@
                 color: #000 !important;
             }
         }
+
         /* ===== MOBILE RESPONSIVE STYLES ===== */
         .mobile-toggle-btn {
             display: none;
@@ -1220,10 +1424,12 @@
             margin-right: 15px;
             transition: all 0.2s;
         }
+
         .mobile-toggle-btn:hover {
             background: rgba(255, 255, 255, 0.08);
             border-color: rgba(255, 255, 255, 0.2);
         }
+
         .sidebar-overlay {
             position: fixed;
             inset: 0;
@@ -1232,31 +1438,34 @@
             z-index: 998;
             display: none;
         }
+
         .sidebar-overlay.active {
             display: block;
         }
-        
+
         @media (max-width: 1200px) {
             .stats-grid {
                 grid-template-columns: repeat(3, 1fr);
             }
         }
-        
+
         @media (max-width: 1024px) {
             .pos-grid {
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
+
             .billing-summary-card {
                 position: static;
                 width: 100%;
             }
         }
-        
+
         @media (max-width: 768px) {
             body {
                 flex-direction: column;
             }
+
             .sidebar {
                 position: fixed;
                 left: 0;
@@ -1265,65 +1474,1280 @@
                 z-index: 999;
                 transform: translateX(-100%);
                 transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                box-shadow: 10px 0 25px rgba(0,0,0,0.5);
+                box-shadow: 10px 0 25px rgba(0, 0, 0, 0.5);
                 height: 100vh;
             }
+
             .sidebar.active {
                 transform: translateX(0);
             }
+
             .mobile-toggle-btn {
                 display: flex;
             }
+
             .main-content {
                 padding: 24px 16px;
                 max-height: none;
                 overflow-y: visible;
             }
+
             .page-header {
                 margin-bottom: 20px;
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 15px;
             }
+
             .page-header .page-actions {
                 width: 100%;
                 justify-content: flex-end;
             }
+
             .stats-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 12px;
                 margin-bottom: 20px;
             }
+
             .dashboard-row {
                 grid-template-columns: 1fr;
                 gap: 20px;
             }
+
             .search-filter-row {
                 flex-direction: column;
                 align-items: stretch;
             }
+
             .search-stock-wrapper {
                 max-width: none;
             }
+
             .history-filters {
                 flex-wrap: wrap;
             }
         }
-        
+
         @media (max-width: 480px) {
             .stats-grid {
                 grid-template-columns: 1fr;
             }
+
             .billing-inputs {
                 grid-template-columns: 1fr;
             }
+
             .btn-checkout {
                 padding: 14px;
                 font-size: 13px;
             }
         }
+
+        /* =====================================================
+   DIGINESS POS — RESPONSIVE STYLES ONLY
+   Replace existing @media queries with this block.
+   Breakpoints: 1200px | 900px | 700px | 500px | 300px
+   ===================================================== */
+
+        /* ── Sidebar overlay (mobile mask) — shared ── */
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 998;
+            display: none;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+
+        /* Mobile hamburger — hidden by default on desktop */
+        .mobile-toggle-btn {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 16px;
+            color: #fff;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: all 0.2s;
+        }
+
+        .mobile-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* ══════════════════════════════════════════════════
+   1 — 1200 px  (large tablets / small laptops)
+   ══════════════════════════════════════════════════ */
+        @media (max-width: 1200px) {
+
+            /* Stats row: 3 columns instead of 5 */
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 14px;
+            }
+
+            /* Dashboard row keeps 2 cols but tighter */
+            .dashboard-row {
+                grid-template-columns: 60fr 40fr;
+                gap: 20px;
+            }
+
+            /* POS layout single column starts here */
+            .pos-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .billing-summary-card {
+                position: static;
+                width: 100%;
+            }
+
+            /* Sidebar slightly narrower */
+            .sidebar {
+                width: 240px;
+            }
+        }
+
+        /* ══════════════════════════════════════════════════
+   2 — 900 px  (tablet portrait / small laptop)
+   ══════════════════════════════════════════════════ */
+        @media (max-width: 900px) {
+
+            /* Slide sidebar off-canvas */
+            .sidebar {
+                position: fixed;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                z-index: 999;
+                width: 260px;
+                transform: translateX(-100%);
+                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: 10px 0 30px rgba(0, 0, 0, 0.6);
+                height: 100vh;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            /* Show hamburger */
+            .mobile-toggle-btn {
+                display: flex;
+            }
+
+            /* Main content fills width */
+            .main-content {
+                padding: 24px 20px;
+                max-height: none;
+                overflow-y: visible;
+            }
+
+            /* Page header: stacked */
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+                margin-bottom: 20px;
+            }
+
+            .page-header .page-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            /* Stats: 2 columns */
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            /* Dashboard row: full width stacked */
+            .dashboard-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            /* History filters wrap */
+            .history-filters {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .history-filter-btn {
+                font-size: 11px;
+                padding: 6px 12px;
+            }
+
+            /* Search + filter rows stack */
+            .search-filter-row {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+
+            .search-stock-wrapper {
+                max-width: 100%;
+            }
+
+            /* Page title description: shorter */
+            #pageDescriptionText {
+                display: none;
+            }
+
+            /* Stat card slightly smaller */
+            .stat-card {
+                height: 108px;
+                padding: 16px;
+            }
+
+            .stat-value {
+                font-size: 22px;
+            }
+        }
+
+        /* ══════════════════════════════════════════════════
+   3 — 700 px  (large phones / phablets)
+   ══════════════════════════════════════════════════ */
+        @media (max-width: 700px) {
+
+            /* Main padding tighter */
+            .main-content {
+                padding: 20px 14px;
+            }
+
+            /* Stats: 2 cols still, but smaller */
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                margin-bottom: 20px;
+            }
+
+            .stat-card {
+                height: 96px;
+                padding: 14px;
+            }
+
+            .stat-value {
+                font-size: 20px;
+            }
+
+            .stat-label {
+                font-size: 10px;
+            }
+
+            .stat-icon-box {
+                width: 30px;
+                height: 30px;
+                font-size: 13px;
+            }
+
+            /* Card inner padding */
+            .card {
+                padding: 16px;
+            }
+
+            .card-header {
+                margin-bottom: 14px;
+            }
+
+            /* Table font */
+            th {
+                font-size: 10px;
+                padding: 10px 12px;
+            }
+
+            td {
+                font-size: 12px;
+                padding: 12px;
+            }
+
+            /* Billing inputs: 1 column */
+            .billing-inputs {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            /* Payment mode: 3 cols but icon smaller */
+            .payment-option i {
+                font-size: 15px;
+            }
+
+            .payment-option {
+                padding: 10px 6px;
+                font-size: 11px;
+            }
+
+            /* Modal full width */
+            .modal-box {
+                border-radius: 10px;
+                max-width: 96vw;
+            }
+
+            /* Page title font */
+            .page-title h1 {
+                font-size: 19px;
+            }
+
+            /* Checkout button */
+            .btn-checkout {
+                padding: 14px;
+                font-size: 13px;
+            }
+
+            /* Sidebar operator name truncate */
+            .operator-name {
+                max-width: 120px;
+            }
+
+            /* Search bar */
+            .search-bar-input-wrapper input {
+                font-size: 13px;
+                padding: 13px 13px 13px 42px;
+            }
+
+            /* Invoice paper padding */
+            #invoicePaper {
+                padding: 24px 18px;
+                font-size: 12px;
+            }
+
+            .invoice-header-block {
+                flex-direction: column;
+                gap: 14px;
+            }
+
+            .invoice-logo-area,
+            .invoice-title-area {
+                width: 100%;
+                text-align: left;
+            }
+
+            .invoice-details-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .invoice-col {
+                border-left: none !important;
+                padding-left: 0 !important;
+            }
+
+            .invoice-summary-block {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .invoice-payment-details {
+                max-width: 100%;
+            }
+
+            .invoice-totals {
+                width: 100%;
+            }
+        }
+
+        /* ══════════════════════════════════════════════════
+   4 — 500 px  (standard phones)
+   ══════════════════════════════════════════════════ */
+        @media (max-width: 500px) {
+
+            /* Single column stats */
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .stat-card {
+                height: auto;
+                padding: 14px 16px;
+                flex-direction: row;
+                align-items: center;
+                gap: 14px;
+            }
+
+            .stat-val-container {
+                flex-direction: row-reverse;
+                align-items: center;
+                gap: 10px;
+                margin-top: 0;
+            }
+
+            .stat-value {
+                font-size: 22px;
+            }
+
+            .stat-label {
+                font-size: 10px;
+            }
+
+            /* Main padding */
+            .main-content {
+                padding: 16px 12px;
+            }
+
+            /* Page header */
+            .page-title h1 {
+                font-size: 17px;
+            }
+
+            .time-badge {
+                font-size: 11px;
+                padding: 6px 12px;
+            }
+
+            /* Card */
+            .card {
+                padding: 14px;
+                margin-bottom: 16px;
+            }
+
+            /* POS Billing */
+            .billing-summary-card {
+                padding: 16px;
+            }
+
+            .summary-row {
+                font-size: 12px;
+            }
+
+            .summary-row.total {
+                font-size: 14px;
+            }
+
+            .summary-row.total span.val {
+                font-size: 17px;
+            }
+
+            .btn-checkout {
+                padding: 13px;
+                font-size: 12px;
+                letter-spacing: 0.05em;
+            }
+
+            /* Table: hide less critical columns on narrow screens */
+            .table-container table th:nth-child(3),
+            .table-container table td:nth-child(3) {
+                display: none;
+                /* hide Barcode col on stock table */
+            }
+
+            /* History table: hide date col */
+            #historyTableBody tr td:nth-child(2),
+            #historyTableBody tr~thead th:nth-child(2) {
+                display: none;
+            }
+
+            /* Delivery table: hide address col */
+            #deliveryTableBody tr td:nth-child(3),
+            #deliveryTableBody tr~thead th:nth-child(3) {
+                display: none;
+            }
+
+            /* Modal */
+            .modal-box {
+                max-width: 100%;
+                border-radius: 8px;
+                margin: 8px;
+            }
+
+            .modal-header {
+                padding: 16px 18px;
+            }
+
+            .modal-body {
+                padding: 16px 18px;
+            }
+
+            .modal-footer {
+                padding: 14px 18px;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .modal-footer .btn-secondary-action,
+            .modal-footer .btn-primary-action {
+                flex: 1 1 auto;
+                justify-content: center;
+                font-size: 12px;
+            }
+
+            /* Payment grid */
+            .payment-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 6px;
+            }
+
+            .payment-option {
+                padding: 8px 4px;
+                font-size: 10px;
+            }
+
+            /* Sidebar */
+            .sidebar {
+                width: 240px;
+            }
+
+            .sidebar-brand img {
+                width: 85px;
+            }
+
+            /* Toast */
+            .toast-container {
+                bottom: 16px;
+                right: 12px;
+                left: 12px;
+            }
+
+            .toast {
+                font-size: 12px;
+                padding: 10px 14px;
+            }
+
+            /* Invoice paper */
+            #invoicePaper {
+                padding: 18px 14px;
+                font-size: 11px;
+            }
+
+            .invoice-title-area h1 {
+                font-size: 18px;
+            }
+
+            .invoice-table th,
+            .invoice-table td {
+                padding: 8px 10px;
+                font-size: 11px;
+            }
+        }
+
+        /* ══════════════════════════════════════════════════
+   5 — 300 px  (very small / foldable phones)
+   ══════════════════════════════════════════════════ */
+        @media (max-width: 300px) {
+
+            /* Ultra-compact main */
+            .main-content {
+                padding: 12px 8px;
+            }
+
+            /* Stats */
+            .stats-grid {
+                gap: 8px;
+            }
+
+            .stat-card {
+                padding: 10px 12px;
+            }
+
+            .stat-value {
+                font-size: 18px;
+            }
+
+            /* Header */
+            .page-title h1 {
+                font-size: 14px;
+            }
+
+            .time-badge {
+                display: none;
+            }
+
+            /* hide clock to save space */
+            .mobile-toggle-btn {
+                width: 34px;
+                height: 34px;
+                font-size: 14px;
+                margin-right: 8px;
+            }
+
+            /* Card */
+            .card {
+                padding: 10px;
+            }
+
+            .card-title {
+                font-size: 11px;
+            }
+
+            /* Table minimal */
+            th {
+                font-size: 9px;
+                padding: 8px;
+            }
+
+            td {
+                font-size: 11px;
+                padding: 8px;
+            }
+
+            /* Hide extra table columns aggressively */
+            .table-container table th:nth-child(n+4),
+            .table-container table td:nth-child(n+4) {
+                display: none;
+            }
+
+            /* Billing */
+            .billing-summary-card {
+                padding: 12px;
+            }
+
+            .btn-checkout {
+                font-size: 11px;
+                padding: 12px;
+            }
+
+            .payment-option span {
+                display: none;
+            }
+
+            /* icon only */
+            .payment-option i {
+                font-size: 18px;
+            }
+
+            .payment-option {
+                padding: 12px 4px;
+            }
+
+            /* Sidebar */
+            .sidebar {
+                width: 88vw;
+            }
+
+            .sidebar-nav {
+                padding: 16px 8px;
+            }
+
+            .nav-item {
+                font-size: 12px;
+                padding: 10px 12px;
+            }
+
+            /* Sidebar footer */
+            .operator-name {
+                max-width: 90px;
+                font-size: 11px;
+            }
+
+            .operator-role {
+                font-size: 9px;
+            }
+
+            .logout-btn {
+                font-size: 11px;
+                padding: 8px;
+            }
+
+            /* Modal full bleed */
+            .modal-overlay {
+                padding: 8px;
+            }
+
+            .modal-box {
+                border-radius: 6px;
+            }
+
+            .modal-header h3 {
+                font-size: 13px;
+            }
+
+            .modal-body {
+                padding: 12px;
+            }
+
+            .modal-footer {
+                padding: 12px;
+                gap: 6px;
+            }
+
+            /* Toast */
+            .toast-container {
+                bottom: 10px;
+                right: 8px;
+                left: 8px;
+            }
+
+            .toast {
+                font-size: 11px;
+                padding: 8px 12px;
+            }
+
+            /* Invoice */
+            #invoicePaper {
+                padding: 12px 10px;
+                font-size: 10px;
+            }
+
+            .invoice-logo-area h2 {
+                font-size: 16px;
+            }
+        }
+
+        /* =====================================================
+   DIGINESS POS — ADDITIONAL RESPONSIVE FIXES
+   1. Dashboard row stacking fix (below 1181px)
+   2. POS Billing full mobile fix
+   ===================================================== */
+
+        /* ══════════════════════════════════════════════════
+   DASHBOARD ROW — stack below 1181px
+   ══════════════════════════════════════════════════ */
+        @media (max-width: 1181px) {
+            .dashboard-row {
+                grid-template-columns: 1fr !important;
+                gap: 20px;
+            }
+
+            /* Sales Reports card: full width, compact layout */
+            .dashboard-row .card:last-child>div[style*="height: 180px"] {
+                height: auto !important;
+            }
+
+            /* Low stock table takes full width */
+            .dashboard-row .card:first-child {
+                width: 100%;
+            }
+        }
+
+        /* ══════════════════════════════════════════════════
+   LOW STOCK TABLE — responsive text wrapping
+   ══════════════════════════════════════════════════ */
+        @media (max-width: 900px) {
+
+            /* Table scrollable horizontally */
+            #dashboardLowStockBody td,
+            #dashboardLowStockBody th {
+                white-space: normal;
+                word-break: break-word;
+            }
+
+            /* Hide Model No column on small screens */
+            #panel-dashboard .card thead tr th:nth-child(2),
+            #panel-dashboard .card tbody tr td:nth-child(2) {
+                display: none;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            /* Also hide Status column on very small — show just name + qty */
+            #panel-dashboard .card thead tr th:nth-child(4),
+            #panel-dashboard .card tbody tr td:nth-child(4) {
+                display: none;
+            }
+
+            /* Sales report card description text hidden on small */
+            .dashboard-row .card:last-child p {
+                display: none;
+            }
+
+            .dashboard-row .card:last-child>div {
+                height: auto !important;
+                gap: 12px !important;
+            }
+        }
+
+        /* ══════════════════════════════════════════════════
+   POS BILLING TERMINAL — full mobile fix
+   ══════════════════════════════════════════════════ */
+
+        /* POS grid already 1 col below 1200 — reinforce */
+        @media (max-width: 1200px) {
+            .pos-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            .billing-summary-card {
+                position: static !important;
+                top: auto !important;
+                width: 100% !important;
+            }
+        }
+
+        /* Billing table horizontal scroll on all sizes */
+        #panel-billing .table-container {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        #panel-billing .table-container table {
+            min-width: 480px;
+        }
+
+        @media (max-width: 900px) {
+
+            /* Search bar full width */
+            .search-autocomplete-container {
+                width: 100%;
+            }
+
+            /* Add manually button full width already — ensure spacing */
+            #panel-billing .btn-primary-action[onclick*="modalManualItem"] {
+                width: 100%;
+                margin-bottom: 14px;
+            }
+
+            /* Bill table min-width tighter */
+            #panel-billing .table-container table {
+                min-width: 400px;
+            }
+
+            /* Summary card */
+            .billing-summary-card {
+                padding: 18px;
+            }
+
+            /* Customer inputs full width */
+            .customer-pos-details .billing-input-group input {
+                font-size: 14px;
+                padding: 10px 12px;
+            }
+
+            /* Billing inputs 2 col still ok at 900 */
+            .billing-inputs {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            /* Bill table even more compact */
+            #panel-billing .table-container table {
+                min-width: 360px;
+            }
+
+            #panel-billing table th,
+            #panel-billing table td {
+                padding: 10px 10px;
+                font-size: 12px;
+            }
+
+            /* Hide Model column inside bill table on small */
+            #panel-billing #activeBillBody tr td:nth-child(2),
+            #panel-billing table thead tr th:nth-child(2) {
+                display: none;
+            }
+
+            /* Billing inputs single col */
+            .billing-inputs {
+                grid-template-columns: 1fr !important;
+                gap: 10px;
+            }
+
+            /* Summary row font */
+            .summary-row {
+                font-size: 12px;
+            }
+
+            .summary-row.total {
+                font-size: 14px;
+            }
+
+            .summary-row.total span.val {
+                font-size: 16px;
+            }
+
+            /* Payment grid 3 cols compact */
+            .payment-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 8px;
+            }
+
+            .payment-option {
+                padding: 10px 6px;
+                font-size: 11px;
+                gap: 4px;
+            }
+
+            .payment-option i {
+                font-size: 16px;
+            }
+
+            /* Checkout button */
+            .btn-checkout {
+                padding: 14px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 500px) {
+
+            /* Billing summary card padding */
+            .billing-summary-card {
+                padding: 14px;
+            }
+
+            /* Bill table scroll — allow even narrower */
+            #panel-billing .table-container table {
+                min-width: 300px;
+            }
+
+            /* Also hide Barcode subtext inside bill rows */
+            #panel-billing .product-subtext {
+                display: none;
+            }
+
+            /* Qty controls compact */
+            .qty-btn {
+                width: 22px;
+                height: 22px;
+                font-size: 11px;
+            }
+
+            .qty-input {
+                font-size: 12px;
+                width: 26px;
+            }
+
+            /* Price input inside bill */
+            #panel-billing table td input[type="number"] {
+                width: 65px !important;
+                font-size: 12px;
+            }
+
+            /* Summary row spacing */
+            .summary-row {
+                margin-bottom: 12px;
+            }
+
+            /* Customer input labels */
+            .billing-input-group label {
+                font-size: 9px;
+            }
+
+            .billing-input-group input {
+                font-size: 13px;
+                padding: 8px 10px;
+            }
+
+            /* Payment options — show icon only */
+            .payment-option span {
+                font-size: 10px;
+            }
+
+            /* Checkout */
+            .btn-checkout {
+                font-size: 12px;
+                padding: 12px;
+            }
+
+            /* Card header in billing */
+            #panel-billing .card-header {
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (max-width: 300px) {
+
+            /* POS ultra compact */
+            .billing-summary-card {
+                padding: 10px;
+            }
+
+            #panel-billing table th,
+            #panel-billing table td {
+                padding: 7px 7px;
+                font-size: 11px;
+            }
+
+            /* Hide Total column — show only Price × Qty */
+            #panel-billing table thead tr th:nth-child(5),
+            #panel-billing table tbody tr td:nth-child(5) {
+                display: none;
+            }
+
+            .payment-option span {
+                display: none;
+            }
+
+            .payment-option {
+                padding: 12px 4px;
+            }
+
+            .payment-option i {
+                font-size: 18px;
+            }
+
+            .btn-checkout {
+                font-size: 11px;
+                padding: 11px;
+                letter-spacing: 0.03em;
+            }
+
+            /* Summary labels tighten */
+            .summary-row {
+                font-size: 11px;
+                margin-bottom: 10px;
+            }
+
+            .summary-row.total {
+                font-size: 13px;
+            }
+
+            .summary-row.total span.val {
+                font-size: 15px;
+            }
+        }
+
+        /* =====================================================
+   DIGINESS POS — POS GRID NUCLEAR MOBILE FIX
+   Add this LAST in your <style> block.
+   Fixes pos-grid not collapsing on mobile.
+   ===================================================== */
+
+        /* Force pos-grid to always be block/single-col on small screens
+   Uses every selector variation to override inline styles */
+
+        @media (max-width: 1200px) {
+
+            #panel-billing .pos-grid,
+            .pos-grid {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 20px !important;
+                width: 100% !important;
+            }
+
+            #panel-billing .pos-grid>*,
+            .pos-grid>* {
+                width: 100% !important;
+                min-width: 0 !important;
+                flex: none !important;
+            }
+
+            /* Sticky billing summary card — remove sticky on mobile */
+            .billing-summary-card {
+                position: static !important;
+                top: auto !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+        }
+
+        /* ── Search autocomplete ── */
+        @media (max-width: 900px) {
+            .search-autocomplete-container {
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            .search-bar-input-wrapper {
+                width: 100% !important;
+            }
+
+            .search-bar-input-wrapper input {
+                width: 100% !important;
+                box-sizing: border-box !important;
+                font-size: 14px !important;
+            }
+
+            .suggestions-dropdown {
+                width: 100% !important;
+                left: 0 !important;
+                right: 0 !important;
+                box-sizing: border-box !important;
+            }
+        }
+
+        /* ── Active bill card ── */
+        @media (max-width: 900px) {
+            #panel-billing .card {
+                width: 100% !important;
+                box-sizing: border-box !important;
+                overflow: hidden !important;
+            }
+
+            #panel-billing .table-container {
+                width: 100% !important;
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+            }
+
+            #panel-billing .table-container table {
+                min-width: 420px !important;
+            }
+        }
+
+        /* ── Billing summary card inner layout ── */
+        @media (max-width: 700px) {
+            .billing-summary-card {
+                padding: 16px !important;
+            }
+
+            .billing-inputs {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 10px !important;
+            }
+
+            .customer-pos-details {
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            .customer-pos-details .billing-input-group,
+            .billing-input-group {
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            .customer-pos-details .billing-input-group input,
+            .billing-input-group input {
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            .payment-mode-selector {
+                width: 100% !important;
+            }
+
+            .payment-grid {
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 8px !important;
+                width: 100% !important;
+            }
+
+            .btn-checkout {
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+        }
+
+        /* ── Bill table: hide model col on small ── */
+        @media (max-width: 600px) {
+            #panel-billing .table-container table {
+                min-width: 320px !important;
+            }
+
+            /* Hide Model column */
+            #panel-billing table thead tr th:nth-child(2),
+            #panel-billing table tbody tr td:nth-child(2) {
+                display: none !important;
+            }
+        }
+
+        /* ── Billing inputs 1-col on very small ── */
+        @media (max-width: 500px) {
+            .billing-inputs {
+                grid-template-columns: 1fr !important;
+            }
+
+            /* Product subtext (barcode) hidden */
+            #panel-billing .product-subtext {
+                display: none !important;
+            }
+
+            /* Qty controls */
+            .qty-controls {
+                gap: 5px !important;
+            }
+
+            .qty-btn {
+                width: 22px !important;
+                height: 22px !important;
+                font-size: 11px !important;
+            }
+
+            .qty-input {
+                font-size: 12px !important;
+                width: 24px !important;
+            }
+
+            /* Price input */
+            #panel-billing table td div input[type="number"] {
+                width: 60px !important;
+                font-size: 12px !important;
+            }
+
+            /* Summary */
+            .summary-row {
+                font-size: 12px !important;
+                margin-bottom: 10px !important;
+            }
+
+            .summary-row.total {
+                font-size: 13px !important;
+                padding-top: 12px !important;
+            }
+
+            .summary-row.total span.val {
+                font-size: 16px !important;
+            }
+
+            /* Payment options */
+            .payment-option {
+                padding: 9px 4px !important;
+                font-size: 10px !important;
+                gap: 4px !important;
+            }
+
+            .payment-option i {
+                font-size: 15px !important;
+            }
+
+            /* Checkout btn */
+            .btn-checkout {
+                font-size: 12px !important;
+                padding: 13px !important;
+                letter-spacing: 0.05em !important;
+            }
+        }
+
+        /* ── 300px nuclear ── */
+        @media (max-width: 300px) {
+            .billing-summary-card {
+                padding: 10px !important;
+            }
+
+            /* Hide Total column — too cramped */
+            #panel-billing table thead tr th:nth-child(5),
+            #panel-billing table tbody tr td:nth-child(5) {
+                display: none !important;
+            }
+
+            .payment-option span {
+                display: none !important;
+            }
+
+            .payment-option {
+                padding: 12px 2px !important;
+            }
+
+            .payment-option i {
+                font-size: 17px !important;
+            }
+
+            .btn-checkout {
+                font-size: 11px !important;
+                padding: 11px !important;
+            }
+
+            .summary-row {
+                font-size: 11px !important;
+            }
+
+            .summary-row.total span.val {
+                font-size: 14px !important;
+            }
+        }
     </style>
 </head>
+
 <body>
     <!-- Mobile Navigation Overlay Mask -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleMobileSidebar()"></div>
@@ -1349,20 +2773,21 @@
     <!-- ===== 1. AUTH LOGIN GUARD SCREEN ===== -->
     <div class="login-overlay" id="loginOverlay">
         <div class="login-card">
-            <img src="assets/logo.png" alt="Diginess Logo" onerror="this.src='https://placehold.co/130x40/09090b/ffffff?text=DIGINESS'">
+            <img src="assets/logo1.png" alt="Diginess Logo"
+                onerror="this.src='https://placehold.co/130x40/09090b/ffffff?text=DIGINESS'">
             <h2>POS billing portal</h2>
             <p>Access billing terminal & inventory manager</p>
-            
+
             <div class="form-group">
                 <label>POS Portal Email</label>
-                <input type="email" id="adminEmail" placeholder="operator@diginess.store" value="admin@diginess.store">
+                <input type="email" id="adminEmail" placeholder="operator@diginess.store">
             </div>
-            
+
             <div class="form-group">
                 <label>Password</label>
                 <input type="password" id="adminPassword" placeholder="••••••••">
             </div>
-            
+
             <button class="login-btn" onclick="handleAdminLogin()">Authenticate Portal</button>
             <div class="login-error" id="loginErrorMsg"></div>
         </div>
@@ -1370,10 +2795,11 @@
     <!-- ===== 2. SIDEBAR NAVIGATION ===== -->
     <div class="sidebar">
         <div class="sidebar-brand">
-            <img src="assets/logo.png" alt="Diginess Logo" onerror="this.src='https://placehold.co/100x30/0c0c0e/ffffff?text=DIGINESS'">
+            <img src="assets/logo1.png" alt="Diginess Logo"
+                onerror="this.src='https://placehold.co/100x30/0c0c0e/ffffff?text=DIGINESS'">
             <span>POS v1.2</span>
         </div>
-        
+
         <nav class="sidebar-nav">
             <div class="nav-item active" onclick="switchTab('dashboard', this)">
                 <i class="fas fa-chart-pie"></i> Dashboard
@@ -1394,7 +2820,7 @@
                 <i class="fas fa-file-invoice-dollar"></i> Order History
             </div>
         </nav>
-        
+
         <div class="sidebar-footer">
             <div class="operator-info">
                 <div class="operator-avatar" id="operatorInitial">A</div>
@@ -1473,7 +2899,7 @@
                 <!-- Low Stock Products -->
                 <div class="card">
                     <div class="card-header">
-                        <span class="card-title">Low Stock Alert (under 5 pcs)</span>
+                        <span class="card-title">Low Stock Alert</span>
                         <button class="btn-secondary-action" onclick="switchTab('stock')">Manage Stock</button>
                     </div>
                     <div class="table-container">
@@ -1488,7 +2914,10 @@
                             </thead>
                             <tbody id="dashboardLowStockBody">
                                 <!-- Loaded dynamically -->
-                                <tr><td colspan="4" style="text-align: center; color: var(--muted);">Loading inventory updates...</td></tr>
+                                <tr>
+                                    <td colspan="4" style="text-align: center; color: var(--muted);">Loading inventory
+                                        updates...</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -1500,7 +2929,8 @@
                     </div>
                     <div style="display:flex; flex-direction:column; gap:20px; justify-content:center; height: 180px;">
                         <p style="font-size:13px; color:var(--muted); line-height:1.6;">
-                            Compile and download a comprehensive CSV spreadsheet containing itemized logs of all orders, billing transactions, dates, customer info, and totals from both Online Store and POS.
+                            Compile and download a comprehensive CSV spreadsheet containing itemized logs of all orders,
+                            billing transactions, dates, customer info, and totals from both Online Store and POS.
                         </p>
                         <button class="btn-primary-action" onclick="exportSalesCSV()">
                             <i class="fas fa-file-csv"></i> Export Sales Logs (CSV)
@@ -1517,18 +2947,28 @@
                     <!-- Search suggestion input box -->
                     <div class="search-autocomplete-container">
                         <div class="search-bar-input-wrapper">
-                            <input type="text" id="billingSearchInput" placeholder="Type product name or keyword (e.g. 'Smart Switch', 'Cap', 'Robot') to search..." oninput="handleBillingSearch()" autocomplete="off">
+                            <input type="text" id="billingSearchInput"
+                                placeholder="Type product name or keyword (e.g. 'Smart Switch', 'Cap', 'Robot') to search..."
+                                oninput="handleBillingSearch()" autocomplete="off">
                             <i class="fas fa-magnifying-glass"></i>
                         </div>
                         <div class="suggestions-dropdown" id="billingSuggestions">
                             <!-- Populated dynamically -->
                         </div>
                     </div>
+                    <!-- Add Manually Button -->
+                    <button class="btn-primary-action"
+                        style="width: 100%; margin-bottom: 16px; background: rgba(16, 185, 129, 0.1); color: var(--accent); border: 1px solid rgba(16, 185, 129, 0.3);"
+                        onclick="openModal('modalManualItem')">
+                        <i class="fas fa-plus-circle"></i> Add Item Manually
+                    </button>
                     <!-- Active Bill Table -->
                     <div class="card" style="padding: 16px;">
                         <div class="card-header" style="margin-bottom: 12px;">
-                            <span class="card-title" style="font-size: 12px;"><i class="fas fa-receipt"></i> Active Bill Table</span>
-                            <button class="btn-secondary-action" style="padding: 4px 10px; font-size:11px;" onclick="clearActiveBill()">Clear Bill</button>
+                            <span class="card-title" style="font-size: 12px;"><i class="fas fa-receipt"></i> Active Bill
+                                Table</span>
+                            <button class="btn-secondary-action" style="padding: 4px 10px; font-size:11px;"
+                                onclick="clearActiveBill()">Clear Bill</button>
                         </div>
                         <div class="table-container">
                             <table style="min-width: 500px;">
@@ -1546,7 +2986,8 @@
                                     <!-- Dynamic list of items -->
                                     <tr id="emptyBillRow">
                                         <td colspan="6" style="text-align: center; padding: 48px; color: var(--muted);">
-                                            <i class="fas fa-cash-register" style="font-size: 28px; color: var(--border); display: block; margin-bottom: 12px;"></i>
+                                            <i class="fas fa-cash-register"
+                                                style="font-size: 28px; color: var(--border); display: block; margin-bottom: 12px;"></i>
                                             Type and select a product above to add it to the bill.
                                         </td>
                                     </tr>
@@ -1557,7 +2998,8 @@
                 </div>
                 <!-- Right Side Summary Checkout panel -->
                 <div class="billing-summary-card">
-                    <div class="card-header" style="margin-bottom: 16px; border-bottom: 1px solid var(--border); padding-bottom: 12px;">
+                    <div class="card-header"
+                        style="margin-bottom: 16px; border-bottom: 1px solid var(--border); padding-bottom: 12px;">
                         <span class="card-title"><i class="fas fa-wallet"></i> Billing Details</span>
                     </div>
                     <!-- Customer details inputs -->
@@ -1575,11 +3017,13 @@
                     <div class="billing-inputs">
                         <div class="billing-input-group">
                             <label>Discount (%)</label>
-                            <input type="number" id="posDiscount" min="0" max="100" value="0" oninput="calculateBillTotals()">
+                            <input type="number" id="posDiscount" min="0" max="100" value="0"
+                                oninput="calculateBillTotals()">
                         </div>
                         <div class="billing-input-group">
                             <label>GST / Tax (%)</label>
-                            <input type="number" id="posTax" min="0" max="100" value="18" oninput="calculateBillTotals()">
+                            <input type="number" id="posTax" min="0" max="100" value="18"
+                                oninput="calculateBillTotals()">
                         </div>
                     </div>
                     <!-- Summary numbers -->
@@ -1603,7 +3047,8 @@
                     <div class="payment-mode-selector">
                         <div class="payment-label">Select Payment Method</div>
                         <div class="payment-grid">
-                            <div class="payment-option active" data-mode="Cash" onclick="selectPaymentMode('Cash', this)">
+                            <div class="payment-option active" data-mode="Cash"
+                                onclick="selectPaymentMode('Cash', this)">
                                 <i class="fas fa-money-bill-wave"></i>
                                 <span>Cash</span>
                             </div>
@@ -1628,7 +3073,8 @@
             <div class="card" style="padding: 16px;">
                 <div class="search-filter-row">
                     <div class="search-stock-wrapper">
-                        <input type="text" id="stockSearchInput" placeholder="Search inventory by product name..." oninput="renderStockTable()">
+                        <input type="text" id="stockSearchInput" placeholder="Search inventory by product name..."
+                            oninput="renderStockTable()">
                         <i class="fas fa-magnifying-glass"></i>
                     </div>
                 </div>
@@ -1646,7 +3092,10 @@
                         </thead>
                         <tbody id="stockTableBody">
                             <!-- Populated dynamically -->
-                            <tr><td colspan="6" style="text-align: center; color: var(--muted);">Loading database inventory...</td></tr>
+                            <tr>
+                                <td colspan="6" style="text-align: center; color: var(--muted);">Loading database
+                                    inventory...</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -1657,7 +3106,8 @@
             <div class="card" style="padding: 16px;">
                 <div class="search-filter-row">
                     <div class="search-stock-wrapper">
-                        <input type="text" id="pricingSearchInput" placeholder="Search products to manage pricing..." oninput="renderPricingTable()">
+                        <input type="text" id="pricingSearchInput" placeholder="Search products to manage pricing..."
+                            oninput="renderPricingTable()">
                         <i class="fas fa-magnifying-glass"></i>
                     </div>
                 </div>
@@ -1673,7 +3123,10 @@
                             </tr>
                         </thead>
                         <tbody id="pricingTableBody">
-                            <tr><td colspan="5" style="text-align: center; color: var(--muted);">Loading database pricing...</td></tr>
+                            <tr>
+                                <td colspan="5" style="text-align: center; color: var(--muted);">Loading database
+                                    pricing...</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -1684,13 +3137,17 @@
             <div class="card" style="padding: 16px;">
                 <div class="search-filter-row">
                     <div class="search-stock-wrapper">
-                        <input type="text" id="historySearchInput" placeholder="Search invoices by ID, name, date..." oninput="renderHistoryTable()">
+                        <input type="text" id="historySearchInput" placeholder="Search invoices by ID, name, date..."
+                            oninput="renderHistoryTable()">
                         <i class="fas fa-magnifying-glass"></i>
                     </div>
                     <div class="history-filters">
-                        <button class="history-filter-btn active" data-type="all" onclick="filterHistoryType('all', this)">All Orders</button>
-                        <button class="history-filter-btn" data-type="pos" onclick="filterHistoryType('pos', this)">POS Billing</button>
-                        <button class="history-filter-btn" data-type="online" onclick="filterHistoryType('online', this)">Online Website</button>
+                        <button class="history-filter-btn active" data-type="all"
+                            onclick="filterHistoryType('all', this)">All Orders</button>
+                        <button class="history-filter-btn" data-type="pos" onclick="filterHistoryType('pos', this)">POS
+                            Billing</button>
+                        <button class="history-filter-btn" data-type="online"
+                            onclick="filterHistoryType('online', this)">Online Website</button>
                     </div>
                 </div>
                 <div class="table-container">
@@ -1708,7 +3165,10 @@
                         </thead>
                         <tbody id="historyTableBody">
                             <!-- Populated dynamically -->
-                            <tr><td colspan="7" style="text-align: center; color: var(--muted);">Loading order transactions...</td></tr>
+                            <tr>
+                                <td colspan="7" style="text-align: center; color: var(--muted);">Loading order
+                                    transactions...</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -1719,14 +3179,20 @@
             <div class="card" style="padding: 16px;">
                 <div class="search-filter-row">
                     <div class="search-stock-wrapper">
-                        <input type="text" id="deliverySearchInput" placeholder="Search deliveries by ID, name, state, phone..." oninput="renderDeliveryTable()">
+                        <input type="text" id="deliverySearchInput"
+                            placeholder="Search deliveries by ID, name, state, phone..."
+                            oninput="renderDeliveryTable()">
                         <i class="fas fa-magnifying-glass"></i>
                     </div>
                     <div class="history-filters" id="deliveryStatusFilters">
-                        <button class="history-filter-btn active" data-status="all" onclick="filterDeliveryStatus('all', this)">All Shipments</button>
-                        <button class="history-filter-btn" data-status="processing" onclick="filterDeliveryStatus('processing', this)">Processing</button>
-                        <button class="history-filter-btn" data-status="shipped" onclick="filterDeliveryStatus('shipped', this)">Shipped</button>
-                        <button class="history-filter-btn" data-status="delivered" onclick="filterDeliveryStatus('delivered', this)">Delivered</button>
+                        <button class="history-filter-btn active" data-status="all"
+                            onclick="filterDeliveryStatus('all', this)">All Shipments</button>
+                        <button class="history-filter-btn" data-status="processing"
+                            onclick="filterDeliveryStatus('processing', this)">Processing</button>
+                        <button class="history-filter-btn" data-status="shipped"
+                            onclick="filterDeliveryStatus('shipped', this)">Shipped</button>
+                        <button class="history-filter-btn" data-status="delivered"
+                            onclick="filterDeliveryStatus('delivered', this)">Delivered</button>
                     </div>
                 </div>
                 <div class="table-container">
@@ -1744,7 +3210,10 @@
                         </thead>
                         <tbody id="deliveryTableBody">
                             <!-- Populated dynamically -->
-                            <tr><td colspan="7" style="text-align: center; color: var(--muted);">Loading deliveries...</td></tr>
+                            <tr>
+                                <td colspan="7" style="text-align: center; color: var(--muted);">Loading deliveries...
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -1752,6 +3221,44 @@
         </div>
     </div>
     <!-- ===== 4. POPUPS & OVERLAYS ===== -->
+    <!-- Modal: Add Item Manually -->
+    <div class="modal-overlay" id="modalManualItem">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Add Item</h3>
+                <span class="modal-close" onclick="closeModal('modalManualItem')"><i class="fas fa-times"></i></span>
+            </div>
+            <div class="modal-body">
+                <div style="display: grid; grid-template-columns: 1fr; gap: 16px;">
+                    <div class="form-group">
+                        <label>Product Name</label>
+                        <input type="text" id="manualItemName" placeholder="e.g. Smart Device, T-Shirt" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Price (₹)</label>
+                        <input type="number" id="manualItemPrice" min="0" placeholder="e.g. 1999" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Model Number</label>
+                        <input type="text" id="manualItemModel" placeholder="e.g. DG-MOD-001" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Barcode Number</label>
+                        <input type="text" id="manualItemBarcode" placeholder="e.g. 890000000001" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Quantity</label>
+                        <input type="number" id="manualItemQuantity" min="1" value="1" required>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary-action" onclick="closeModal('modalManualItem')">Cancel</button>
+                <button class="btn-primary-action" style="background:var(--accent); color:#000;"
+                    onclick="submitManualItem()">Add to Bill</button>
+            </div>
+        </div>
+    </div>
     <!-- Modal: Stock Adjustment -->
     <div class="modal-overlay" id="modalStockAdjust">
         <div class="modal-box">
@@ -1762,7 +3269,7 @@
             <div class="modal-body">
                 <div class="stock-adjust-form">
                     <p style="font-size: 13px; color: var(--muted);" id="adjustProductMeta"></p>
-                    
+
                     <div class="form-group" style="margin-bottom:0; display: none;">
                         <label>Adjustment Target</label>
                         <select id="adjustTarget">
@@ -1771,7 +3278,7 @@
                             <option value="available">Sellable Stock (Available)</option>
                         </select>
                     </div>
-                    
+
                     <div class="form-group" style="margin-bottom:0;">
                         <label>Adjustment Type</label>
                         <select id="adjustActionType">
@@ -1792,7 +3299,8 @@
             </div>
             <div class="modal-footer">
                 <button class="btn-secondary-action" onclick="closeModal('modalStockAdjust')">Cancel</button>
-                <button class="btn-primary-action" style="background:var(--accent); color:#000;" onclick="submitStockAdjustment()">Apply Adjustments</button>
+                <button class="btn-primary-action" style="background:var(--accent); color:#000;"
+                    onclick="submitStockAdjustment()">Apply Adjustments</button>
             </div>
         </div>
     </div>
@@ -1811,7 +3319,8 @@
             </div>
             <div class="modal-footer">
                 <button class="btn-secondary-action" onclick="closeModal('modalInvoice')">Close</button>
-                <button class="btn-secondary-action" style="color: #3b82f6; border-color: rgba(59,130,246,0.3);" onclick="downloadInvoicePDF()">
+                <button class="btn-secondary-action" style="color: #3b82f6; border-color: rgba(59,130,246,0.3);"
+                    onclick="downloadInvoicePDF()">
                     <i class="fas fa-file-pdf"></i> Download PDF
                 </button>
                 <button class="btn-primary-action" onclick="printInvoiceThermal()">
@@ -1822,17 +3331,17 @@
     </div>
     <!-- Toast Notifications wrapper -->
     <div class="toast-container" id="toastContainer"></div>
-    
+
     <script>
         let operatorUser = null;
-        let operatorRole = null; 
+        let operatorRole = null;
         let activeTabName = 'dashboard';
-        let stockDataMap = {}; 
-        let ordersHistoryList = []; 
-        let activePOSBillItems = []; 
-        let selectedPOSPaymentMode = 'Cash'; 
-        let currentAdjustingProductSlug = ''; 
-        let viewingInvoiceObject = null; 
+        let stockDataMap = {};
+        let ordersHistoryList = [];
+        let activePOSBillItems = [];
+        let selectedPOSPaymentMode = 'Cash';
+        let currentAdjustingProductSlug = '';
+        let viewingInvoiceObject = null;
         document.addEventListener('DOMContentLoaded', () => {
             // Live clock logic
             setInterval(() => {
@@ -1864,12 +3373,12 @@
                     operatorUser = user;
                     operatorRole = (email === 'admin@diginess.store') ? 'admin' : 'staff';
                     loginOverlay.style.display = 'none';
-                    
+
                     // Setup operator identity
                     const opInitial = email.charAt(0).toUpperCase();
                     document.getElementById('operatorInitial').textContent = opInitial;
                     document.getElementById('operatorName').textContent = email;
-                    
+
                     const roleText = (operatorRole === 'admin') ? 'System Store Admin' : 'POS Billing Staff';
                     document.querySelector('.operator-role').textContent = roleText;
 
@@ -1896,7 +3405,7 @@
         function applyRolePermissions() {
             if (!operatorUser) return;
             const isStaff = (operatorRole === 'staff');
-            
+
             // 1. CSV Export button control
             const csvExportBtn = document.querySelector('.dashboard-row button[onclick="exportSalesCSV()"]');
             if (csvExportBtn) {
@@ -1912,7 +3421,7 @@
                     csvExportBtn.title = '';
                 }
             }
-            
+
             // 2. Refresh tables to adapt display elements
             if (activeTabName === 'stock') {
                 renderStockTable();
@@ -1955,14 +3464,14 @@
         // ------------------ TAB CONTROLLER ------------------
         function switchTab(tabId, element) {
             activeTabName = tabId;
-            
+
             // Hide all tab panels
             document.querySelectorAll('.tab-panel').forEach(panel => {
                 panel.style.display = 'none';
             });
             // Show target tab panel
             document.getElementById('panel-' + tabId).style.display = 'block';
-            
+
             // Auto close mobile sidebar menu if it is active
             const sidebar = document.querySelector('.sidebar');
             const overlay = document.getElementById('sidebarOverlay');
@@ -1975,7 +3484,7 @@
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('active');
             });
-            
+
             if (element) {
                 element.classList.add('active');
             } else {
@@ -2040,7 +3549,7 @@
                 stockSnap.forEach(doc => existingSlugs.add(doc.id));
                 const batch = db.batch();
                 let initialNeeded = false;
-                
+
                 productData.forEach(p => {
                     if (!existingSlugs.has(p.slug)) {
                         console.log('Stock init triggered for product slug:', p.slug);
@@ -2083,7 +3592,7 @@
                     stockDataMap[doc.id] = doc.data();
                 });
                 console.log('Realtime Stocks synchronized successfully');
-                
+
                 // Refresh active dashboard metric counts and tables
                 if (activeTabName === 'dashboard') {
                     renderDashboardMetrics();
@@ -2102,7 +3611,7 @@
                     ordersHistoryList.push({ id: doc.id, ...doc.data() });
                 });
                 console.log('Realtime Orders database synchronized successfully');
-                
+
                 // Refresh active dashboard metrics and order history list
                 if (activeTabName === 'dashboard') {
                     renderDashboardMetrics();
@@ -2120,15 +3629,15 @@
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
             toast.className = `toast ${type}`;
-            
+
             const icon = type === 'success' ? 'fa-circle-check' : 'fa-triangle-exclamation';
             toast.innerHTML = `
                 <i class="fas ${icon}"></i>
                 <span>${message}</span>
             `;
-            
+
             container.appendChild(toast);
-            
+
             // Remove toast after 3.5 seconds
             setTimeout(() => {
                 toast.style.animation = 'toastSlideIn 0.3s ease reverse';
@@ -2153,7 +3662,7 @@
             ordersHistoryList.forEach(order => {
                 const total = order.total || 0;
                 totalSalesAmount += total;
-                
+
                 const isPOSOrder = order.isPOS || order.orderType === 'POS';
                 if (isPOSOrder) {
                     posSalesAmount += total;
@@ -2232,7 +3741,7 @@
                 const payment = isPOS ? (order.paymentMode || "Cash") : "Razorpay Online";
                 const total = order.total || 0;
                 // Since subtotal is total, let's approximate subtotal minus estimated tax/discount if needed
-                const subtotal = total; 
+                const subtotal = total;
                 const status = order.status || "Delivered";
                 const row = `"${invoiceNo}","${date}","${customer.replace(/"/g, '""')}","${contact}","${orderType}","${payment}",${subtotal},${total},"${status}"`;
                 csvContent += row + "\r\n";
@@ -2240,7 +3749,7 @@
             const encodedUri = encodeURI(csvContent);
             const link = document.createElement("a");
             link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `diginess_sales_report_${new Date().toISOString().slice(0,10)}.csv`);
+            link.setAttribute("download", `diginess_sales_report_${new Date().toISOString().slice(0, 10)}.csv`);
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
@@ -2256,8 +3765,8 @@
                 return;
             }
             // Find matches in productData
-            const matches = productData.filter(p => 
-                p.name.toLowerCase().includes(query) || 
+            const matches = productData.filter(p =>
+                p.name.toLowerCase().includes(query) ||
                 p.category.toLowerCase().includes(query) ||
                 getProductModel(p.slug).toLowerCase().includes(query) ||
                 getProductBarcode(p.slug).includes(query)
@@ -2268,14 +3777,14 @@
                         No matching products found matching "${query}"
                     </div>
                 `;
-                } else {
+            } else {
                 dropdown.innerHTML = matches.map(p => {
                     const stockInfo = stockDataMap[p.slug] || { currentStock: 0, availableStock: 0 };
                     const available = stockInfo.availableStock || 0;
                     const isOut = available <= 0;
                     const onclickAttr = isOut ? '' : "addProductToBill('" + p.slug + "');";
                     const activePrice = (typeof stockInfo.priceNum !== 'undefined') ? stockInfo.priceNum : (p.priceNum || 0);
-                    
+
                     return `
                         <div class="suggestion-item" onclick="${onclickAttr}">
                             <div class="suggestion-product-info">
@@ -2292,13 +3801,13 @@
                     `;
                 }).join('');
             }
-            
+
             dropdown.style.display = 'block';
         }
         function addProductToBill(slug) {
             const dropdown = document.getElementById('billingSuggestions');
             const input = document.getElementById('billingSearchInput');
-            
+
             dropdown.style.display = 'none';
             input.value = '';
             const product = productData.find(p => p.slug === slug);
@@ -2350,6 +3859,57 @@
             showToast(`Removed ${item.name} from bill`, 'warning');
             renderActiveBill();
         }
+        function submitManualItem() {
+            const name = document.getElementById('manualItemName').value.trim();
+            const price = parseFloat(document.getElementById('manualItemPrice').value);
+            const model = document.getElementById('manualItemModel').value.trim();
+            const barcode = document.getElementById('manualItemBarcode').value.trim();
+            const quantity = parseInt(document.getElementById('manualItemQuantity').value);
+
+            // Validation
+            if (!name) {
+                showToast('Please enter product name.', 'error');
+                return;
+            }
+            if (isNaN(price) || price <= 0) {
+                showToast('Please enter a valid price.', 'error');
+                return;
+            }
+            if (!model) {
+                showToast('Please enter model number.', 'error');
+                return;
+            }
+            if (!barcode) {
+                showToast('Please enter barcode number.', 'error');
+                return;
+            }
+            if (isNaN(quantity) || quantity < 1) {
+                showToast('Please enter valid quantity.', 'error');
+                return;
+            }
+
+            // Add to bill
+            activePOSBillItems.push({
+                slug: `manual-${Date.now()}`,
+                name: name,
+                priceNum: price,
+                model: model,
+                barcode: barcode,
+                quantity: quantity,
+                isManual: true
+            });
+
+            // Clear form and close modal
+            document.getElementById('manualItemName').value = '';
+            document.getElementById('manualItemPrice').value = '';
+            document.getElementById('manualItemModel').value = '';
+            document.getElementById('manualItemBarcode').value = '';
+            document.getElementById('manualItemQuantity').value = '1';
+            closeModal('modalManualItem');
+
+            showToast(`Added ${name} to bill`, 'success');
+            renderActiveBill();
+        }
         function clearActiveBill() {
             activePOSBillItems = [];
             document.getElementById('posCustomerName').value = '';
@@ -2360,7 +3920,7 @@
         }
         function renderActiveBill() {
             const body = document.getElementById('activeBillBody');
-            
+
             if (activePOSBillItems.length === 0) {
                 body.innerHTML = `
                     <tr id="emptyBillRow">
@@ -2468,7 +4028,7 @@
             const taxVal = (subtotalAfterDiscount * taxPct) / 100;
             const grandTotal = Math.round(subtotalAfterDiscount + taxVal);
             // Generate deterministic order id for POS
-            const orderId = `POS-${Date.now().toString(36).toUpperCase()}-${Math.floor(100 + Math.random()*900)}`;
+            const orderId = `POS-${Date.now().toString(36).toUpperCase()}-${Math.floor(100 + Math.random() * 900)}`;
             const currentDate = new Date().toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: 'long',
@@ -2513,7 +4073,7 @@
                             const data = doc.data();
                             const current = data.currentStock || 0;
                             const available = data.availableStock || 0;
-                            
+
                             transaction.update(stockRef, {
                                 currentStock: Math.max(0, current - item.quantity),
                                 availableStock: Math.max(0, available - item.quantity),
@@ -2525,10 +4085,10 @@
                 // Save POS Order document to orders collection
                 await db.collection('orders').add(invoiceDetails);
                 showToast('Sale transaction recorded successfully!', 'success');
-                
+
                 // Show printable invoice popup
                 showInvoiceModal(invoiceDetails);
-                
+
                 // Reset terminal
                 clearActiveBill();
             } catch (err) {
@@ -2540,20 +4100,20 @@
         function showInvoiceModal(orderObject) {
             viewingInvoiceObject = orderObject;
             const container = document.getElementById('invoicePaper');
-            
+
             const isPOS = orderObject.isPOS || orderObject.orderType === 'POS';
             const invoiceNo = orderObject.orderId || 'N/A';
             const dateStr = orderObject.date || 'N/A';
             const customerName = orderObject.customerName || orderObject.userName || 'Walk-in Customer';
             const contactDetails = orderObject.customerContact || orderObject.userEmail || orderObject.shippingInfo?.phone || 'N/A';
-            
+
             // Numbers
             const totalVal = orderObject.total || 0;
             const subtotal = orderObject.subtotal || totalVal;
             const discountVal = orderObject.discountVal || 0;
             const taxVal = orderObject.taxVal || 0;
             const paymentMode = isPOS ? (orderObject.paymentMode || 'Cash') : 'Razorpay Online';
-            
+
             // Format Billing Details
             let billingDetailsHTML = '';
             if (orderObject.shippingInfo) {
@@ -2605,7 +4165,7 @@
                     <div class="invoice-logo-area">
                         <h2>DIGINESS</h2>
                         <p>2nd Floor, Ampa Skyone, No.1, Nelson Manickam Rd, Aminjikarai, Chennai, Tamil Nadu 600030</p>
-                        <p>Phone: +91 9845012345</p>
+                        <p>Phone: +91 9845082345</p>
                     </div>
                     <div class="invoice-title-area">
                         <h1>TAX INVOICE</h1>
@@ -2691,14 +4251,14 @@
         // Client side PDF downloader via html2pdf library
         function downloadInvoicePDF() {
             if (!viewingInvoiceObject) return;
-            
+
             const element = document.getElementById('invoicePaper');
             const options = {
-                margin:       10,
-                filename:     `invoice_${viewingInvoiceObject.orderId}.pdf`,
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
-                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                margin: 10,
+                filename: `invoice_${viewingInvoiceObject.orderId}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true, letterRendering: true },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
             // Temporarily apply white background to print properly if browser theme affects canvas
             element.style.background = '#ffffff';
@@ -2715,8 +4275,8 @@
             const body = document.getElementById('stockTableBody');
             const query = document.getElementById('stockSearchInput').value.trim().toLowerCase();
             // Filter products
-            const filtered = productData.filter(p => 
-                p.name.toLowerCase().includes(query) || 
+            const filtered = productData.filter(p =>
+                p.name.toLowerCase().includes(query) ||
                 p.category.toLowerCase().includes(query) ||
                 getProductModel(p.slug).toLowerCase().includes(query)
             );
@@ -2742,9 +4302,9 @@
                 } else if (isLow) {
                     stockStatusBadge = `<span class="badge warning">Low Stock</span>`;
                 }
-                
+
                 const activePrice = (typeof stockInfo.priceNum !== 'undefined') ? stockInfo.priceNum : (p.priceNum || 0);
-                
+
                 let actionsHtml = '';
                 if (operatorRole === 'staff') {
                     actionsHtml = `<span class="badge" style="background: rgba(255,255,255,0.05); color: var(--muted); font-size:12px; font-weight:500; border: 1px solid rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 4px;">View Only</span>`;
@@ -2763,7 +4323,7 @@
                         </div>
                     `;
                 }
-                
+
                 return `
                     <tr>
                         <td>
@@ -2809,11 +4369,11 @@
             document.getElementById('adjustActionType').value = preSelectAction;
             document.getElementById('adjustTarget').value = 'both';
             document.getElementById('adjustQuantityInput').value = '5';
-            
+
             // Get active price from stockDataMap or productData
             const activePrice = (typeof stockInfo.priceNum !== 'undefined') ? stockInfo.priceNum : (product.priceNum || 0);
             document.getElementById('adjustPriceInput').value = activePrice;
-            
+
             openModal('modalStockAdjust');
         }
         // Commit stock adjustment to Firestore
@@ -2884,8 +4444,8 @@
             if (!body) return;
             const query = document.getElementById('pricingSearchInput').value.trim().toLowerCase();
             // Filter products
-            const filtered = productData.filter(p => 
-                p.name.toLowerCase().includes(query) || 
+            const filtered = productData.filter(p =>
+                p.name.toLowerCase().includes(query) ||
                 p.category.toLowerCase().includes(query) ||
                 getProductModel(p.slug).toLowerCase().includes(query)
             );
@@ -2902,7 +4462,7 @@
             body.innerHTML = filtered.map(p => {
                 const stockInfo = stockDataMap[p.slug] || {};
                 const activePrice = (typeof stockInfo.priceNum !== 'undefined') ? stockInfo.priceNum : (p.priceNum || 0);
-                
+
                 let actionHtml = '';
                 if (operatorRole === 'staff') {
                     actionHtml = `<span class="badge" style="background: rgba(255,255,255,0.05); color: var(--muted); font-size:12px; font-weight:500; border: 1px solid rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 4px;">View Only</span>`;
@@ -2917,7 +4477,7 @@
                         </div>
                     `;
                 }
-                
+
                 return `
                     <tr>
                         <td>
@@ -2941,7 +4501,7 @@
                 `;
             }).join('');
         }
-        
+
         async function submitSinglePriceUpdate(slug) {
             if (operatorRole !== 'admin') {
                 showToast('Access Denied: Only administrators can update product prices.', 'error');
@@ -2982,28 +4542,28 @@
             const body = document.getElementById('deliveryTableBody');
             if (!body) return;
             const query = document.getElementById('deliverySearchInput').value.trim().toLowerCase();
-            
+
             // Filter orders containing shippingInfo (which denotes online orders)
             let deliveries = ordersHistoryList.filter(order => {
                 const hasShipping = !!order.shippingInfo;
                 if (!hasShipping) return false;
-                
+
                 // Status filter
                 const orderStatus = (order.status || 'Processing').toLowerCase();
                 if (activeDeliveryStatusFilter === 'processing' && orderStatus !== 'processing' && orderStatus !== 'pending') return false;
                 if (activeDeliveryStatusFilter === 'shipped' && orderStatus !== 'shipped') return false;
                 if (activeDeliveryStatusFilter === 'delivered' && orderStatus !== 'delivered') return false;
-                
+
                 // Search filter query
                 const orderId = (order.orderId || '').toLowerCase();
                 const customer = (order.customerName || order.userName || '').toLowerCase();
                 const phone = (order.shippingInfo?.phone || '').toLowerCase();
                 const state = (order.shippingInfo?.state || '').toLowerCase();
                 const city = (order.shippingInfo?.city || '').toLowerCase();
-                
+
                 return orderId.includes(query) || customer.includes(query) || phone.includes(query) || state.includes(query) || city.includes(query);
             });
-            
+
             if (deliveries.length === 0) {
                 body.innerHTML = `
                     <tr>
@@ -3014,26 +4574,26 @@
                 `;
                 return;
             }
-            
+
             body.innerHTML = deliveries.map(order => {
                 const s = order.shippingInfo || {};
                 const invoiceNo = order.orderId || 'N/A';
                 const customer = s.fullName || order.customerName || order.userName || 'Customer';
                 const contact = s.phone || order.userEmail || 'N/A';
-                
+
                 const addressStr = `${s.address || ''}, ${s.city || ''}, ${s.state || ''} - ${s.zip || ''}`;
-                
+
                 // Items Summary
                 const itemsSummary = (order.items || []).map(it => `${it.name} (x${it.quantity})`).join(', ');
                 const total = order.total || 0;
                 const status = order.status || 'Processing';
                 const isStaff = (operatorRole === 'staff');
-                
+
                 // Status Badge CSS
                 let badgeClass = 'warning'; // processing / pending
                 if (status.toLowerCase() === 'shipped') badgeClass = 'info';
                 else if (status.toLowerCase() === 'delivered') badgeClass = 'success';
-                
+
                 // Status update actions
                 let actionHTML = '';
                 if (isStaff) {
@@ -3047,7 +4607,7 @@
                         </select>
                     `;
                 }
-                
+
                 return `
                     <tr onclick="if(event.target.tagName !== 'SELECT') reprintInvoice('${order.orderId}')" style="cursor: pointer;">
                         <td><strong style="color:var(--primary);">${invoiceNo}</strong></td>
@@ -3106,7 +4666,7 @@
             // Filter history lists
             let filtered = ordersHistoryList.filter(order => {
                 const isPOS = order.isPOS || order.orderType === 'POS';
-                
+
                 // 1. Filter by order type tabs
                 if (activeHistoryTypeFilter === 'pos' && !isPOS) return false;
                 if (activeHistoryTypeFilter === 'online' && isPOS) return false;
@@ -3115,7 +4675,7 @@
                 const customer = (order.customerName || order.userName || '').toLowerCase();
                 const date = (order.date || '').toLowerCase();
                 const payment = isPOS ? (order.paymentMode || '').toLowerCase() : 'razorpay online';
-                
+
                 return orderId.includes(query) || customer.includes(query) || date.includes(query) || payment.includes(query);
             });
             if (filtered.length === 0) {
@@ -3135,7 +4695,7 @@
                 const customer = order.customerName || order.userName || 'Walk-in Customer';
                 const payment = isPOS ? (order.paymentMode || 'Cash') : 'Razorpay Online';
                 const total = order.total || 0;
-                
+
                 return `
                     <tr>
                         <td><strong style="color:var(--primary);">${invoiceNo}</strong></td>
@@ -3200,4 +4760,5 @@
         }
     </script>
 </body>
+
 </html>
