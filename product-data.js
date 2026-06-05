@@ -933,5 +933,101 @@ const productData = [
       </ul>
       <p>Travel smarter with luggage that moves with you.</p>
     `
+  },
+  {
+    slug: 'usb-to-rs485-adapter',
+    name: 'USB to RS485 Adapter',
+    img: 'assets/products/49.png',
+    images: [
+      'assets/products/49.png',
+      'assets/products/50.png'
+    ],
+    category: 'Computer Accessories',
+    priceNum: 1299,
+    price: '₹1,299',
+    description: `
+      <h3>USB to RS485 Adapter</h3>
+      <p>Reliable USB to RS485 converter for industrial communication, automation, and serial device control.</p>
+      <h4>Key Features:</h4>
+      <ul>
+        <li><strong>RS485 Compatibility:</strong> Connects USB devices to RS485 networks and devices</li>
+        <li><strong>Stable Communication:</strong> Supports reliable half-duplex serial data transfer</li>
+        <li><strong>Plug and Play:</strong> Easy driver installation for Windows and Linux</li>
+        <li><strong>Compact Design:</strong> Portable adapter ready for field deployment</li>
+        <li><strong>LED Indicators:</strong> Status LEDs for power and data transmission</li>
+      </ul>
+      <h4>Specifications:</h4>
+      <ul>
+        <li>Interface: USB-A to RS485</li>
+        <li>Protocol: Half-duplex RS485 serial communication</li>
+        <li>Power: USB-powered</li>
+        <li>Compatibility: Windows, Linux, macOS</li>
+      </ul>
+      <p>Perfect for connecting industrial controllers, meters, and automation equipment to modern PCs.</p>
+    `
+  },
+  {
+    slug: 'type-c-to-usb-3-converter',
+    name: 'Type C to USB 3.0 Converter',
+    img: 'assets/products/51.png',
+    images: [
+      'assets/products/51.png',
+      'assets/products/52.png'
+    ],
+    category: 'Computer Accessories',
+    priceNum: 899,
+    price: '₹899',
+    description: `
+      <h3>Type C to USB 3.0 Converter</h3>
+      <p>High-speed Type-C adapter that lets you connect USB 3.0 devices to modern laptops and tablets.</p>
+      <h4>Key Features:</h4>
+      <ul>
+        <li><strong>USB 3.0 Speed:</strong> Fast data transfer up to 5Gbps</li>
+        <li><strong>Wide Compatibility:</strong> Works with Type-C laptops, tablets, and smartphones</li>
+        <li><strong>Compact Design:</strong> Lightweight and easy to carry in a bag or pocket</li>
+        <li><strong>Durable Build:</strong> Reinforced connector and braided cable for long life</li>
+        <li><strong>Plug and Play:</strong> No additional drivers required</li>
+      </ul>
+      <h4>Specifications:</h4>
+      <ul>
+        <li>Connector: USB Type-C to USB Type-A 3.0</li>
+        <li>Transfer Rate: Up to 5Gbps</li>
+        <li>Compatibility: USB 3.0 / 2.0 peripherals</li>
+        <li>Power: Bus powered</li>
+      </ul>
+      <p>Use this converter for fast file transfers, external drives, and USB accessories on Type-C devices.</p>
+    `
+  },
+  {
+    slug: 'type-c-8-in-1-hub',
+    name: 'Type-C 8-in-1 Hub',
+    img: 'assets/products/53.png',
+    images: [
+      'assets/products/53.png',
+      'assets/products/54.png'
+    ],
+    category: 'Computer Accessories',
+    priceNum: 2499,
+    price: '₹2,499',
+    description: `
+      <h3>Type-C 8-in-1 Hub</h3>
+      <p>Powerful Type-C hub with eight ports to expand your laptop or tablet connectivity in one compact unit.</p>
+      <h4>Key Features:</h4>
+      <ul>
+        <li><strong>8 Ports:</strong> Multiple USB, HDMI, SD, and power delivery ports in one hub</li>
+        <li><strong>High-Speed Data:</strong> USB 3.0 ports for fast transfers and peripherals</li>
+        <li><strong>HDMI Output:</strong> Supports external displays for presentations and productivity</li>
+        <li><strong>Power Delivery:</strong> Pass-through charging for compatible Type-C laptops</li>
+        <li><strong>Compact Design:</strong> Sleek aluminum housing for durability and style</li>
+      </ul>
+      <h4>Specifications:</h4>
+      <ul>
+        <li>Ports: USB-C PD, USB 3.0, HDMI, SD, microSD, Ethernet (if available), audio</li>
+        <li>Compatibility: USB-C laptops and tablets</li>
+        <li>Transfer Rate: Up to 5Gbps on USB 3.0 ports</li>
+        <li>Power Delivery: Up to 60W pass-through charging</li>
+      </ul>
+      <p>Expand your workstation instantly with DIGINESS Type-C Hub - the easiest way to connect all your devices.</p>
+    `
   }
 ];
