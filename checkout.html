@@ -1145,7 +1145,7 @@
             `;
             });
 
-            const shipping = subtotal > 1999 ? 0 : 0;
+            const shipping = subtotal > 1999 ? 0 : 199;
             const total = subtotal + shipping;
 
             // Get user email and display name (handle phone users)
@@ -1182,7 +1182,7 @@
                     
                     <div class="form-group">
                         <label>Email</label>
-                        <input type="email" id="checkoutEmail" value="${userEmail}" ${userInfo && userInfo.isPhoneUser ? 'placeholder="Your phone number is your login"' : 'readonly'}>
+                        <input type="email" id="checkoutEmail" value="${userEmail}" ${userInfo && userInfo.isPhoneUser ? 'placeholder="Enter Your Email ID"' : 'readonly'}>
                     </div>
                     
                     <div class="form-group">
