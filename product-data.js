@@ -1029,5 +1029,46 @@ const productData = [
       </ul>
       <p>Expand your workstation instantly with DIGINESS Type-C Hub - the easiest way to connect all your devices.</p>
     `
-  }
+  },
+  {
+  slug: 'tremblay-party-speaker',
+  name: 'Tremblay Party Speaker',
+  img: 'assets/products/55.png',
+  images: [
+    'assets/products/55.png',
+    'assets/products/56.png',
+    'assets/products/57.png'
+  ],
+  category: 'Audio Accessories',
+  priceNum: 12990,
+  price: '₹12,990',
+  description: `
+    <h3>Tremblay Party Speaker</h3>
+    <p>Premium retro-style portable Bluetooth speaker designed to deliver powerful sound, stylish aesthetics, and all-day entertainment wherever you go.</p>
+
+    <h4>Key Features:</h4>
+    <ul>
+      <li><strong>Rich Stereo Sound:</strong> High-quality drivers provide clear vocals, deep bass, and immersive audio performance</li>
+      <li><strong>Bluetooth Connectivity:</strong> Seamlessly connect smartphones, tablets, laptops, and other Bluetooth-enabled devices</li>
+      <li><strong>Portable Design:</strong> Built-in carrying strap makes it easy to take your music anywhere</li>
+      <li><strong>Retro Premium Finish:</strong> Elegant leather-textured exterior with vintage-inspired styling</li>
+      <li><strong>Multiple Playback Modes:</strong> Supports Bluetooth, AUX, USB, and TF card playback</li>
+      <li><strong>Long Battery Life:</strong> Enjoy hours of uninterrupted music on a single charge</li>
+    </ul>
+
+    <h4>Specifications:</h4>
+    <ul>
+      <li>Connectivity: Bluetooth, AUX Input, USB, TF Card</li>
+      <li>Battery: Rechargeable Lithium Battery</li>
+      <li>Control Panel: Volume, Playback Controls, Power Switch</li>
+      <li>Design: Portable Retro Speaker with Carry Handle</li>
+      <li>Compatibility: Android, iOS, Windows, MacOS Devices</li>
+    </ul>
+
+    <p>
+      Bring your parties to life with the Tremblay Party Speaker. Combining vintage design with modern wireless technology,
+      it delivers powerful sound and premium style for home entertainment, outdoor gatherings, and everyday listening.
+    </p>
+  `
+}
 ];
