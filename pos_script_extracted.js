@@ -749,8 +749,8 @@
                     <div class="invoice-logo-area">
                         <h2>DIGINESS</h2>
                         <p>SMART TECH REVOLUTION</p>
-                        <p>12/4 Main Commercial St, Chennai, TN</p>
-                        <p>Support: support@diginess.store | Phone: +91 9845012345</p>
+                        <p>NO. 55/8, Embassy Tower, Montieth Road, Egmore, Chennai, Tamil Nadu, India - 600 008.</p>
+                        <p>Support: support@diginess.store | Phone: +91 8248881272</p>
                     </div>
                     <div class="invoice-title-area">
                         <h1>TAX INVOICE</h1>
