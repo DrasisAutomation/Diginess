@@ -1156,7 +1156,8 @@
             `;
             });
 
-            const shipping = subtotal > 1999 ? 0 : 199;
+            // Shipping charges (set to 0 for free shipping on all orders)
+            const shipping = 0;
             const total = subtotal + shipping;
 
             // Get user email and display name (handle phone users)
@@ -1178,7 +1179,7 @@
                         </div>
                         <div class="total-row">
                             <span>Shipping</span>
-                            <span>${shipping === 0 ? 'Free' : '₹' + shipping}</span>
+                            <span style="color: #2e7d32; font-weight: 500;">Free</span>
                         </div>
                         <div class="grand-total">
                             <span>Total</span>
