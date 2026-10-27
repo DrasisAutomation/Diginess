@@ -442,7 +442,7 @@ app.post('/api/verify-otp', (req, res) => {
 });
 
 // ================= Cashfree =================
-const CASHFREE_APP_ID = process.env.CASHFREE_APP_ID || 'TEST112971349bcd61e5ac290d4eac1f43179211';
+const CASHFREE_APP_ID = process.env.CASHFREE_APP_ID || '147215798b703b5c489e6c405747512741';
 const CASHFREE_SECRET_KEY = process.env.CASHFREE_SECRET_KEY || '';
 if (!CASHFREE_SECRET_KEY) {
   console.warn('WARNING: CASHFREE_SECRET_KEY is not set in environment or .env file');
