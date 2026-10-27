@@ -559,7 +559,7 @@ app.get('/api/verify-order/:orderId', async (req, res) => {
 });
 
 // Start server
-const PORT = 6453;
+const PORT = process.env.PORT || 6435;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
   console.log(`API endpoints:`);
@@ -572,4 +572,14 @@ app.listen(PORT, () => {
   console.log(`- POST /api/create-order`);
   console.log(`- GET  /api/verify-order/:orderId`);
 });
+
+// Also listen on fallback port 6453
+if (Number(PORT) === 6435) {
+  try {
+    app.listen(6453, () => {
+      console.log('Also listening on port 6453');
+    }).on('error', () => {});
+  } catch (e) {}
+}
+
 
