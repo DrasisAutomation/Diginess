@@ -192,7 +192,7 @@ function generateOrderEmail(orderData) {
           <div class="order-info">
             <p><strong>Order ID:</strong> #${orderId}</p>
             <p><strong>Order Date:</strong> ${date}</p>
-            <p><strong>Payment:</strong> ✓ Paid via Razorpay</p>
+            <p><strong>Payment:</strong> ✓ Paid via Cashfree</p>
             <p><strong>Status:</strong> Processing</p>
           </div>
           
@@ -441,33 +441,120 @@ app.post('/api/verify-otp', (req, res) => {
   }
 });
 
-// ================= Razorpay =================
-const RAZORPAY_KEY_ID = process.env.RAZORPAY_KEY_ID || 'rzp_live_SuNypBXlSjwpgD';
-const RAZORPAY_KEY_SECRET = process.env.RAZORPAY_KEY_SECRET || 'cJryM7y4rCR1F6iWuO60lLCb';
+// ================= Cashfree =================
+const CASHFREE_APP_ID = process.env.CASHFREE_APP_ID || 'TEST112971349bcd61e5ac290d4eac1f43179211';
+const CASHFREE_SECRET_KEY = process.env.CASHFREE_SECRET_KEY || '';
+if (!CASHFREE_SECRET_KEY) {
+  console.warn('WARNING: CASHFREE_SECRET_KEY is not set in environment or .env file');
+}
+const CASHFREE_ENV = (process.env.CASHFREE_ENV || (CASHFREE_APP_ID.startsWith('TEST') ? 'TEST' : 'PROD')).toUpperCase();
+const CASHFREE_BASE_URL = CASHFREE_ENV === 'PROD' ? 'https://api.cashfree.com/pg' : 'https://sandbox.cashfree.com/pg';
 
-// Get Razorpay Key ID (sends only public key ID to frontend, never key secret)
-app.get('/api/razorpay-key', (req, res) => {
-  res.json({ keyId: RAZORPAY_KEY_ID });
+// Get Cashfree Config for frontend
+app.get('/api/cashfree-config', (req, res) => {
+  res.json({
+    appId: CASHFREE_APP_ID,
+    env: CASHFREE_ENV === 'PROD' ? 'production' : 'sandbox',
+    mode: CASHFREE_ENV === 'PROD' ? 'production' : 'sandbox'
+  });
 });
 
-// Create Razorpay order (example)
+// Backward compatibility endpoint for key discovery
+app.get('/api/razorpay-key', (req, res) => {
+  res.json({
+    keyId: CASHFREE_APP_ID,
+    appId: CASHFREE_APP_ID,
+    mode: CASHFREE_ENV === 'PROD' ? 'production' : 'sandbox'
+  });
+});
+
+// Create Cashfree Order
 app.post('/api/create-order', async (req, res) => {
   try {
-    const { amount, currency = 'INR', receipt = 'receipt#1' } = req.body;
-    if (!amount || isNaN(Number(amount))) return res.status(400).json({ success: false, error: 'Invalid amount' });
+    const { amount, currency = 'INR', customerId, customerPhone, customerName, customerEmail, orderId, returnUrl } = req.body;
+    if (!amount || isNaN(Number(amount)) || Number(amount) <= 0) {
+      return res.status(400).json({ success: false, error: 'Invalid amount' });
+    }
 
-    const data = { amount: Math.round(Number(amount) * 100), currency, receipt };
-    const auth = Buffer.from(`${RAZORPAY_KEY_ID}:${RAZORPAY_KEY_SECRET}`).toString('base64');
+    const cleanOrderId = orderId 
+      ? String(orderId).replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 45) 
+      : 'order_' + Date.now();
+    const cleanPhone = (customerPhone ? String(customerPhone).replace(/[^0-9]/g, '').slice(-10) : '') || '9999999999';
+    const cleanCustomerId = (customerId ? String(customerId).replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 45) : '') || ('cust_' + Date.now());
 
-    const response = await axios.post('https://api.razorpay.com/v1/orders', data, {
-      headers: { Authorization: `Basic ${auth}` },
+    const orderPayload = {
+      order_id: cleanOrderId,
+      order_amount: Number(Number(amount).toFixed(2)),
+      order_currency: currency,
+      customer_details: {
+        customer_id: cleanCustomerId,
+        customer_name: customerName || 'Customer',
+        customer_email: customerEmail || 'customer@diginess.store',
+        customer_phone: cleanPhone
+      },
+      order_meta: {
+        return_url: returnUrl || null
+      }
+    };
+
+    console.log('Creating Cashfree order:', cleanOrderId, 'amount:', orderPayload.order_amount);
+
+    const response = await axios.post(`${CASHFREE_BASE_URL}/orders`, orderPayload, {
+      headers: {
+        'x-client-id': CASHFREE_APP_ID,
+        'x-client-secret': CASHFREE_SECRET_KEY,
+        'x-api-version': '2023-08-01',
+        'Content-Type': 'application/json'
+      },
+      timeout: 15000
+    });
+
+    console.log('Cashfree order created successfully:', response.data.order_id);
+
+    return res.json({
+      success: true,
+      orderId: response.data.order_id,
+      paymentSessionId: response.data.payment_session_id,
+      cfOrderId: response.data.cf_order_id,
+      order: response.data
+    });
+  } catch (err) {
+    const errorData = err.response ? err.response.data : (err.message || err);
+    console.error('create-order error:', errorData);
+    return res.status(502).json({
+      success: false,
+      error: 'Failed to create Cashfree order',
+      details: errorData
+    });
+  }
+});
+
+// Verify Cashfree Order Status
+app.get('/api/verify-order/:orderId', async (req, res) => {
+  try {
+    const { orderId } = req.params;
+    const response = await axios.get(`${CASHFREE_BASE_URL}/orders/${encodeURIComponent(orderId)}`, {
+      headers: {
+        'x-client-id': CASHFREE_APP_ID,
+        'x-client-secret': CASHFREE_SECRET_KEY,
+        'x-api-version': '2023-08-01'
+      },
       timeout: 10000
     });
 
-    return res.json({ success: true, order: response.data });
+    return res.json({
+      success: true,
+      orderStatus: response.data.order_status,
+      order: response.data
+    });
   } catch (err) {
-    console.error('create-order error:', err.message || err);
-    return res.status(502).json({ success: false, error: 'Failed to create Razorpay order', details: err.message });
+    const errorData = err.response ? err.response.data : (err.message || err);
+    console.error('verify-order error:', errorData);
+    return res.status(502).json({
+      success: false,
+      error: 'Failed to verify order',
+      details: errorData
+    });
   }
 });
 
@@ -481,5 +568,8 @@ app.listen(PORT, () => {
   console.log(`- GET  /api/test`);
   console.log(`- POST /api/send-otp`);
   console.log(`- POST /api/verify-otp`);
+  console.log(`- GET  /api/cashfree-config`);
   console.log(`- POST /api/create-order`);
+  console.log(`- GET  /api/verify-order/:orderId`);
 });
+

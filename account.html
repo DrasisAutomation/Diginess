@@ -17,8 +17,8 @@
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
-  <!-- Razorpay Payment Gateway -->
-  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <!-- Cashfree Payment Gateway SDK -->
+  <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
   <style>
     /* Account page - complete redesign */
     .account-page {
@@ -1532,24 +1532,24 @@
     };
 
     window.BACKEND_BASE = ENV_CONFIG.backendBase;
-    window.razorpayKeyId = 'rzp_live_SuNypBXlSjwpgD'; // Default fallback
+    window.cashfreeAppId = 'TEST112971349bcd61e5ac290d4eac1f43179211'; // Default test fallback
 
-    // Fetch Razorpay key ID from backend to keep it secure
-    async function fetchRazorpayKey() {
+    // Fetch Cashfree config from backend
+    async function fetchCashfreeConfig() {
       try {
-        const response = await fetch(`${ENV_CONFIG.backendBase}/api/razorpay-key`);
+        const response = await fetch(`${ENV_CONFIG.backendBase}/api/cashfree-config`);
         if (response.ok) {
           const data = await response.json();
-          if (data.keyId) {
-            window.razorpayKeyId = data.keyId;
-            console.log('Razorpay key loaded successfully');
+          if (data.appId) {
+            window.cashfreeAppId = data.appId;
+            console.log('Cashfree config loaded successfully');
           }
         }
       } catch (error) {
-        console.error('Error fetching Razorpay key:', error);
+        console.warn('Backend not available for cashfree config, using default test key');
       }
     }
-    fetchRazorpayKey();
+    fetchCashfreeConfig();
 
     // Initialize Firebase
     firebase.initializeApp(ENV_CONFIG.firebase);

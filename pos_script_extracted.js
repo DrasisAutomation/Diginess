@@ -383,7 +383,7 @@
                 const contact = order.userEmail || order.shippingInfo?.phone || "";
                 const isPOS = order.isPOS || order.orderType === 'POS';
                 const orderType = isPOS ? "POS" : "Online Website";
-                const payment = isPOS ? (order.paymentMode || "Cash") : "Razorpay Online";
+                const payment = isPOS ? (order.paymentMode || "Cash") : (order.paymentGateway ? (order.paymentGateway + " Online") : "Cashfree Online");
                 const total = order.total || 0;
                 // Since subtotal is total, let's approximate subtotal minus estimated tax/discount if needed
                 const subtotal = total; 
@@ -703,7 +703,7 @@
             const subtotal = orderObject.subtotal || totalVal;
             const discountVal = orderObject.discountVal || 0;
             const taxVal = orderObject.taxVal || 0;
-            const paymentMode = isPOS ? (orderObject.paymentMode || 'Cash') : 'Razorpay Online';
+            const paymentMode = isPOS ? (orderObject.paymentMode || 'Cash') : (orderObject.paymentGateway ? (orderObject.paymentGateway + ' Online') : 'Cashfree Online');
             
             // Format Billing Details
             let billingDetailsHTML = '';
@@ -1146,7 +1146,7 @@
                 const orderId = (order.orderId || '').toLowerCase();
                 const customer = (order.customerName || order.userName || '').toLowerCase();
                 const date = (order.date || '').toLowerCase();
-                const payment = isPOS ? (order.paymentMode || '').toLowerCase() : 'razorpay online';
+                const payment = isPOS ? (order.paymentMode || '').toLowerCase() : (order.paymentGateway ? (order.paymentGateway.toLowerCase() + ' online') : 'cashfree online');
                 
                 return orderId.includes(query) || customer.includes(query) || date.includes(query) || payment.includes(query);
             });
@@ -1165,7 +1165,7 @@
                 const invoiceNo = order.orderId || 'N/A';
                 const dateStr = order.date || 'N/A';
                 const customer = order.customerName || order.userName || 'Walk-in Customer';
-                const payment = isPOS ? (order.paymentMode || 'Cash') : 'Razorpay Online';
+                const payment = isPOS ? (order.paymentMode || 'Cash') : (order.paymentGateway ? (order.paymentGateway + ' Online') : 'Cashfree Online');
                 const total = order.total || 0;
                 
                 return `
